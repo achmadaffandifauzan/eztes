@@ -1,0 +1,34 @@
+<% layout('layouts/boilerplate') %>
+
+    <div class="col-6 offset-3">
+        <h3 class="text-center mb-4">BUAT SOAL</h3>
+        <form action="/posts" method="POST" novalidate class="needs-validation" enctype="multipart/form-data">
+            <div class="form-group mb-3">
+                <label class="form-label" for="titleNew">Judul</label>
+                <input type="text" class="form-control" id="titleNew" name="post[title]">
+            </div>
+            <div class="form-group mb-3">
+                <label class="form-label" for="descriptionNew">Pertanyaan</label>
+                <textarea class="form-control" id="descriptionNew" rows="3" name="post[description]"
+                    required></textarea>
+                <div class="invalid-feedback">
+                    Wajib Terisi!
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="imageNew">Tambah Gambar</label>
+                <input type="file" class="form-control" name="post[image]" id="imageNew" multiple>
+
+            </div>
+            <div class="form-group mb-3">
+                <label class="form-label" for="postCategoryNew">Kelompok Soal</label>
+                <input type="text" class="form-control" id="postCategoryNew" name="post[postCategory]" required>
+            </div>
+            <div class="invalid-feedback">
+                Wajib Terisi!
+            </div>
+            <button class="btn btnNewCustom btn-sm btn-success mb-3">Unggah</button>
+            <a href="/posts"><button type="button"
+                    class="btn btnNewCustom btn-sm btn-danger mb-3 ms-3">Batal</button></a>
+        </form>
+    </div>
