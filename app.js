@@ -26,7 +26,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 
 //process.env.DB_URL
 //mongodb://127.0.0.1:27017/sekawan2
-const dbUrl = process.env.DB_URL || "mongodb://127.0.0.1:27017/sekawan2";
+const dbUrl = process.env.DB_URL;
 mongoose.set("strictQuery", true);
 mongoose.connect(dbUrl);
 
@@ -87,12 +87,14 @@ const styleSrcUrls = [
   "https://stackpath.bootstrapcdn.com/",
   "https://fonts.googleapis.com/",
   "https://use.fontawesome.com/",
+  "https://fonts.google.com/",
 ];
 const connectSrcUrls = [
 ];
 const fontSrcUrls = [
   "https://fonts.gstatic.com/",
   "https://fonts.googleapis.com/",
+  "https://fonts.google.com/",
 ];
 app.use(
   helmet({ crossOriginEmbedderPolicy: false, }),

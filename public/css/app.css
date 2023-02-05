@@ -1,18 +1,22 @@
+.material-symbols-outlined {
+  font-variation-settings:
+    'FILL' 0,
+    'wght' 500,
+    'GRAD' 0,
+    'opsz' 48
+}
+
 body {
   background-color: rgb(250, 250, 250);
 }
+
 h1,
 h2,
 h3,
 h4,
-h5 {
+h5,
+h6 {
   font-family: "lato";
-}
-
-h3 {
-  border-bottom: 2px solid #0d6efd;
-  width: max-content;
-  margin: auto;
 }
 
 textarea {
@@ -21,6 +25,7 @@ textarea {
 
 #nav {
   background-color: rgb(255, 255, 255);
+  background-color: #dc222a;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
@@ -35,20 +40,21 @@ nav .container-fluid {
 }
 
 nav .container-fluid a {
-  color: black;
   align-items: center;
   font-size: 16px;
-  border: 2px solid white;
   height: max-content;
   width: max-content;
   padding: 0.4em;
 }
 
+.spanMaterialSymbol {
+  vertical-align: middle;
+}
+
 nav .container-fluid a:hover {
-  color: #0d6efd !important;
+  color: white !important;
   align-items: center;
   font-size: 16px;
-  border-bottom: 2px solid #0d6efd;
 }
 
 #navSearchBtn,
@@ -102,8 +108,9 @@ nav .container-fluid a:hover {
 }
 
 .footer {
-  background-color: rgb(255, 255, 255);
+  background-color: #fafafa;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  height: min-content;
 }
 
 .card {
@@ -115,16 +122,6 @@ nav .container-fluid a:hover {
 .cardIndex {
   box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
   max-width: 60%;
-}
-
-.card-header {
-  border-radius: 0 !important;
-}
-
-.card-footer {
-  border: 0;
-  border-radius: 0 !important;
-  background-color: white;
 }
 
 .cardShow {
@@ -163,15 +160,32 @@ button {
   display: grid;
   grid-auto-flow: column;
   grid-template-columns: max-content;
+  background-color: #edf0ef;
+  border-bottom: 1px solid #d8d9d9;
+}
+
+.cardIndexHeader {
+  background-color: #edf0ef;
+  border-bottom: 1px solid #d8d9d9;
+}
+
+.buttonContainerShow {
+  display: grid;
+  justify-content: space-between;
+}
+
+.buttonContainerShow div,
+.buttonContainerShow a {
+  grid-row-start: 1;
 }
 
 #buttonShow {
   display: flex;
-  align-self: center;
-  justify-self: end;
+  justify-content: end;
 }
 
-#buttonShow form {
+#buttonShow form,
+#buttonShow a {
   display: inline-block;
   margin-left: 0.5em;
 }
@@ -217,6 +231,7 @@ button {
   align-items: center;
   margin-left: 0.5em;
   font-family: "lato";
+  color: #dc222a;
 }
 
 .postTitle {
@@ -226,6 +241,7 @@ button {
   font-weight: 500;
   text-decoration: none;
   text-align: center;
+  align-self: center;
 }
 
 .postDescription {
@@ -241,45 +257,28 @@ button {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
 
+.btn-primary {
+  background-color: #dc222a;
+  border: 1px solid #dc222a;
+}
+
+
+.btn-danger {
+  background-color: #dc222a;
+  border: 1px solid #dc222a;
+}
+
 .btnNewCustom {
   width: 70px;
 }
 
 .alert-dismissible {
   padding: 10px;
-  max-width: 60%;
+  max-width: 80%;
   margin: auto;
   margin-bottom: 15px;
 }
 
 .alert-dismissible .btn-close {
   padding: 14px;
-}
-
-@media (max-width: 450px) {
-  .cardIndex {
-    max-width: 100%;
-  }
-
-  .cardShow {
-    max-width: 100%;
-  }
-
-  .cardUser {
-    max-width: 100%;
-  }
-}
-
-@media (min-width: 451px) and (max-width: 800px) {
-  .cardIndex {
-    max-width: 80%;
-  }
-
-  .cardShow {
-    max-width: 80%;
-  }
-
-  .cardUser {
-    max-width: 80%;
-  }
 }

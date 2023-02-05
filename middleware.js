@@ -7,9 +7,9 @@ const ExpressError = require('./utils/ExpressError');
 module.exports.isLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
         req.session.lastPath = req.originalUrl;
-        console.log(req.query._method)
+        //console.log(req.query._method)
         if (req.query._method === 'DELETE') { req.session.lastPath = '/posts'; } //prevent error because redirecting on link with post / delete / put method create an error
-        req.flash('error', "You're not logged in!");
+        req.flash('error', "Anda belum login!");
         return res.redirect('/login');
     }
     next();
@@ -20,7 +20,7 @@ module.exports.isPostAuthor = catchAsync(async (req, res, next) => {
     if (post.author.equals(req.user._id)) {
         next();
     } else {
-        req.flash('error', "You don't have permission to do that!");
+        req.flash('error', "Anda tidak memiliki izin untuk itu!");
         res.redirect(`/posts/${req.params.id}`)
     }
 })
@@ -30,7 +30,7 @@ module.exports.isCommentAuthor = catchAsync(async (req, res, next) => {
     if (comment.author.equals(req.user._id)) {
         next();
     } else {
-        req.flash('error', "You don't have permission to do that!");
+        req.flash('error', "Anda tidak memiliki izin untuk itu!");
         res.redirect(`/posts/${id}`)
     }
 })
@@ -56,3 +56,12 @@ module.exports.validateComment = (req, res, next) => {
     }
 }
 
+module.exports.isPostAvailable = catchAsync(async (req, res, next) => {
+    const post = await Post.findById(req.params.id)
+    if (post.isAvailable === "true" || post.author.equals(req.user._id)) {
+        next();
+    } else {
+        req.flash('error', "Soal telah ditutup!");
+        res.redirect(`/${post.author}/${post.postCategoryId}`)
+    }
+})

@@ -2,23 +2,38 @@
 <html lang="en">
 
 <% layout('layouts/boilerplate') %>
-<a class="btn btn-sm btn-primary mb-2 m-auto" href="/<%= post.author._id %>/<%= post.postCategory %>" role="button">Kembali</a>
-    <div class="cardShow card mt-0">
-        <div id="cardShowHeader" class="card-header">
-            <a class="headerCardDesc" href="/<%= post.author._id %>/<%= post.postCategory %>"><%= post.postCategory %></a>
-        <a class="ownerName ms-auto" href="/<%= post.author._id %>/<%= post.postCategory %>">
-            <%= post.author.username %>
-        </a> 
-            
-            <% if(currentUser && post.author.equals(currentUser._id)) {%>
-                <div id="buttonShow">
-                    <a href="/posts/<%= post._id %>/edit"><button type="button"
-                            class="btn btn-sm btn-info">Edit</button></a>
-                    <form action="/posts/<%= post._id %>?_method=DELETE" method="POST">
-                        <button class="btn btn-sm btn-danger">Delete</button>
+    <div class="buttonContainerShow">
+        <a class="btn btn-sm btn-primary mb-2 " href="/<%= post.author._id %>/<%= post.postCategoryId %>"
+            role="button">Kembali</a>
+        <% if(currentUser && post.author.equals(currentUser._id)) {%>
+            <div id="buttonShow" class="mb-2 me-auto">
+                <% if (post.isAvailable==="true" ) {%>
+                    <form action="/posts/<%= post._id %>/hide" method="POST">
+                        <button class="btn btn-sm btn-warning">Tutup Soal</button>
                     </form>
-                </div>
-                <% } %>
+                    <% } else {%>
+                        <form action="/posts/<%= post._id %>/unhide" method="POST">
+                            <button class="btn btn-sm btn-success">Buka Soal</button>
+                        </form>
+                        <% } %>
+                            <a href="/posts/<%= post._id %>/edit"><button type="button"
+                                    class="btn btn-sm btn-info">Edit</button></a>
+                            <form action="/posts/<%= post._id %>?_method=DELETE" method="POST">
+                                <button class="btn btn-sm btn-danger">Hapus</button>
+                            </form>
+            </div>
+            <% } %>
+    </div>
+    <div class="col-sm-8 offset-sm-2 card mt-0">
+        <div id="cardShowHeader" class="card-header">
+            <a class="headerCardDesc" href="/<%= post.author._id %>/<%= post.postCategoryId %>">
+                <%= post.postCategory %>
+            </a>
+            <a class="ownerName ms-auto" href="/<%= post.author._id %>/<%= post.postCategoryId %>">
+                <%= post.author.username %>
+            </a>
+
+
         </div>
         <div class="card-body pb-1">
 
@@ -65,7 +80,7 @@
 
     </div>
     <% if(currentUser) {%>
-        <div class="cardShow my-3">
+        <div class="col-sm-8 offset-sm-2 my-3">
             <form action="/posts/<%= post._id %>/comments" method="POST" class="needs-validation" novalidate>
                 <label class="form-label" for="commentAdd"> Masukkan Jawaban Anda</label>
                 <textarea class="form-control" name="comment[text]" id="commentAdd" cols="50" rows="8"
@@ -77,31 +92,31 @@
             </form>
         </div>
         <% } %>
-            <h4 class="cardShow my-4">Jawaban Anda</h4>
+            <h4 class="col-sm-8 offset-sm-2 my-4">Jawaban : </h4>
             <% for (let comment of post.comments) {%>
-                <% if (currentUser) {%> 
-                <% if (comment.author.equals(currentUser._id) || post.author.equals(currentUser._id)) {%> 
-                <div id="commentsShow">
-                    <div class="cardShow card mb-2">
-                        <div class="card-header">
-                            <a class="ownerName" href="">
-                                <%= comment.author.username %>
-                            </a>
-                            <% if(currentUser && comment.author.equals(currentUser._id)) {%>
-                                <form action="/posts/<%= post._id %>/comments/<%= comment._id %>?_method=DELETE"
-                                    method="POST">
-                                    <button class="btn btn-sm btn-danger">Delete</button>
-                                </form>
+                <% if (currentUser) {%>
+                    <% if (comment.author.equals(currentUser._id) || post.author.equals(currentUser._id)) {%>
+                        <div id="commentsShow">
+                            <div class="cardShow card mb-2">
+                                <div class="card-header">
+                                    <a class="ownerName" href="">
+                                        <%= comment.author.username %>
+                                    </a>
+                                    <% if(currentUser && comment.author.equals(currentUser._id)) {%>
+                                        <form action="/posts/<%= post._id %>/comments/<%= comment._id %>?_method=DELETE"
+                                            method="POST">
+                                            <button class="btn btn-sm btn-danger">Delete</button>
+                                        </form>
+                                        <% } %>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        <%= comment.text %>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <% } %>
+                            <% } %>
                                 <% } %>
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text">
-                                <%= comment.text %>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <% } %> 
-                <% } %> 
-                <% } %>
-                    </div>
+                                    </div>

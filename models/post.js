@@ -35,8 +35,16 @@ const postSchema = new Schema({
         }
     ],
     postCategory: {
-        type:String,
-        required:true,
+        type: String,
+        required: true,
+    },
+    postCategoryId: {
+        type: String,
+    },
+    isAvailable: {
+        type: String,
+        required: false,
+        default: "true",
     }
 });
 

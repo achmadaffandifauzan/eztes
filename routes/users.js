@@ -17,7 +17,7 @@ router.post('/register', catchAsync(async (req, res, next) => {
         const registeredUser = await User.register(newUser, password);
         req.login(registeredUser, (error) => {
             if (error) return next(error);
-            req.flash('success', 'Successfully Registered!');
+            req.flash('success', 'Anda berhasil terdaftar.');
             res.redirect('/posts');
         })
 
@@ -32,7 +32,7 @@ router.get('/login', (req, res) => {
 router.post('/login', passport.authenticate('local',
     { failureFlash: true, failureRedirect: '/login', keepSessionInfo: true }),
     catchAsync(async (req, res, next) => {
-        req.flash('success', 'Welcome Back!');
+        req.flash('success', 'Anda berhasil login.');
         const redirectUrl = req.session.lastPath || '/posts';
         delete req.session.lastPath;
         res.redirect(redirectUrl);
@@ -66,7 +66,7 @@ router.delete('/:friendId/:currentId', isLoggedIn, catchAsync(async (req, res, n
 router.get('/logout', isLoggedIn, catchAsync(async (req, res, next) => {
     req.logout((error) => {
         if (error) return next(error)
-        req.flash('success', "You're Logged Out!");
+        req.flash('success', "Anda Berhasil logout.");
         res.redirect('/posts');
     });
 }))
@@ -74,23 +74,21 @@ router.get('/logout', isLoggedIn, catchAsync(async (req, res, next) => {
 router.get('/:userId/', catchAsync(async (req, res, next) => {
     const { userId } = req.params;
     const user = await User.findById(userId).populate('posts').populate('friendRequests').populate('friends');
-    const currentUser = req.user; 
+    const currentUser = req.user;
     if (currentUser) {
         const user2 = await User.findById(currentUser._id);
         const isFriend = user2.friends.includes(user._id) ? true : false;
-        console.log(user)
         res.render('users/show', { user, isFriend })
     } else {
         res.render('users/show', { user })
     }
 }))
 
-router.get('/:userId/:category', catchAsync(async (req, res, next) => {
-    const { userId, category } = req.params;
+router.get('/:userId/:categoryId', catchAsync(async (req, res, next) => {
+    const { userId, categoryId } = req.params;
     //console.log(category)
-    const posts = await Post.find({postCategory : category}).populate('author');
-    const user = await User.findById(userId).populate('posts').populate('friendRequests').populate('friends');
-    res.render('users/category', { user, posts })
+    const posts = await Post.find({ postCategoryId: categoryId, author: { $in: [userId] } }).populate('author');
+    res.render('users/category', { posts })
 }))
 // router.get('/:friendId/:currentId', isLoggedIn, catchAsync(async (req, res, next) => {
 //     const { currentId, friendId } = req.params;

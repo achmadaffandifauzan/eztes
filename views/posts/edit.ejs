@@ -1,5 +1,5 @@
 <% layout('layouts/boilerplate') %>
-    <div class="col-6 offset-3">
+    <div class="col-sm-6 offset-sm-3">
         <h3 class="text-center mb-4">EDIT SOAL</h3>
         <form action="/posts/<%= post._id %>?_method=PUT " method="POST" novalidate class="needs-validation"
             enctype="multipart/form-data">
@@ -31,8 +31,8 @@
             </div>
             <div class="form-group mb-3">
                 <label class="form-label" for="postCategoryEdit">Kelompok Soal</label>
-                <input type="text" class="form-control" id="postCategoryEdit" name="post[postCategory]" 
-                    value="<%= post.hashtag %>" required>
+                <input type="text" class="form-control" id="postCategoryEdit" name="post[postCategory]"
+                    value="<%= post.postCategory %>" required>
             </div>
             <div class="invalid-feedback">
                 Wajib Terisi!
