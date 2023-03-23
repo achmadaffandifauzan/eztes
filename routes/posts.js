@@ -46,6 +46,7 @@ router.get('/', catchAsync(async (req, res, next) => {
             return obj
         }
         // return result === true ? obj : undefined;
+        //ss
     });
 
     res.render('posts/index', { newCat });
