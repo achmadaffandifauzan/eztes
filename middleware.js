@@ -58,8 +58,12 @@ module.exports.validateComment = (req, res, next) => {
 
 module.exports.isPostAvailable = catchAsync(async (req, res, next) => {
     const post = await Post.findById(req.params.id)
-    if (post.isAvailable === "true" || post.author.equals(req.user._id)) {
+    if (post.isAvailable === "true") {
         next();
+    } else if (req.user) {
+        if (post.author.equals(req.user._id)) {
+            next();
+        }
     } else {
         req.flash('error', "Soal telah ditutup!");
         res.redirect(`/${post.author}/${post.postCategoryId}`)

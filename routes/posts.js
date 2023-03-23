@@ -24,7 +24,31 @@ router.get('/', catchAsync(async (req, res, next) => {
     for (let cat of categories) {
         cat.author = await User.findById(cat.authorId);
     }
-    res.render('posts/index', { categories });
+    console.log(categories)
+    // console.log(req.query)
+    newCat = categories.filter((obj) => {
+        result = false;
+        if (req.query.postCategory) {
+            if (obj.postCategory.toLowerCase().includes(req.query.postCategory.toLowerCase())) {
+                result = true;
+            }
+        } else if (req.query.author) {
+            if (obj.author.username.toLowerCase().includes(req.query.author.toLowerCase())) {
+                result = true;
+            }
+
+        } else if (!req.query.postCategory) {
+            result = true;
+        } else if (!req.query.author) {
+            result = true;
+        }
+        if (result === true) {
+            return obj
+        }
+        // return result === true ? obj : undefined;
+    });
+
+    res.render('posts/index', { newCat });
 }))
 router.get('/new', isLoggedIn, (req, res) => {
     res.render('posts/new');
@@ -69,6 +93,7 @@ router.post('/', isLoggedIn, upload.array('post[image]'), validatePost, catchAsy
     post.images = req.files.map(file => ({ url: file.path, filename: file.filename }));
     post.author = req.user._id;
     post.postCategoryId = post.postCategory + "___" + req.user._id;
+    post.isAvailable = "true";
     const user = await User.findById(req.user._id);
     user.posts.push(post._id);
     await post.save();

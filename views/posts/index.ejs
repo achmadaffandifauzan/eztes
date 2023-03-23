@@ -1,14 +1,18 @@
 <% layout('layouts/boilerplate') %>
-  <% for (let category of categories) {%>
-    <div class="col-sm-6 offset-sm-3 card text-center m-auto mb-4">
-      <div class="card-header cardIndexHeader">
-        <%= category.author.username %>
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">
-          <%= category.postCategory %>
-        </h5>
-        <a href="/<%= category.author._id %>/<%= category._id %>" class="btn btn-primary">Lihat Soal</a>
-      </div>
+  <% for (let category of newCat) {%>
+
+    <div class="col-sm-4 offset-sm-1 card cardIndex mb-4">
+      <a href="/<%= category.author._id %>/<%= category._id %>" class="text-decoration-none">
+        <div class="card-header cardIndexHeader">
+          <%= category.author.username %>
+        </div>
+        <div class="card-body cardIndexBody">
+          <h5 class="card-title">
+            <%= category.postCategory %>
+          </h5>
+
+        </div>
+
+      </a>
     </div>
     <% } %>

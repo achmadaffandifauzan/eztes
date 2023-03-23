@@ -97,7 +97,7 @@
                 <% if (currentUser) {%>
                     <% if (comment.author.equals(currentUser._id) || post.author.equals(currentUser._id)) {%>
                         <div id="commentsShow">
-                            <div class="cardShow card mb-2">
+                            <div class="col-sm-8 offset-sm-2 card mb-2">
                                 <div class="card-header">
                                     <a class="ownerName" href="">
                                         <%= comment.author.username %>

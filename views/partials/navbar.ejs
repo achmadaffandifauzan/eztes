@@ -1,4 +1,4 @@
-<nav id="nav" class="navbar sticky-top navbar-expand-lg py-1 navbar-dark">
+<nav id="nav" class="navbar navbar-expand-lg py-1 navbar-light">
   <div class="container-fluid">
     <a class="navbar-brand mb-0 h1" href="/">SEKAWAN</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
@@ -7,22 +7,44 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav me-auto">
-        <a class="nav-link m-auto" href="/posts">Menu</a>
-        <a class="nav-link m-auto" href="/posts/new">Buat Soal</a>
+
+        <a class="nav-link navMenu" href="/posts">Menu</a>
+
+
+        <a class="nav-link navMenu" href="/posts/new">Buat Soal</a>
+      </div>
+      <div class="navbar-nav" id="navSearch">
+        <form action="">
+          <span class="labelForm">Cari Soal :</span>
+          <div class="input-group input-group-sm ms-3 my-1">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Kategori</span>
+            <input type="text" class="form-control" aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-sm" name="postCategory">
+          </div>
+          <div class="input-group input-group-sm ms-3 my-1">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Pemilik</span>
+            <input type="text" class="form-control" aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-sm" name="author">
+          </div>
+
+          <button class="btn"><span class="material-symbols-rounded">
+              search
+            </span></button>
+        </form>
       </div>
       <div class="navbar-nav ms-auto">
         <% if(!currentUser) { %>
 
-          <a class="nav-link m-auto" href="/login"><span class="material-symbols-outlined spanMaterialSymbol">
+          <a class="nav-link navAuth" href="/login"><span class="material-symbols-rounded spanMaterialSymbol">
               login
             </span>
             <span class="spanMaterialSymbol">Login</span>
           </a>
-          <a class="nav-link m-auto" href="/register"><span class="material-symbols-outlined spanMaterialSymbol">
+          <a class="nav-link navAuth" href="/register"><span class="material-symbols-rounded spanMaterialSymbol">
               app_registration
             </span><span class="spanMaterialSymbol">Register</span></a>
           <% } else { %>
-            <a class="nav-link m-auto" href="/logout"><span class="material-symbols-outlined spanMaterialSymbol">
+            <a class="nav-link m-auto navAuth" href="/logout"><span class="material-symbols-rounded spanMaterialSymbol">
                 logout
               </span><span class="spanMaterialSymbol">Logout</span></a>
             <% } %>

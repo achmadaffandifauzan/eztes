@@ -26,7 +26,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 
 //process.env.DB_URL
 //mongodb://127.0.0.1:27017/sekawan2
-const dbUrl = process.env.DB_URL;
+const dbUrl = "mongodb://127.0.0.1:27017/sekawan2";
 mongoose.set("strictQuery", true);
 mongoose.connect(dbUrl);
 
