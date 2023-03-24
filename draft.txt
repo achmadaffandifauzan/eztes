@@ -1,1 +1,3 @@
  - middleware validatePost
+bug :
+post comment => Post validation failed: type: Path `type` is required.
