@@ -9,8 +9,8 @@ const { storage, cloudinary } = require('../cloudinary');
 const upload = multer({ storage });
 
 
-
 router.get('/', catchAsync(async (req, res, next) => {
+    const { page = 1, limit = 2 } = req.query;
     const categories = await Post.aggregate(
         [{
             $group: {
@@ -20,11 +20,11 @@ router.get('/', catchAsync(async (req, res, next) => {
                 count: { $sum: 1 }
             }
         }]
-    );
+    ).sort({ postCategory: 1 })
     for (let cat of categories) {
         cat.author = await User.findById(cat.authorId);
     }
-    console.log(categories)
+    // console.log(categories)
     // console.log(req.query)
     newCat = categories.filter((obj) => {
         result = false;
@@ -48,7 +48,6 @@ router.get('/', catchAsync(async (req, res, next) => {
         // return result === true ? obj : undefined;
         //ss
     });
-
     res.render('posts/index', { newCat });
 }))
 router.get('/new', isLoggedIn, (req, res) => {
@@ -89,7 +88,7 @@ router.post('/:id/unhide', isLoggedIn, isPostAuthor, catchAsync(async (req, res,
     req.flash('success', "Soal telah dibuka kembali.");
     res.redirect(`/posts/${post._id}`);
 }))
-router.post('/', isLoggedIn, upload.array('post[image]'), validatePost, catchAsync(async (req, res, next) => {
+router.post('/', isLoggedIn, upload.array('post[image]'), catchAsync(async (req, res, next) => {
     const post = new Post(req.body.post);
     post.images = req.files.map(file => ({ url: file.path, filename: file.filename }));
     post.author = req.user._id;
@@ -99,7 +98,7 @@ router.post('/', isLoggedIn, upload.array('post[image]'), validatePost, catchAsy
     user.posts.push(post._id);
     await post.save();
     await user.save();
-    //console.log(post);
+    console.log(post);
     req.flash('success', 'Berhasil membuat soal.')
     res.redirect(`/posts/${post._id}`);
 }))

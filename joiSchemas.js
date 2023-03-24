@@ -1,5 +1,7 @@
 const BaseJoi = require('joi');
 // this joiSchema only catch error if user pass the client side validation anyway (the bootstrap form validation)
+// modelSchema : structural design
+// joiSchema : validate when user create new question
 
 const sanitizeHtml = require('sanitize-html');
 
@@ -29,10 +31,12 @@ const Joi = BaseJoi.extend(extension);
 
 module.exports.postSchema = Joi.object({
     post: Joi.object({
-        title: Joi.string().allow("").escapeHTML(),
+        title: Joi.string().required().escapeHTML(),
         description: Joi.string().required().escapeHTML(),
-        hashtag: Joi.string().allow("").escapeHTML(),
-        postCategory: Joi.string().required().escapeHTML()
+        postCategory: Joi.string().required().escapeHTML(),
+        type: Joi.string().required().escapeHTML(),
+        options: Joi.object().allow(""),
+        key: Joi.string().allow("").escapeHTML(),
     }).required(),
     deleteImages: Joi.array()
 });

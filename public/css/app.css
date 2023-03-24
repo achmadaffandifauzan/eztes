@@ -135,9 +135,14 @@ textarea {
 }
 
 .cardIndex {
-  max-width: 60%;
+  width: 30%;
+  max-width: 50%;
+  transition: 0.3s;
 }
 
+.cardIndex:hover {
+  width: 35%;
+}
 
 .cardIndexHeader {
   /* border-bottom: 4px solid #04d7a2 !important; */
@@ -148,11 +153,12 @@ textarea {
   font-size: 12px;
   text-transform: uppercase;
   font-weight: bolder;
-  /* text-align: center; */
+  text-align: center;
 }
 
 .cardIndexBody {
   color: #1d214e;
+  text-align: center;
 }
 
 .cardShow {

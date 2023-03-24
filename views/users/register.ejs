@@ -4,25 +4,28 @@
     <div class="col-sm-4 offset-sm-1">
         <h2 class="my-4">Register</h2>
         <form action="/register" method="POST" class="needs-validation" novalidate>
-            <div class="form-group mb-3">
-                <label for="emailCreate">Email</label>
-                <input type="email" class="form-control" id="emailCreate" name="user[email]" required>
+            <div class="form-floating mb-3">
+                <input type="email" class="form-control" id="emailCreate" name="user[email]" placeholder="Email"
+                    required>
+                <label for="emailCreate">E-mail</label>
                 <div class="invalid-feedback">
-                    Add email!
+                    Masukkan e-mail!
                 </div>
             </div>
-            <div class="form-group mb-3">
-                <label for="usernameCreate">Username</label>
-                <input type="text" class="form-control" id="usernameCreate" name="user[username]" required>
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" id="usernameLogin" name="user[username]" placeholder="Username"
+                    required>
+                <label for="usernameLogin">Username</label>
                 <div class="invalid-feedback">
-                    Add username!
+                    Masukkan username!
                 </div>
             </div>
-            <div class="form-group mb-3">
-                <label for="passwordCreate">Password</label>
-                <input type="password" class="form-control" id="passwordCreate" name="user[password]" required>
+            <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="passwordLogin" name="user[password]"
+                    placeholder="Password" required>
+                <label for="passwordLogin">Password</label>
                 <div class="invalid-feedback">
-                    Add password!
+                    Masukkan password!
                 </div>
             </div>
             <button class="btn btn-success">

@@ -19,14 +19,11 @@ const postSchema = new Schema({
         type: String,
         required: true,
     },
-    hashtag: {
-        type: String,
-        required: false,
-    },
     images: [imageSchema],
     author: {
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: true,
     },
     comments: [
         {
@@ -40,12 +37,24 @@ const postSchema = new Schema({
     },
     postCategoryId: {
         type: String,
+        required: true,
     },
     isAvailable: {
         type: String,
         required: false,
         default: "true",
-    }
+    },
+    type: {
+        type: String,
+        required: true,
+        enum: ['options', 'essay']
+    },
+    options: [{
+        type: String,
+    }],
+    key: {
+        type: Number,
+    },
 });
 
 postSchema.post('findOneAndDelete', async function (doc) {
@@ -59,3 +68,17 @@ postSchema.post('findOneAndDelete', async function (doc) {
 })
 
 module.exports = mongoose.model('Post', postSchema);
+
+// let contoh = {
+//     tipe : "pilgan",
+//     options : {
+//         1 : 'asda',
+//         2 : 'asssda',
+//         3 : 'assdda',
+//         4 : 'asffda',
+//         5 : 'asfgda',
+//     },
+//     key : {
+//         1 : true,
+//     }
+// }
