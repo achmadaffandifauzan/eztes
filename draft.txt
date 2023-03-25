@@ -1,5 +1,9 @@
- - middleware validatePost,commentPost
- - joiSchemas
+- middleware validatePost,commentPost
+- joiSchemas
+- edit post
+- koreksi soal
 bug :
+={
 (solved) post comment => Post validation failed: type: Path `type` is required.
 problem => because some of the post doesnt have latest model, (post has been created before added 'type' to the model)
+}

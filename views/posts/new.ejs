@@ -1,90 +1,86 @@
 <% layout('layouts/boilerplate') %>
-
-    <div class="col-sm-6 offset-sm-3">
-        <h3 class="text-center mb-4">BUAT SOAL</h3>
-        <form action="/posts" method="POST" novalidate class="needs-validation" enctype="multipart/form-data">
+<div class="col-sm-6 offset-sm-3">
+    <h3 class="text-center mb-4">BUAT SOAL</h3>
+    <form action="/posts" method="POST" novalidate class="needs-validation" enctype="multipart/form-data">
+        <div class="form-group mb-3">
+            <label class="form-label" for="title">Judul / No soal</label>
+            <input type="text" class="form-control" id="title" name="post[title]" required>
+            <div class="invalid-feedback">
+                Wajib Terisi!
+            </div>
+        </div>
+        <div class="form-group mb-3">
+            <label class="form-label" for="description">Pertanyaan</label>
+            <textarea class="form-control" id="description" rows="3" name="post[description]" required></textarea>
+            <div class="invalid-feedback">
+                Wajib Terisi!
+            </div>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="image">Tambah Gambar</label>
+            <input type="file" class="form-control" name="post[image]" id="image" multiple>
+        </div>
+        <div class="form-group mb-3">
+            <label class="form-label" for="postCategory">Kelompok Soal</label>
+            <input type="text" class="form-control" id="postCategory" name="post[postCategory]" required>
+            <div class="invalid-feedback">
+                Wajib Terisi!
+            </div>
+        </div>
+        <div class="form-group mb-3" id="questionType">
+            <label class="form-label" for="questionTypeOptions">Tipe Soal</label>
+            <select class="form-select" id="questionTypeOptions" name="post[type]" required>
+                <option value="essay">Isian</option>
+                <option value="options">Pilihan ganda</option>
+            </select>
+            <div class="invalid-feedback">
+                Wajib Terisi!
+            </div>
+        </div>
+        <fieldset id="keyOptions" class="options" disabled>
             <div class="form-group mb-3">
-                <label class="form-label" for="titleNew">Judul / No soal</label>
-                <input type="text" class="form-control" id="titleNew" name="post[title]" required>
+                <label class="form-label">Pilihan jawaban</label>
+                <div class="input-group input-group-sm mb-2">
+                    <span class="input-group-text">a</span>
+                    <input type="text" class="form-control" name="post[options]" required>
+                </div>
+                <div class="input-group input-group-sm mb-2">
+                    <span class="input-group-text">b</span>
+                    <input type="text" class="form-control" name="post[options]" required>
+                </div>
+                <div class="input-group input-group-sm mb-2">
+                    <span class="input-group-text">c</span>
+                    <input type="text" class="form-control" name="post[options]" required>
+                </div>
+                <div class="input-group input-group-sm mb-2">
+                    <span class="input-group-text">d</span>
+                    <input type="text" class="form-control" name="post[options]" required>
+                </div>
+                <div class="input-group input-group-sm mb-2">
+                    <span class="input-group-text">e</span>
+                    <input type="text" class="form-control" name="post[options]" required>
+                </div>
                 <div class="invalid-feedback">
                     Wajib Terisi!
                 </div>
             </div>
+        </fieldset>
+        <fieldset id="keyAnswer" class="options" disabled>
             <div class="form-group mb-3">
-                <label class="form-label" for="descriptionNew">Pertanyaan</label>
-                <textarea class="form-control" id="descriptionNew" rows="3" name="post[description]"
-                    required></textarea>
-                <div class="invalid-feedback">
-                    Wajib Terisi!
-                </div>
-            </div>
-            <div class="mb-3">
-                <label class="form-label" for="imageNew">Tambah Gambar</label>
-                <input type="file" class="form-control" name="post[image]" id="imageNew" multiple>
-
-            </div>
-            <div class="form-group mb-3">
-                <label class="form-label" for="postCategoryNew">Kelompok Soal</label>
-                <input type="text" class="form-control" id="postCategoryNew" name="post[postCategory]" required>
-                <div class="invalid-feedback">
-                    Wajib Terisi!
-                </div>
-            </div>
-            <div class="form-group mb-3" id="questionType">
-                <label class="form-label" for="questionTypeOptions">Tipe Soal</label>
-                <select class="form-select" id="questionTypeOptions" name="post[type]" required>
-                    <option value="essay">Isian</option>
-                    <option value="options">Pilihan ganda</option>
+                <label class="form-label" for="keyNew">Kunci jawaban</label>
+                <select class="form-select" id="keyNew" name="post[key]" required>
+                    <option value="0">a</option>
+                    <option value="1">b</option>
+                    <option value="2">c</option>
+                    <option value="3">d</option>
+                    <option value="4">e</option>
                 </select>
                 <div class="invalid-feedback">
                     Wajib Terisi!
                 </div>
             </div>
-            <fieldset id="keyOptions" class="options" disabled>
-                <div class="form-group mb-3">
-                    <label class="form-label">Pilihan jawaban</label>
-                    <div class="input-group input-group-sm mb-2">
-                        <span class="input-group-text">a</span>
-                        <input type="text" class="form-control" name="post[options]" required>
-                    </div>
-                    <div class="input-group input-group-sm mb-2">
-                        <span class="input-group-text">b</span>
-                        <input type="text" class="form-control" name="post[options]" required>
-                    </div>
-                    <div class="input-group input-group-sm mb-2">
-                        <span class="input-group-text">c</span>
-                        <input type="text" class="form-control" name="post[options]" required>
-                    </div>
-                    <div class="input-group input-group-sm mb-2">
-                        <span class="input-group-text">d</span>
-                        <input type="text" class="form-control" name="post[options]" required>
-                    </div>
-                    <div class="input-group input-group-sm mb-2">
-                        <span class="input-group-text">e</span>
-                        <input type="text" class="form-control" name="post[options]" required>
-                    </div>
-                    <div class="invalid-feedback">
-                        Wajib Terisi!
-                    </div>
-                </div>
-            </fieldset>
-            <fieldset id="keyAnswer" class="options" disabled>
-                <div class="form-group mb-3">
-                    <label class="form-label" for="keyNew">Kunci jawaban</label>
-                    <select class="form-select" id="keyNew" name="post[key]" required>
-                        <option value="0">a</option>
-                        <option value="1">b</option>
-                        <option value="2">c</option>
-                        <option value="3">d</option>
-                        <option value="4">e</option>
-                    </select>
-                    <div class="invalid-feedback">
-                        Wajib Terisi!
-                    </div>
-                </div>
-            </fieldset>
-            <button class="btn btnNewCustom btn-sm btn-success mb-3">Unggah</button>
-            <a href="/posts"><button type="button"
-                    class="btn btnNewCustom btn-sm btn-danger mb-3 ms-3">Batal</button></a>
-        </form>
-    </div>
+        </fieldset>
+        <button class="btn btnNewCustom btn-sm btn-success mb-3">Unggah</button>
+        <a href="/posts"><button type="button" class="btn btnNewCustom btn-sm btn-danger mb-3 ms-3">Batal</button></a>
+    </form>
+</div>

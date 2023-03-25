@@ -107,7 +107,7 @@ router.post('/', isLoggedIn, upload.array('post[image]'), catchAsync(async (req,
 //     console.log(req.body, req.files);
 //     res.send('it worked')
 // })
-router.put('/:id', isLoggedIn, isPostAuthor, upload.array('post[image]'), validatePost, catchAsync(async (req, res, next) => {
+router.put('/:id', isLoggedIn, isPostAuthor, upload.array('post[image]'), catchAsync(async (req, res, next) => {
     const { id } = req.params;
     const post = await Post.findByIdAndUpdate(id, { ...req.body.post });
     const imagesArr = req.files.map(file => ({ url: file.path, filename: file.filename }));
