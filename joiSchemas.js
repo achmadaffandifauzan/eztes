@@ -43,6 +43,7 @@ module.exports.postSchema = Joi.object({
 
 module.exports.commentSchema = Joi.object({
     comment: Joi.object({
-        text: Joi.string().required().escapeHTML(),
+        text: Joi.string().escapeHTML(),
+        choice: Joi.number(),
     }).required()
 })

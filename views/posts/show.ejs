@@ -82,11 +82,11 @@
 <div class="col-sm-8 offset-sm-2 my-3 py-3" id="formAnswerOptions">
 
     <h6 class="mb-3 text-muted">Pilih salah satu jawaban</h6>
-    <form action="" class="ms-2">
+    <form action="/posts/<%= post._id %>/comments" method="POST" class="needs-validation ms-2" novalidate>
         <% for (let option of post.options) {%>
         <div class="form-check mb-3">
-            <input class="form-check-input" type="radio" name="flexRadioDefault"
-                id="option<%= post.options.indexOf(option) %>">
+            <input class="form-check-input" type="radio" value="<%= post.options.indexOf(option) %>"
+                name="comment[choice]" id="option<%= post.options.indexOf(option) %>" required>
             <label class="form-check-label" for="option<%= post.options.indexOf(option) %>">
                 <%= option %>
             </label>
@@ -108,16 +108,38 @@
     </form>
 </div>
 <% } %>
+
+<h6 class="col-sm-8 offset-sm-2 my-4 text-muted">Jawaban : </h6>
 <% for (let comment of post.comments) {%>
 <% if (comment.author.equals(currentUser._id) || post.author.equals(currentUser._id)) {%>
 
-<h6 class="col-sm-8 offset-sm-2 my-4 text-muted">Jawaban : </h6>
 <div id="commentsShow">
     <div class="col-sm-8 offset-sm-2 card mb-2">
         <div class="card-header">
-            <a class="ownerName" href="">
+            <a class="ownerName text-primary" href="">
                 <%= comment.author.username %>
             </a>
+            <% if(comment.type == 'options' && post.author.equals(currentUser._id)) {  %>
+            <% if (comment.correctness === true) {%>
+            <div class="text-success answerCorrectness">
+                <span>
+                    Jawaban Benar
+                </span>
+                <span class="material-symbols-rounded fs-5">
+                    verified
+                </span>
+            </div>
+            <% } else {%>
+            <div class="text-danger answerCorrectness">
+                <span>
+                    Jawaban Salah
+                </span>
+                <span class="material-symbols-rounded fs-5">
+                    block
+                </span>
+            </div>
+            <% } %>
+            <% } %>
             <% if(currentUser && comment.author.equals(currentUser._id)) {%>
             <form action="/posts/<%= post._id %>/comments/<%= comment._id %>?_method=DELETE" method="POST">
                 <button class="btn btn-sm btn-danger">Delete</button>
@@ -125,9 +147,15 @@
             <% } %>
         </div>
         <div class="card-body">
+            <% if (comment.type == 'essay') {%>
             <p class="card-text">
                 <%= comment.text %>
             </p>
+            <% } else if(comment.type == 'options') { %>
+            <p class="card-text">
+                <%= comment.choiceValue %>
+            </p>
+            <% } %>
         </div>
     </div>
 </div>

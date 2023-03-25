@@ -79,14 +79,14 @@ router.post('/:id/hide', isLoggedIn, isPostAuthor, catchAsync(async (req, res, n
     post.isAvailable = "false";
     post.save()
     req.flash('success', "Soal telah ditutup.");
-    res.redirect(`/posts/${post._id}`);
+    res.redirect(`/${post.author}/${post.postCategoryId}`);
 }))
 router.post('/:id/unhide', isLoggedIn, isPostAuthor, catchAsync(async (req, res, next) => {
     const post = await Post.findById(req.params.id);
     post.isAvailable = "true";
     post.save()
     req.flash('success', "Soal telah dibuka kembali.");
-    res.redirect(`/posts/${post._id}`);
+    res.redirect(`/${post.author}/${post.postCategoryId}`);
 }))
 router.post('/', isLoggedIn, upload.array('post[image]'), catchAsync(async (req, res, next) => {
     const post = new Post(req.body.post);
@@ -98,7 +98,7 @@ router.post('/', isLoggedIn, upload.array('post[image]'), catchAsync(async (req,
     user.posts.push(post._id);
     await post.save();
     await user.save();
-    console.log(post);
+    // console.log(post);
     req.flash('success', 'Berhasil membuat soal.')
     res.redirect(`/posts/${post._id}`);
 }))

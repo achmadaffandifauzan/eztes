@@ -109,7 +109,7 @@ textarea {
   display: flex;
   text-align: center;
   border: 2px solid #ffffff00;
-  padding: 5px !important;
+  padding: 10px 5px !important;
 }
 
 .navAuth:hover {
@@ -118,6 +118,7 @@ textarea {
 
 .navAuth span {
   display: flex;
+  line-height: 10px;
 }
 
 .footer {
@@ -317,4 +318,15 @@ button {
 
 .alert-dismissible .btn-close {
   padding: 14px;
+}
+
+.answerCorrectness {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.answerCorrectness span {
+  display: flex;
+  line-height: 10px;
 }
