@@ -1,11 +1,11 @@
 <% layout('layouts/boilerplate') %>
 <h3 class="text-center mb-2">
-    <%= posts[0].postCategory %>
+    <%= categories.categoryName %>
 </h3>
 <h6 class="text-center mb-5 font-sm text-uppercase">
-    Oleh : <%= posts[0].author.username %>
+    Oleh : <%= categories.author.username %>
 </h6>
-<% for (let post of posts) {%>
+<% for (let post of categories.posts) {%>
 <div class="col-sm-8 offset-sm-2 card mt-0 mb-5">
     <div id="cardShowHeader" class="card-header">
         <h6 class=" m-auto">

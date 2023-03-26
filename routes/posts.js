@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router({ mergeParams: true });
 const Post = require('../models/post');
 const User = require('../models/user');
+const Category = require('../models/category');
 const catchAsync = require('../utils/CatchAsync');
 const { isLoggedIn, isPostAuthor, validatePost, isPostAvailable } = require('../middleware');
 const multer = require('multer');
@@ -10,7 +11,7 @@ const upload = multer({ storage });
 
 
 router.get('/', catchAsync(async (req, res, next) => {
-    const { page = 1, limit = 2 } = req.query;
+    // const { page = 1, limit = 2 } = req.query;
     const categories = await Post.aggregate(
         [{
             $group: {
@@ -26,28 +27,28 @@ router.get('/', catchAsync(async (req, res, next) => {
     }
     // console.log(categories)
     // console.log(req.query)
-    newCat = categories.filter((obj) => {
-        result = false;
-        if (req.query.postCategory) {
-            if (obj.postCategory.toLowerCase().includes(req.query.postCategory.toLowerCase())) {
-                result = true;
-            }
-        } else if (req.query.author) {
-            if (obj.author.username.toLowerCase().includes(req.query.author.toLowerCase())) {
-                result = true;
-            }
+    // newCat = categories.filter((obj) => {
+    //     result = false;
+    //     if (req.query.postCategory) {
+    //         if (obj.postCategory.toLowerCase().includes(req.query.postCategory.toLowerCase())) {
+    //             result = true;
+    //         }
+    //     } else if (req.query.author) {
+    //         if (obj.author.username.toLowerCase().includes(req.query.author.toLowerCase())) {
+    //             result = true;
+    //         }
 
-        } else if (!req.query.postCategory) {
-            result = true;
-        } else if (!req.query.author) {
-            result = true;
-        }
-        if (result === true) {
-            return obj
-        }
-        // return result === true ? obj : undefined;
-        //ss
-    });
+    //     } else if (!req.query.postCategory) {
+    //         result = true;
+    //     } else if (!req.query.author) {
+    //         result = true;
+    //     }
+    //     if (result === true) {
+    //         return obj
+    //     }
+    //     // return result === true ? obj : undefined;
+    //     //ss
+    // });
     res.render('posts/index', { newCat });
 }))
 router.get('/new', isLoggedIn, (req, res) => {
@@ -92,13 +93,20 @@ router.post('/', isLoggedIn, upload.array('post[image]'), catchAsync(async (req,
     const post = new Post(req.body.post);
     post.images = req.files.map(file => ({ url: file.path, filename: file.filename }));
     post.author = req.user._id;
-    post.postCategoryId = post.postCategory + "___" + req.user._id;
     post.isAvailable = "true";
     const user = await User.findById(req.user._id);
     user.posts.push(post._id);
     await post.save();
     await user.save();
-    // console.log(post);
+
+    let category = await Category.findOne({ categoryName: post.postCategory })
+    if (category) {
+        category.posts.push(post);
+    } else {
+        category = new Category({ categoryName: post.postCategory, author: post.author });
+        category.posts.push(post);
+    }
+    await category.save();
     req.flash('success', 'Berhasil membuat soal.')
     res.redirect(`/posts/${post._id}`);
 }))

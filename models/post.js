@@ -28,14 +28,14 @@ const postSchema = new Schema({
     comments: [
         {
             type: Schema.Types.ObjectId,
-            ref: 'Comment'
+            ref: 'Comment',
         }
     ],
-    postCategory: {
-        type: String,
-        required: true,
+    category: {
+        type: Schema.Types.ObjectId,
+        ref: 'Category',
     },
-    postCategoryId: {
+    postCategory: {
         type: String,
         required: true,
     },

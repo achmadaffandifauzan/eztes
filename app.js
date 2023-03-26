@@ -15,7 +15,8 @@ const LocalStrategy = require("passport-local");
 const User = require("./models/user");
 const helmet = require('helmet');
 
-const userRoutes = require("./routes/users");
+const categoriesRoutes = require("./routes/categories");
+const usersRoutes = require("./routes/users");
 const postsRoutes = require("./routes/posts");
 const commentsRoutes = require("./routes/comments");
 
@@ -133,9 +134,12 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use("/", categoriesRoutes);
 app.use("/posts", postsRoutes);
 app.use("/posts/:id/comments", commentsRoutes);
-app.use("/", userRoutes);
+app.use("/", usersRoutes);
+
+
 
 app.get("/", (req, res) => {
   res.render("home");

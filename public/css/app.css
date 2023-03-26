@@ -264,6 +264,8 @@ button {
   align-items: center;
   margin-left: 0.5em;
   color: #dc222a;
+  text-transform: uppercase;
+  font-size: 14px;
 }
 
 .postTitle {
