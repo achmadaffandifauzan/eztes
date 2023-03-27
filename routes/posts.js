@@ -10,47 +10,6 @@ const { storage, cloudinary } = require('../cloudinary');
 const upload = multer({ storage });
 
 
-router.get('/', catchAsync(async (req, res, next) => {
-    // const { page = 1, limit = 2 } = req.query;
-    const categories = await Post.aggregate(
-        [{
-            $group: {
-                _id: "$postCategoryId",
-                "authorId": { "$first": "$author" },
-                "postCategory": { "$first": "$postCategory" },
-                count: { $sum: 1 }
-            }
-        }]
-    ).sort({ postCategory: 1 })
-    for (let cat of categories) {
-        cat.author = await User.findById(cat.authorId);
-    }
-    // console.log(categories)
-    // console.log(req.query)
-    // newCat = categories.filter((obj) => {
-    //     result = false;
-    //     if (req.query.postCategory) {
-    //         if (obj.postCategory.toLowerCase().includes(req.query.postCategory.toLowerCase())) {
-    //             result = true;
-    //         }
-    //     } else if (req.query.author) {
-    //         if (obj.author.username.toLowerCase().includes(req.query.author.toLowerCase())) {
-    //             result = true;
-    //         }
-
-    //     } else if (!req.query.postCategory) {
-    //         result = true;
-    //     } else if (!req.query.author) {
-    //         result = true;
-    //     }
-    //     if (result === true) {
-    //         return obj
-    //     }
-    //     // return result === true ? obj : undefined;
-    //     //ss
-    // });
-    res.render('posts/index', { newCat });
-}))
 router.get('/new', isLoggedIn, (req, res) => {
     res.render('posts/new');
 })
@@ -58,6 +17,7 @@ router.get('/:id', isPostAvailable, catchAsync(async (req, res, next) => {
     const post = await Post.findById(req.params.id)
         .populate({ path: 'comments', populate: { path: 'author' } })
         .populate('author');
+    // console.log(post)
     //console.log(post.isAvailable)
     if (!post) {
         req.flash('error', "Soal tidak tersedia.");
@@ -96,16 +56,19 @@ router.post('/', isLoggedIn, upload.array('post[image]'), catchAsync(async (req,
     post.isAvailable = "true";
     const user = await User.findById(req.user._id);
     user.posts.push(post._id);
-    await post.save();
-    await user.save();
 
     let category = await Category.findOne({ categoryName: post.postCategory })
     if (category) {
         category.posts.push(post);
+        post.category = category;
     } else {
         category = new Category({ categoryName: post.postCategory, author: post.author });
         category.posts.push(post);
+        post.category = category;
     }
+
+    await post.save();
+    await user.save();
     await category.save();
     req.flash('success', 'Berhasil membuat soal.')
     res.redirect(`/posts/${post._id}`);

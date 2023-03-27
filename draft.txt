@@ -3,6 +3,7 @@
 - edit post
 - koreksi soal
 - friendrequest delete
+- search, sort, paging
 bug :
 ={
 (solved) post comment => Post validation failed: type: Path `type` is required.

@@ -332,3 +332,14 @@ button {
   display: flex;
   line-height: 10px;
 }
+
+.evaluateQnA {
+  display: flex;
+  justify-content: space-between;
+  margin: 40px 5%;
+}
+
+.evaluateQnA .card {
+  display: inline-block;
+  width: 40%;
+}

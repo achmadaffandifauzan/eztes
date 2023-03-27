@@ -116,7 +116,7 @@
 <div id="commentsShow">
     <div class="col-sm-8 offset-sm-2 card mb-2">
         <div class="card-header">
-            <a class="ownerName text-primary" href="">
+            <a class="ownerName text-primary" href="/categories/<%= post.category %>/<%= comment.author._id %>">
                 <%= comment.author.username %>
             </a>
             <% if(comment.type == 'options' && post.author.equals(currentUser._id)) {  %>

@@ -18,7 +18,7 @@ router.post('/register', catchAsync(async (req, res, next) => {
         req.login(registeredUser, (error) => {
             if (error) return next(error);
             req.flash('success', 'Anda berhasil terdaftar.');
-            res.redirect('/posts');
+            res.redirect('/categories');
         })
 
     } catch (error) {
@@ -33,7 +33,7 @@ router.post('/login', passport.authenticate('local',
     { failureFlash: true, failureRedirect: '/login', keepSessionInfo: true }),
     catchAsync(async (req, res, next) => {
         req.flash('success', 'Anda berhasil login.');
-        const redirectUrl = req.session.lastPath || '/posts';
+        const redirectUrl = req.session.lastPath || '/categories';
         delete req.session.lastPath;
         res.redirect(redirectUrl);
     }));
@@ -67,7 +67,7 @@ router.get('/logout', isLoggedIn, catchAsync(async (req, res, next) => {
     req.logout((error) => {
         if (error) return next(error)
         req.flash('success', "Anda Berhasil logout.");
-        res.redirect('/posts');
+        res.redirect('/categories');
     });
 }))
 // dont forget to change to user/:userId/ later
@@ -83,19 +83,5 @@ router.get('/:userId/', catchAsync(async (req, res, next) => {
         res.render('users/show', { user })
     }
 }))
-
-router.get('/:userId/:categoryId', catchAsync(async (req, res, next) => {
-    const { userId, categoryId } = req.params;
-    //console.log(category)
-    const posts = await Post.find({ postCategoryId: categoryId, author: { $in: [userId] } }).populate('author');
-    res.render('users/category', { posts })
-}))
-// router.get('/:friendId/:currentId', isLoggedIn, catchAsync(async (req, res, next) => {
-//     const { currentId, friendId } = req.params;
-//     const user = await User.findById(friendId).populate('posts');
-//     const currentUser = await User.findById(currentId);
-//     const isFriend = currentUser.friends.include(user._id) ? true : false;
-//     res.render('users/show', { user, isFriend })
-// }))
 
 module.exports = router;
