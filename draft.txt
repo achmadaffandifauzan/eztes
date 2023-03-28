@@ -12,3 +12,4 @@
 - delete post error
 - user may input symbols that can break code
 - post image
+- post but same category
