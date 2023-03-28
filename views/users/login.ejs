@@ -1,25 +1,23 @@
 <% layout('layouts/boilerplate') %>
-    <div class="col-sm-4 offset-sm-1">
-        <h2 class="my-4">Login</h2>
-        <form action="/login" method="POST" class="needs-validation" novalidate>
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="usernameLogin" name="username" placeholder="Username"
-                    required>
-                <label for="usernameLogin">Username</label>
-                <div class="invalid-feedback">
-                    Masukkan username!
-                </div>
+<div class="col-sm-4 offset-sm-1">
+    <h2 class="my-4">Login</h2>
+    <form action="/login" method="POST" class="needs-validation" novalidate>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+            <label for="username">Username</label>
+            <div class="invalid-feedback">
+                Masukkan username!
             </div>
-            <div class="form-floating mb-3">
-                <input type="password" class="form-control" id="passwordLogin" name="password" placeholder="Password"
-                    required>
-                <label for="passwordLogin">Password</label>
-                <div class="invalid-feedback">
-                    Masukkan password!
-                </div>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+            <label for="password">Password</label>
+            <div class="invalid-feedback">
+                Masukkan password!
             </div>
-            <button class="btn btn-success">
-                Login
-            </button>
-        </form>
-    </div>
+        </div>
+        <button class="btn btn-success">
+            Login
+        </button>
+    </form>
+</div>

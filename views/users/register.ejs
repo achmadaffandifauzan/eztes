@@ -1,35 +1,40 @@
 <% layout('layouts/boilerplate') %>
 
 
-    <div class="col-sm-4 offset-sm-1">
-        <h2 class="my-4">Register</h2>
-        <form action="/register" method="POST" class="needs-validation" novalidate>
-            <div class="form-floating mb-3">
-                <input type="email" class="form-control" id="emailCreate" name="user[email]" placeholder="Email"
-                    required>
-                <label for="emailCreate">E-mail</label>
-                <div class="invalid-feedback">
-                    Masukkan e-mail!
-                </div>
+<div class="col-sm-4 offset-sm-1">
+    <h2 class="my-4">Register</h2>
+    <form action="/register" method="POST" class="needs-validation" novalidate>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="name" name="user[name]" placeholder="Nama" required>
+            <label for="name">Nama</label>
+            <div class="invalid-feedback">
+                Masukkan nama anda!
             </div>
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="usernameLogin" name="user[username]" placeholder="Username"
-                    required>
-                <label for="usernameLogin">Username</label>
-                <div class="invalid-feedback">
-                    Masukkan username!
-                </div>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="email" name="user[email]" placeholder="Email" required>
+            <label for="email">E-mail</label>
+            <div class="invalid-feedback">
+                Masukkan e-mail anda!
             </div>
-            <div class="form-floating mb-3">
-                <input type="password" class="form-control" id="passwordLogin" name="user[password]"
-                    placeholder="Password" required>
-                <label for="passwordLogin">Password</label>
-                <div class="invalid-feedback">
-                    Masukkan password!
-                </div>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="username" name="user[username]" placeholder="Username" required>
+            <label for="username">Username</label>
+            <div class="invalid-feedback">
+                Masukkan username anda!
             </div>
-            <button class="btn btn-success">
-                Register
-            </button>
-        </form>
-    </div>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="password" name="user[password]" placeholder="Password"
+                required>
+            <label for="password">Password</label>
+            <div class="invalid-feedback">
+                Masukkan password anda!
+            </div>
+        </div>
+        <button class="btn btn-success">
+            Register
+        </button>
+    </form>
+</div>

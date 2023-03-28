@@ -9,6 +9,9 @@ const categorySchema = new Schema({
     categoryName: {
         type: String,
     },
+    authorName: {
+        type: String,
+    },
     posts: [
         {
             type: Schema.Types.ObjectId,

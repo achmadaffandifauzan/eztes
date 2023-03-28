@@ -54,6 +54,8 @@ router.post('/', isLoggedIn, upload.array('post[image]'), catchAsync(async (req,
     post.images = req.files.map(file => ({ url: file.path, filename: file.filename }));
     post.author = req.user._id;
     post.isAvailable = "true";
+    post.postCategory = req.body.post.postCategory;
+
     const user = await User.findById(req.user._id);
     user.posts.push(post._id);
 
@@ -63,6 +65,7 @@ router.post('/', isLoggedIn, upload.array('post[image]'), catchAsync(async (req,
         post.category = category;
     } else {
         category = new Category({ categoryName: post.postCategory, author: post.author });
+        category.authorName = user.username;
         category.posts.push(post);
         post.category = category;
     }

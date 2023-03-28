@@ -3,8 +3,7 @@
 
 <% layout('layouts/boilerplate') %>
 <div class="buttonContainerShow">
-    <a class="btn btn-sm btn-primary mb-2 " href="/<%= post.author._id %>/<%= post.postCategoryId %>"
-        role="button">Kembali</a>
+    <a class="btn btn-sm btn-primary mb-2 " href="/categories/<%= post.category._id %>" role="button">Kembali</a>
     <% if(currentUser && post.author.equals(currentUser._id)) {%>
     <div id="buttonShow" class="mb-2 me-auto">
         <% if (post.isAvailable==="true" ) {%>
@@ -26,10 +25,10 @@
 <!-- QUESTION -->
 <div class="col-sm-8 offset-sm-2 card mt-0">
     <div id="cardShowHeader" class="card-header">
-        <a class="headerCardDesc" href="/<%= post.author._id %>/<%= post.postCategoryId %>">
+        <a class="headerCardDesc" href="/categories/<%= post.category._id %>">
             <%= post.postCategory %>
         </a>
-        <a class="ownerName ms-auto" href="/<%= post.author._id %>/<%= post.postCategoryId %>">
+        <a class="ownerName ms-auto" href="">
             <%= post.author.username %>
         </a>
     </div>

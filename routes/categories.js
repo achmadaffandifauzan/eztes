@@ -7,9 +7,25 @@ const Comment = require('../models/comment');
 const catchAsync = require('../utils/CatchAsync');
 
 router.get('/categories', catchAsync(async (req, res, next) => {
-    let categories = await Category.find({}).populate('author')
-    // console.log(categories)
-    // console.log(req.query)
+    if (req.query.categoryName && req.query.author) {
+        var categories = await Category.find({
+            "categoryName": { '$regex': req.query.categoryName, $options: 'i' },
+            "authorName": { '$regex': req.query.authorName, $options: 'i' },
+        })
+    } else if (req.query.categoryName) {
+        var categories = await Category.find({
+            "categoryName": { '$regex': req.query.categoryName, $options: 'i' },
+        })
+    } else if (req.query.author) {
+        var categories = await Category.find({
+            "authorName": { '$regex': req.query.authorName, $options: 'i' },
+        })
+    } else {
+        var categories = await Category.find({}).limit(30);
+    }
+    console.log(categories)
+    console.log(req.query)
+
     // let postCategories = categories.posts.filter((obj) => {
     //     result = false;
     //     if (req.query.postCategory) {

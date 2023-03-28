@@ -37,7 +37,6 @@ const postSchema = new Schema({
     },
     postCategory: {
         type: String,
-        required: true,
     },
     isAvailable: {
         type: String,

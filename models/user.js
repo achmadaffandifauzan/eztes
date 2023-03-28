@@ -8,22 +8,14 @@ const userSchema = new Schema({
     required: true,
     unique: true,
   },
+  name: {
+    type: String,
+    required: true,
+  },
   posts: [
     {
       type: Schema.Types.ObjectId,
       ref: "Post",
-    },
-  ],
-  friends: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "User",
-    },
-  ],
-  friendRequests: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "User",
     },
   ],
 });
