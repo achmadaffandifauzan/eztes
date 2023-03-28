@@ -7,7 +7,7 @@ const Comment = require('../models/comment');
 const catchAsync = require('../utils/CatchAsync');
 
 router.get('/categories', catchAsync(async (req, res, next) => {
-    if (req.query.categoryName && req.query.author) {
+    if (req.query.categoryName && req.query.authorName) {
         var categories = await Category.find({
             "categoryName": { '$regex': req.query.categoryName, $options: 'i' },
             "authorName": { '$regex': req.query.authorName, $options: 'i' },
@@ -16,7 +16,7 @@ router.get('/categories', catchAsync(async (req, res, next) => {
         var categories = await Category.find({
             "categoryName": { '$regex': req.query.categoryName, $options: 'i' },
         })
-    } else if (req.query.author) {
+    } else if (req.query.authorName) {
         var categories = await Category.find({
             "authorName": { '$regex': req.query.authorName, $options: 'i' },
         })
@@ -25,29 +25,6 @@ router.get('/categories', catchAsync(async (req, res, next) => {
     }
     console.log(categories)
     console.log(req.query)
-
-    // let postCategories = categories.posts.filter((obj) => {
-    //     result = false;
-    //     if (req.query.postCategory) {
-    //         if (obj.postCategory.toLowerCase().includes(req.query.postCategory.toLowerCase())) {
-    //             result = true;
-    //         }
-    //     } else if (req.query.author) {
-    //         if (obj.author.username.toLowerCase().includes(req.query.author.toLowerCase())) {
-    //             result = true;
-    //         }
-
-    //     } else if (!req.query.postCategory) {
-    //         result = true;
-    //     } else if (!req.query.author) {
-    //         result = true;
-    //     }
-    //     if (result === true) {
-    //         return obj
-    //     }
-    //     // return result === true ? obj : undefined;
-    //     //ss
-    // });
     res.render('categories/index', { categories })
 }))
 
