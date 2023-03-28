@@ -2,9 +2,16 @@
 <h3 class="text-center mb-2">
     <%= categories.categoryName %>
 </h3>
-<h6 class="text-center mb-5 font-sm text-uppercase">
+<h6 class="text-center font-sm text-uppercase">
     Oleh : <%= categories.author.username %>
 </h6>
+<% if (categories.author.equals(currentUser._id)) {%>
+<div class="col-sm-8 offset-sm-2 mt-0 mb-5 d-flex justify-content-around">
+    <a href="/categories/<%= categories._id%>/answerer"><button class="btn btn-sm btn-secondary">Koreksi
+            penjawab</button></a>
+</div>
+<% } %>
+
 <% for (let post of categories.posts) {%>
 <div class="col-sm-8 offset-sm-2 card mt-0 mb-5">
     <div id="cardShowHeader" class="card-header">

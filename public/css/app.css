@@ -296,6 +296,20 @@ button {
   border: 1px solid #1d214e;
 }
 
+.btn-secondary {
+  background-color: #04d7a2;
+  border: 1px solid #04d7a2;
+  color: #1d214e;
+  transition: 0.3s;
+  width: 150px;
+}
+
+.btn-secondary:hover {
+  background-color: #1d214e;
+  border: 1px solid #1d214e;
+  color: #04d7a2;
+  width: 200px;
+}
 
 .btn-danger {
   background-color: #dc222a;

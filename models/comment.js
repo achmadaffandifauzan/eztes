@@ -20,6 +20,12 @@ const commentSchema = new Schema({
             ref: 'Post'
         }
     ],
+    category: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Category'
+        }
+    ],
 });
 
 module.exports = mongoose.model('Comment', commentSchema);

@@ -3,6 +3,7 @@ const router = express.Router({ mergeParams: true });
 const Category = require('../models/category');
 const Post = require('../models/post');
 const User = require('../models/user');
+const Comment = require('../models/comment');
 const catchAsync = require('../utils/CatchAsync');
 
 router.get('/categories', catchAsync(async (req, res, next) => {
@@ -39,7 +40,30 @@ router.get('/categories/:id', catchAsync(async (req, res, next) => {
     // console.log(categories)
     res.render('categories/category', { categories })
 }))
+router.get('/categories/:id/answerer', catchAsync(async (req, res, next) => {
+    const category = await Category.findById(req.params.id);
+    // const comments = await Comment.find({ category: req.params.id }).populate('author');
+    const comments = await Comment.aggregate([
+        {
+            "$group": {
+                _id: "$author",
+            },
+        },
+    ])
 
+    // returning promise instead of result of find
+    // const comment = comments.map(async (comment) => {
+    //     await User.findById(comment)
+    // })
+    // console.log(posts[0].comments[0])
+
+    let Answerer = [];
+    for (let comment of comments) {
+        Answerer.push(await User.findById(comment))
+    }
+    console.log(Answerer)
+    res.render('categories/answerer', { Answerer, category })
+}))
 router.get('/categories/:id/:userID', catchAsync(async (req, res, next) => {
     const { id, userID } = req.params;
     const userComment = await User.findById(userID);

@@ -4,6 +4,11 @@
 - koreksi soal
 - friendrequest delete
 - search, sort, paging
+- protect the route not just from ejs, but in the router also
+- dependencies when deleting
+- categoryName in category model should no be used for query (can cause duplicate since it is not unique)
+- register with NAME, username, email, and password
+- evaluate page : know how many not answered (answered / question)
 bug :
 ={
 (solved) post comment => Post validation failed: type: Path `type` is required.

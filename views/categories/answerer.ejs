@@ -1,0 +1,14 @@
+<% layout('layouts/boilerplate') %>
+<% for(let user of Answerer) {%>
+<div class="card my-3 col-6 offset-3">
+    <a href="/categories/<%= category._id %>/<%= user._id %>">
+        <div class="card-header">
+            <%= user.username %>
+        </div>
+    </a>
+    <div class="card-body">
+
+    </div>
+</div>
+
+<% } %>

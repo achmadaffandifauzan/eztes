@@ -2,12 +2,15 @@ const express = require('express');
 const router = express.Router({ mergeParams: true });
 const Comment = require('../models/comment');
 const Post = require('../models/post');
+const Category = require('../models/category');
 const catchAsync = require('../utils/CatchAsync');
 const { isLoggedIn, isCommentAuthor, validateComment, isPostAvailable } = require('../middleware');
 
+
+// prefix => /posts/:id/
 router.post('/', isPostAvailable, isLoggedIn, catchAsync(async (req, res, next) => {
     const postDB = await Post.findById(req.params.id).populate('comments');
-
+    const categoryDB = await Category.find({ posts: req.params.id });
     try {
         // repost answer (comment from this user is already exist)
         const comment = await Comment.findOne(
@@ -15,7 +18,7 @@ router.post('/', isPostAvailable, isLoggedIn, catchAsync(async (req, res, next) 
                 author: req.user._id,
                 post: req.params.id,
             })
-        console.log("Comment = ", comment)
+        // console.log("Comment = ", comment)
         if (postDB.type == 'options') {
             let trueOrFalse;
             if (req.body.comment.choice == postDB.key) {
@@ -32,9 +35,11 @@ router.post('/', isPostAvailable, isLoggedIn, catchAsync(async (req, res, next) 
         await comment.save();
     } catch (error) {
         // new answer (comment from this user is not exist)
-        console.log(error)
+
+        // console.log(error)
         const comment = new Comment(req.body.comment);
         comment.post = postDB;
+        comment.category = categoryDB;
         comment.author = req.user._id;
         if (postDB.type == 'options') {
             comment.type = 'options';
