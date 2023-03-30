@@ -29,7 +29,7 @@
             <%= post.postCategory %>
         </a>
         <a class="ownerName ms-auto" href="">
-            <%= post.author.username %>
+            <%= post.author.name %>
         </a>
     </div>
     <div class="card-body pb-1">
@@ -116,7 +116,7 @@
     <div class="col-sm-8 offset-sm-2 card mb-2">
         <div class="card-header">
             <a class="ownerName text-primary" href="/categories/<%= post.category %>/<%= comment.author._id %>">
-                <%= comment.author.username %>
+                <%= comment.author.name %>
             </a>
             <% if(comment.type == 'options' && post.author.equals(currentUser._id)) {  %>
             <% if (comment.correctness === true) {%>

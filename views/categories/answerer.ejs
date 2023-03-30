@@ -1,14 +1,12 @@
 <% layout('layouts/boilerplate') %>
+<a class="btn btn-sm btn-primary mb-2 " href="/categories/<%= category._id %>" role="button">Kembali</a>
+<div class="titlePageAnswerer">DAFTAR PENJAWAB</div>
 <% for(let user of Answerer) {%>
-<div class="card my-3 col-6 offset-3">
-    <a href="/categories/<%= category._id %>/<%= user._id %>">
-        <div class="card-header">
-            <%= user.username %>
+<a href="/categories/<%= category._id %>/<%= user._id %>" class="text-decoration-none">
+    <div class="card my-3 col-6 offset-3 cardAnswerer">
+        <div>
+            <%= user.name %>
         </div>
-    </a>
-    <div class="card-body">
-
     </div>
-</div>
-
+</a>
 <% } %>

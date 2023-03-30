@@ -135,14 +135,83 @@ textarea {
 
 }
 
+#categoryIndexContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+#indexSearchContainer {
+  transform: translate(12px, -25px);
+  position: sticky;
+  /* top : navbar height (46,33px) + transform Y (25px) */
+  top: 71.33px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgb(29, 33, 78);
+  background: linear-gradient(0deg, rgba(29, 33, 78, 1) 0%, rgba(4, 215, 162, 1) 76%);
+  overflow: hidden;
+}
+
+#indexSearch {
+  width: 100%;
+  padding: 50px;
+}
+
+
+#indexSearch .input-group {
+  margin-bottom: 30px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 100px;
+}
+
+#indexSearch .input-group input {
+  height: 80px;
+  border: 0;
+  /* border-top: 2px solid #1d214e;
+  border-right: 2px solid #1d214e;
+  border-bottom: 2px solid #1d214e; */
+  background-color: #04d7a200;
+  font-size: 30px;
+  color: #1d214e;
+}
+
+#indexSearch .input-group span {
+  height: 80px;
+  border: 0;
+  background-color: #04d7a200;
+  font-size: 30px;
+  color: #1d214e;
+}
+
+#indexSearch .btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-self: center;
+  align-self: center;
+}
+
+#indexSearch .labelForm {
+  font-size: 30px;
+  color: #1d214e;
+  margin-right: 10px;
+}
+
+#indexSearch .btn span {
+  font-size: 30px;
+  color: #1d214e;
+}
+
 .cardIndex {
-  width: 30%;
-  max-width: 50%;
+  width: 80%;
+  max-width: 95%;
   transition: 0.3s;
 }
 
 .cardIndex:hover {
-  width: 35%;
+  width: 100%;
 }
 
 .cardIndexHeader {
@@ -165,6 +234,10 @@ textarea {
 .cardShow {
   max-width: 60%;
   margin: auto;
+}
+
+.card-body {
+  text-align: justify;
 }
 
 button {
@@ -336,16 +409,52 @@ button {
   padding: 14px;
 }
 
-.answerCorrectness {
-  display: flex;
-  align-items: center;
-  gap: 4px;
+
+.card-header {
+  background-color: #04d7a2;
+  background-image: linear-gradient(to left, #1d214ea9, #04d7a2);
 }
 
-.answerCorrectness span {
-  display: flex;
-  line-height: 10px;
+
+/* -----ANSWERER PAGE------- */
+/* -----ANSWERER PAGE------- */
+/* -----ANSWERER PAGE------- */
+
+.cardAnswerer {
+  height: 40px;
+  /* display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between; */
+  color: #1d214e;
+  background-color: #04d7a2;
+  transition: 0.3s;
 }
+
+.cardAnswerer div {
+  position: absolute;
+  top: 50%;
+  line-height: 0px;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+
+.cardAnswerer:hover {
+  background-color: #0cbc98;
+}
+
+.titlePageAnswerer {
+  display: flex;
+  color: #1d214e;
+  justify-content: center;
+  font-weight: bold;
+}
+
+
+/* -----EVALUATE PAGE------- */
+/* -----EVALUATE PAGE------- */
+/* -----EVALUATE PAGE------- */
 
 .evaluateQnA {
   display: flex;
@@ -355,5 +464,86 @@ button {
 
 .evaluateQnA .card {
   display: inline-block;
-  width: 40%;
+  width: 47%;
+}
+
+.evaluateQnA .card-header {
+  color: #1d214e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: none;
+}
+
+.evaluateQnA .card-header-question {
+  background-color: #04d7a2;
+  background-image: linear-gradient(to left, #1d214e81, #04d7a2);
+}
+
+.evaluateQnA .card-header-answer {
+  background-color: #04d7a2;
+  background-image: linear-gradient(to right, #1d214e81, #04d7a2);
+}
+
+.evaluatePageHeaderContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.evaluatePageHeader {
+  display: inline;
+  justify-content: center;
+  text-align: center;
+  border: 0;
+  background-color: #ff9900;
+  padding: 5px 20px;
+  margin-top: 10px;
+  box-shadow: none;
+}
+
+.answerMCQ .form-check-input {
+  border-radius: 100%;
+  margin: 0;
+  border: 4px solid #a4a4a4;
+}
+
+.answerMCQ-option {
+  display: grid;
+  grid-template-columns: 25px 25px auto;
+  margin: 10px 0;
+
+  border-radius: 15px;
+}
+
+.answerMCQ-option label {
+  display: flex;
+  align-self: center;
+  justify-self: center;
+}
+
+.answerMCQ-option .answerMCQ-textAnswer {
+  grid-column-start: 3;
+  padding: 0 10px 0 5px;
+  display: flex;
+  align-self: center;
+}
+
+.answerCorrectness {
+  grid-column-start: 2;
+  display: flex;
+  align-self: center;
+  justify-self: center;
+}
+
+.answerCorrectness span {
+  display: flex;
+  line-height: 10px;
+}
+
+.correctAnswer {
+  background-color: #19875463;
+}
+
+.wrongAnswer {
+  background-color: #dc354663;
 }

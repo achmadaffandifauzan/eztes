@@ -1,35 +1,57 @@
 <% layout('layouts/boilerplate') %>
-<% for (let category of categories) {%>
+<div id="categoryIndexContainer">
 
-<div class="col-sm-4 offset-sm-1 card cardIndex mb-4">
-  <a href="/categories/<%= category._id %>" class="text-decoration-none">
-    <div class="card-header cardIndexHeader">
-      <%= category.authorName %>
+  <div class="col-6">
+    <% for (let category of categories) {%>
+    <div class=" card cardIndex mb-4">
+      <a href="/categories/<%= category._id %>" class="text-decoration-none">
+        <div class="card-header cardIndexHeader">
+          <%= category.authorName %>
+        </div>
+        <div class="card-body cardIndexBody">
+          <h5 class="card-title">
+            <%= category.categoryName %>
+          </h5>
+
+        </div>
+
+      </a>
     </div>
-    <div class="card-body cardIndexBody">
-      <h5 class="card-title">
-        <%= category.categoryName %>
-      </h5>
+    <% } %>
+    <nav aria-label="Page navigation example" class=" offset-3">
+      <ul class="pagination">
+        <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+        <li class="page-item"><a class="page-link" href="?page=2">2</a></li>
+        <li class="page-item"><a class="page-link" href="?page=3">3</a></li>
+        </li>
+      </ul>
+    </nav>
+  </div>
 
+  <div class="col-6">
+    <div id="indexSearchContainer">
+      <img src="https://res.cloudinary.com/dgny2tywl/image/upload/v1680107077/Logo/sekawann_fabdam.png" alt="Logo"
+        width="400" height="100" class="d-inline-block align-text-center">
+      <div id="indexSearch">
+        <form action="/categories" method="get">
+          <div class="input-group input-group-sm">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Kategori</span>
+            <input type="text" class="form-control" aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-sm" name="categoryName" spellcheck="false">
+          </div>
+          <div class="input-group input-group-sm">
+            <span class="input-group-text" id="inputGroup-sizing-sm">Pemilik</span>
+            <input type="text" class="form-control" aria-label="Sizing example input"
+              aria-describedby="inputGroup-sizing-sm" name="authorName" spellcheck="false">
+          </div>
+          <button class="btn">
+            <span class="labelForm">Cari Soal</span>
+            <span class="material-symbols-rounded">
+              search
+            </span>
+          </button>
+        </form>
+      </div>
     </div>
-
-  </a>
+  </div>
 </div>
-<% } %>
-<nav aria-label="Page navigation example">
-  <ul class="pagination">
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-    <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
-    <li class="page-item"><a class="page-link" href="?page=2">2</a></li>
-    <li class="page-item"><a class="page-link" href="?page=3">3</a></li>
-    <li class="page-item">
-      <a class="page-link" href="#" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  </ul>
-</nav>

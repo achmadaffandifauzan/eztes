@@ -1,68 +1,23 @@
 <% layout('layouts/boilerplate') %>
-<h2>Paket Soal : <%= category.categoryName %></h2>
-<h5>Pembuat Soal : <%= category.author.username %></h5>
-<h3>Penjawab : <%= userComment.username%></h3>
+<a class="btn btn-sm btn-primary mb-2 " href="/categories/<%= category._id %>/answerer" role="button">Kembali</a>
+<div class="evaluatePageHeaderContainer">
+    <div class="evaluatePageHeader card col-6 offset-3">
+        <span class="evaluatePageTitle"><%= category.categoryName %></span>
+        <span> oleh <%= category.author.name %></span>
+
+    </div>
+    <div class="evaluatePageHeader card col-6 offset-3">
+        <span>Penjawab : </span>
+        <span class="authorName"><%= userComment.name%></span>
+    </div>
+</div>
 <% for(let post of posts) {%>
 <% for (let comment of post.comments) {%>
 <% if (comment.author.equals(userComment._id)) {%>
 <div class="evaluateQnA">
+
     <div class="card">
-        <div class="card-header">
-            Jawaban
-        </div>
-        <div class="card-body">
-
-            <% if (comment.type == 'options') {%>
-
-            <% for(let option of post.options) {%>
-            <div>
-                <div>
-                    <%=option  %>
-                </div>
-                <!-- if only the answer is wrong and the option from the loop meet the key of options then key answer is showed -->
-                <% if (option == post.options[post.key] && comment.correctness === false ) {%>
-                <div class="text-success answerCorrectness">
-                    <span>
-                        Kunci jawaban
-                    </span>
-                    <span class="material-symbols-rounded">
-                        key
-                    </span>
-                </div>
-                <% } %>
-                <% if (option == comment.choiceValue && comment.correctness === true ) {%>
-                <div class="text-success answerCorrectness">
-                    <span>
-                        Jawaban Benar
-                    </span>
-                    <span class="material-symbols-rounded fs-5">
-                        verified
-                    </span>
-                </div>
-                <% } else if (option == comment.choiceValue && comment.correctness === false ) {%>
-                <div class="text-danger answerCorrectness">
-                    <span>
-                        Jawaban Salah
-                    </span>
-                    <span class="material-symbols-rounded fs-5">
-                        block
-                    </span>
-                </div>
-                <% } %>
-
-
-
-            </div>
-            <% } %>
-
-            <% } else if(comment.type == 'essay') {%>
-            <div><%= comment.text %></div>
-
-            <% } %>
-        </div>
-    </div>
-    <div class="card">
-        <div class="card-header">
+        <div class="card-header card-header-question">
             Pertanyaan
         </div>
         <div class="card-body">
@@ -72,6 +27,56 @@
             <p>
                 <%= post.description %>
             </p>
+        </div>
+    </div>
+
+
+    <div class="card">
+        <div class="card-header card-header-answer">
+            Jawaban
+        </div>
+        <div class="card-body">
+
+            <% if (comment.type == 'options') {%>
+
+            <% for(let option of post.options) {%>
+            <div class="answerMCQ">
+                <div class="answerMCQ-option">
+                    <label class="form-check-input"></label>
+
+
+                    <!-- if only the answer is wrong and the option from the loop meet the key of options then key answer is showed -->
+                    <% if (option == post.options[post.key] && comment.correctness === false ) {%>
+                    <div class="text-success answerCorrectness">
+                        <span class="material-symbols-rounded">
+                            key
+                        </span>
+                    </div>
+                    <% } %>
+                    <% if (option == comment.choiceValue && comment.correctness === true ) {%>
+                    <div class="text-success answerCorrectness">
+                        <span class="material-symbols-rounded fs-5">
+                            verified
+                        </span>
+                    </div>
+                    <% } else if (option == comment.choiceValue && comment.correctness === false ) {%>
+                    <div class="text-danger answerCorrectness">
+                        <span class="material-symbols-rounded fs-5">
+                            block
+                        </span>
+                    </div>
+                    <% } %>
+                    <div class="answerMCQ-textAnswer">
+                        <%=option  %>
+                    </div>
+                </div>
+            </div>
+            <% } %>
+
+            <% } else if(comment.type == 'essay') {%>
+            <div><%= comment.text %></div>
+
+            <% } %>
         </div>
     </div>
 </div>

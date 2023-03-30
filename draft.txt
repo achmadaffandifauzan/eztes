@@ -13,3 +13,6 @@
 - user may input symbols that can break code
 - post image
 - post but same category
+
+reference design :
+https://www.mathworks.com/matlabcentral/answers/496254-problem-in-navie-bayes-theorem-code

@@ -3,13 +3,15 @@
     <%= categories.categoryName %>
 </h3>
 <h6 class="text-center font-sm text-uppercase">
-    Oleh : <%= categories.author.username %>
+    Oleh : <%= categories.author.name %>
 </h6>
+<% if (currentUser) {%>
 <% if (categories.author.equals(currentUser._id)) {%>
 <div class="col-sm-8 offset-sm-2 mt-0 mb-5 d-flex justify-content-around">
     <a href="/categories/<%= categories._id%>/answerer"><button class="btn btn-sm btn-secondary">Koreksi
-            penjawab</button></a>
+            Penjawab</button></a>
 </div>
+<% } %>
 <% } %>
 
 <% for (let post of categories.posts) {%>

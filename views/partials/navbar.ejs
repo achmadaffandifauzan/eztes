@@ -1,6 +1,9 @@
-<nav id="nav" class="navbar navbar-expand-lg py-1 navbar-light">
+<nav id="nav" class="navbar navbar-expand-lg py-1 navbar-light sticky-top">
   <div class="container-fluid">
-    <a class="navbar-brand mb-0 h1" href="/">SEKAWAN</a>
+    <a class="navbar-brand mb-0 h1" href="/">
+      <img src="https://res.cloudinary.com/dgny2tywl/image/upload/v1680107077/Logo/sekawann_fabdam.png" alt="Logo"
+        width="100" height="24" class="d-inline-block align-text-center">
+    </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
       aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon color-light"></span>
@@ -14,7 +17,7 @@
         <a class="nav-link navMenu" href="/posts/new">Buat Soal</a>
       </div>
       <div class="navbar-nav" id="navSearch">
-        <form action="">
+        <form action="/categories" method="get">
           <span class="labelForm">Cari Soal :</span>
           <div class="input-group input-group-sm ms-3 my-1">
             <span class="input-group-text" id="inputGroup-sizing-sm">Kategori</span>

@@ -7,24 +7,28 @@ const Comment = require('../models/comment');
 const catchAsync = require('../utils/CatchAsync');
 
 router.get('/categories', catchAsync(async (req, res, next) => {
+    //https://stackoverflow.com/questions/5539955/how-to-paginate-with-mongoose-in-node-js
+    let limit = Math.abs(req.query.limit) || 10;
+    let page = (Math.abs(req.query.page) || 1) - 1;
+
     if (req.query.categoryName && req.query.authorName) {
         var categories = await Category.find({
             "categoryName": { '$regex': req.query.categoryName, $options: 'i' },
             "authorName": { '$regex': req.query.authorName, $options: 'i' },
-        })
+        }).limit(limit).skip(limit * page)
     } else if (req.query.categoryName) {
         var categories = await Category.find({
             "categoryName": { '$regex': req.query.categoryName, $options: 'i' },
-        })
+        }).limit(limit).skip(limit * page)
     } else if (req.query.authorName) {
         var categories = await Category.find({
             "authorName": { '$regex': req.query.authorName, $options: 'i' },
-        })
+        }).limit(limit).skip(limit * page)
     } else {
-        var categories = await Category.find({}).limit(30);
+        var categories = await Category.find({}).limit(limit).skip(limit * page)
     }
-    console.log(categories)
-    console.log(req.query)
+    // console.log(categories)
+    // console.log(req.query)
     res.render('categories/index', { categories })
 }))
 
@@ -54,7 +58,7 @@ router.get('/categories/:id/answerer', catchAsync(async (req, res, next) => {
     for (let comment of comments) {
         Answerer.push(await User.findById(comment))
     }
-    console.log(Answerer)
+    // console.log(Answerer)
     res.render('categories/answerer', { Answerer, category })
 }))
 router.get('/categories/:id/:userID', catchAsync(async (req, res, next) => {
