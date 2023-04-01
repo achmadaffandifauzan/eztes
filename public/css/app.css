@@ -10,6 +10,15 @@ main {
   margin-top: 4rem;
 }
 
+.mainIndex {
+  /* added by js */
+  margin-top: 0;
+  background: linear-gradient(0deg, rgba(29, 33, 78, 1) 0%, rgba(4, 215, 162, 1) 76%);
+  height: 100%;
+  max-height: 100vh;
+  overflow: hidden;
+}
+
 body {
   font-family: 'Varela Round', sans-serif;
   background-color: white;
@@ -165,23 +174,44 @@ textarea {
 #indexSearch {
   width: 100%;
   padding: 50px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
 
+#indexSearch form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
 #indexSearch .inputContainer {
   margin-bottom: 30px;
-  border-radius: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 #indexSearch .inputContainer input {
   border: 0;
-  /* border-top: 2px solid #1d214e;
-  border-right: 2px solid #1d214e;
-  border-bottom: 2px solid #1d214e; */
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 100px;
   background-color: #04d7a200;
+  /* background-color: #ff9900; */
+  border: 5px solid #04d7a2;
   font-size: 30px;
   color: #1d214e;
+  transition: 0.3s;
+}
+
+#indexSearch .inputContainer input:hover {
+  width: 120%;
+}
+
+#indexSearch .inputContainer input:focus {
+  width: 120%;
 }
 
 #indexSearch .inputContainer label {
@@ -192,21 +222,34 @@ textarea {
   margin-bottom: 0;
 }
 
-#indexSearch .btn {
+/* why make buttonContainer ? because <button> display cannot be changedx */
+#indexSearch .buttonContainer {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  justify-self: center;
-  align-self: center;
+  flex-direction: row;
+  width: 120px;
+  height: 120px;
+  overflow: hidden;
+  border-radius: 100px;
+  transition: 0.3s;
+  border: 5px solid #04d7a2;
+}
+
+#indexSearch .buttonContainer:hover {
+  width: 140px;
+  height: 140px;
+}
+
+#indexSearch button {
+  border: 5px;
+  background-color: #ff9900;
+  width: inherit;
+  height: inherit;
+  line-height: 32px;
+  font-size: 22px;
+  color: #1d214e;
 }
 
 #indexSearch .labelForm {
-  font-size: 30px;
-  color: #1d214e;
-  margin-right: 10px;
-}
-
-#indexSearch .btn span {
   font-size: 30px;
   color: #1d214e;
 }
@@ -220,7 +263,13 @@ textarea {
 .cardIndex {
   width: 80%;
   max-width: 95%;
+  height: 100px;
   transition: 0.3s;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 2px solid #04d7a2;
+
 }
 
 .cardIndex:hover {
@@ -230,7 +279,6 @@ textarea {
 .cardIndexHeader {
   /* border-bottom: 4px solid #04d7a2 !important; */
   background-color: #04d7a2;
-  background-image: linear-gradient(to left, #1d214e81, #04d7a2);
   color: #1d214e;
   border: 0;
   font-size: 12px;
@@ -241,7 +289,11 @@ textarea {
 
 .cardIndexBody {
   color: #1d214e;
+  background-color: #ff9900;
+  /* background-image: linear-gradient(to right, #ff9900, #ff9900, #04d7a2); */
   text-align: center;
+  display: flex;
+  justify-content: center;
 }
 
 .cardShow {
@@ -998,4 +1050,17 @@ button {
 
 .scrollbar-near-moon {
   scrollbar-color: #b490ca #F5F5F5;
+}
+
+/* NEW AND EDIT PAGE */
+.newAndEditFormContainer {
+  background-color: #ff9900;
+  padding: 50px;
+  border-radius: 20px;
+  border: 5px solid #04d7a2;
+  color: #1d214e;
+}
+
+.newAndEditFormContainer .form-control {
+  color: #1d214e;
 }

@@ -27,11 +27,8 @@ for (let symbol of symbolAnswer) {
 const indexSearchContainer = document.querySelector("#indexSearchContainer");
 if (indexSearchContainer) {
     document.querySelector('#navSearch').style.display = "none";
-    // also making main does not have margin (to make indexSearchContainer fullscreen)
+    // adding class mainIndex to main
     const main = document.querySelector('main');
-    main.style.marginTop = '0px';
-    main.style.background = 'linear-gradient(0deg, rgba(29, 33, 78, 1) 0%, rgba(4, 215, 162, 1) 76%)';
-    main.style.height = '100%';
-
+    main.classList.add('mainIndex');
     document.querySelector('footer').style.display = 'none';
 }

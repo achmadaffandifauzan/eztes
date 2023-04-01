@@ -5,7 +5,7 @@
     <% for (let category of categories) {%>
     <div class=" card cardIndex my-4">
       <a href="/categories/<%= category._id %>" class="text-decoration-none">
-        <div class="card-header cardIndexHeader cardHeaderColored">
+        <div class="card-header cardIndexHeader ">
           <%= category.authorName %>
         </div>
         <div class="card-body cardIndexBody">
@@ -18,7 +18,7 @@
       </a>
     </div>
     <% } %>
-    <nav aria-label="Page navigation example" class=" offset-3">
+    <nav aria-label="Page navigation example" class="">
       <ul class="pagination">
         <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
         <li class="page-item"><a class="page-link" href="?page=2">2</a></li>
@@ -42,12 +42,11 @@
             <label for="owner" class="form-label">Pemilik</label>
             <input type="text" class="form-control" id="owner" name="authorName" spellcheck="false">
           </div>
-          <button class="btn">
-            <span class="labelForm">Cari Soal</span>
-            <span class="material-symbols-rounded">
-              search
-            </span>
-          </button>
+          <div class="buttonContainer">
+            <button>
+              Cari Soal
+            </button>
+          </div>
         </form>
       </div>
     </div>

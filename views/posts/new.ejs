@@ -1,5 +1,5 @@
 <% layout('layouts/boilerplate') %>
-<div class="col-sm-6 offset-sm-3">
+<div class="col-sm-6 offset-sm-3 newAndEditFormContainer">
     <h3 class="text-center mb-4">BUAT SOAL</h3>
     <form action="/posts" method="POST" novalidate class="needs-validation" enctype="multipart/form-data">
         <div class="form-group mb-3">
@@ -42,23 +42,23 @@
                 <label class="form-label">Pilihan jawaban</label>
                 <div class="input-group input-group-sm mb-2">
                     <span class="input-group-text">a</span>
-                    <input type="text" class="form-control" name="post[options]" required>
+                    <textarea class="form-control" name="post[options]" required></textarea>
                 </div>
                 <div class="input-group input-group-sm mb-2">
                     <span class="input-group-text">b</span>
-                    <input type="text" class="form-control" name="post[options]" required>
+                    <textarea class="form-control" name="post[options]" required></textarea>
                 </div>
                 <div class="input-group input-group-sm mb-2">
                     <span class="input-group-text">c</span>
-                    <input type="text" class="form-control" name="post[options]" required>
+                    <textarea class="form-control" name="post[options]" required></textarea>
                 </div>
                 <div class="input-group input-group-sm mb-2">
                     <span class="input-group-text">d</span>
-                    <input type="text" class="form-control" name="post[options]" required>
+                    <textarea class="form-control" name="post[options]" required></textarea>
                 </div>
                 <div class="input-group input-group-sm mb-2">
                     <span class="input-group-text">e</span>
-                    <input type="text" class="form-control" name="post[options]" required>
+                    <textarea class="form-control" name="post[options]" required></textarea>
                 </div>
                 <div class="invalid-feedback">
                     Wajib Terisi!
