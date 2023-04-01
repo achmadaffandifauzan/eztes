@@ -57,6 +57,7 @@ const postSchema = new Schema({
 });
 
 postSchema.post('findOneAndDelete', async function (doc) {
+    // postSchema.post : after triggering findOneAndDelete, this function wil be triggered
     if (doc) {
         await Comment.deleteMany({
             _id: {

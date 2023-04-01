@@ -1,11 +1,11 @@
 <% layout('layouts/boilerplate') %>
 <div id="categoryIndexContainer">
 
-  <div class="col-6">
+  <div class="col-6 cardIndexContainer scrollbar scrollbar-morpheus-den">
     <% for (let category of categories) {%>
-    <div class=" card cardIndex mb-4">
+    <div class=" card cardIndex my-4">
       <a href="/categories/<%= category._id %>" class="text-decoration-none">
-        <div class="card-header cardIndexHeader">
+        <div class="card-header cardIndexHeader cardHeaderColored">
           <%= category.authorName %>
         </div>
         <div class="card-body cardIndexBody">
@@ -34,15 +34,13 @@
         width="400" height="100" class="d-inline-block align-text-center">
       <div id="indexSearch">
         <form action="/categories" method="get">
-          <div class="input-group input-group-sm">
-            <span class="input-group-text" id="inputGroup-sizing-sm">Kategori</span>
-            <input type="text" class="form-control" aria-label="Sizing example input"
-              aria-describedby="inputGroup-sizing-sm" name="categoryName" spellcheck="false">
+          <div class="mb-3 inputContainer">
+            <label for="category" class="form-label">Kategori</label>
+            <input type="text" class="form-control" id="category" name="categoryName" spellcheck="false">
           </div>
-          <div class="input-group input-group-sm">
-            <span class="input-group-text" id="inputGroup-sizing-sm">Pemilik</span>
-            <input type="text" class="form-control" aria-label="Sizing example input"
-              aria-describedby="inputGroup-sizing-sm" name="authorName" spellcheck="false">
+          <div class="mb-3 inputContainer">
+            <label for="owner" class="form-label">Pemilik</label>
+            <input type="text" class="form-control" id="owner" name="authorName" spellcheck="false">
           </div>
           <button class="btn">
             <span class="labelForm">Cari Soal</span>

@@ -5,8 +5,8 @@
 - search, sort, paging
 - protect the route not just from ejs, but in the router also
 - dependencies when deleting
+- create dependencies => user {category}
 - categoryName in category model should not be used for query (can cause duplicate since it is not unique)
-- register with NAME, username, email, and password
 - evaluate page : know how many not answered (answered / question)
 - cleaning route (delete unused route)
 - delete post error

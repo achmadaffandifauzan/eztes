@@ -100,9 +100,13 @@ router.put('/:id', isLoggedIn, isPostAuthor, upload.array('post[image]'), catchA
 
 router.delete('/:id', isLoggedIn, isPostAuthor, catchAsync(async (req, res, next) => {
     const { id } = req.params;
+    const post = await Post.findById(id);
+    const category = await Category.findById(post.category);
+    await Category.findByIdAndUpdate({ _id: post.category }, { $pull: { posts: id } });
+    await User.findByIdAndUpdate({ _id: post.author }, { $pull: { posts: id } });
     await Post.findByIdAndDelete(id);
     req.flash('success', 'Berhasil menghapus soal.')
-    res.redirect("/posts");
+    res.redirect(`/categories/${category._id}`);
 }))
 
 module.exports = router;
