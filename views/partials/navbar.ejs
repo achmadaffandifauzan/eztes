@@ -10,11 +10,11 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav me-auto">
-
         <a class="nav-link navMenu" href="/categories">Menu</a>
-
-
         <a class="nav-link navMenu" href="/posts/new">Buat Soal</a>
+        <% if (currentUser) {%>
+        <a class="nav-link navMenu" href="/<%= currentUser._id %>">Akun</a>
+        <% } %>
       </div>
       <div class="navbar-nav" id="navSearch">
         <form action="/categories" method="get">

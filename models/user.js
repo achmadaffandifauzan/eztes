@@ -18,6 +18,12 @@ const userSchema = new Schema({
       ref: "Post",
     },
   ],
+  categories: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Category",
+    }
+  ],
 });
 
 userSchema.plugin(passportLocalMongoose);

@@ -1,3 +1,4 @@
+
 const questionTypeOptions = document.querySelector("#questionTypeOptions");
 const options = document.querySelectorAll(".options");
 if (questionTypeOptions) {
@@ -31,4 +32,33 @@ if (indexSearchContainer) {
     const main = document.querySelector('main');
     main.classList.add('mainIndex');
     document.querySelector('footer').style.display = 'none';
+
+    const nav = document.querySelector("#nav");
+    nav.classList.add('navIndex');
 }
+
+
+// about page
+function aboutNavScroll() {
+    let div = document.getElementById("aboutNav");
+    if (document.body.scrollTop > 170 || document.documentElement.scrollTop > 170) {
+        div.style.backgroundColor = '#b0e5b3'
+    } else {
+        div.style.backgroundColor = 'rgba(0, 0, 0, 0)'
+    }
+}
+
+function hideFaqAnswer(e) {
+    let parent = e.target.parentNode;
+    let answerClassList = parent.querySelector('.faqAnswer').classList;
+    answerClassList.toggle("faqAnswerHidden")
+
+}
+
+// // category page
+// const cardCategory = document.querySelector(".cardCategory");
+// cardCategory.addEventListener('mouseover', (e) => {
+
+//     console.log(e)
+//     e.target.parentElement.classList.toggle("col-sm-6", "offset-sm-3");
+// })

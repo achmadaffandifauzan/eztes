@@ -1,18 +1,17 @@
+backend :
 - middleware validatePost,commentPost
 - joiSchemas
-- edit post
-- koreksi soal
-- search, sort, paging
 - protect the route not just from ejs, but in the router also
-- dependencies when deleting
-- create dependencies => user {category}
-- categoryName in category model should not be used for query (can cause duplicate since it is not unique)
-- evaluate page : know how many not answered (answered / question)
-- cleaning route (delete unused route)
-- delete post error
-- user may input symbols that can break code
 - post image
-- post but same category
+- user may input symbols that can break code
+- post but same category (post appear in different category owner)
+
+frontend :
+- evaluate page : know how many not answered (answered / question)
+- user management post
+
+
 
 reference design :
 https://www.mathworks.com/matlabcentral/answers/496254-problem-in-navie-bayes-theorem-code
+https://www.creative-tim.com/blog/web-development/best-reactjs-project-examples/

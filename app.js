@@ -142,7 +142,7 @@ app.use("/", usersRoutes);
 
 
 app.get("/", (req, res) => {
-  res.render("home");
+  res.render("about");
 });
 
 app.all("*", (req, res, next) => {

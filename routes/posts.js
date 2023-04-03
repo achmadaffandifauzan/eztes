@@ -67,6 +67,7 @@ router.post('/', isLoggedIn, upload.array('post[image]'), catchAsync(async (req,
         category = new Category({ categoryName: post.postCategory, author: post.author });
         category.authorName = user.name;
         category.posts.push(post);
+        user.categories.push(category); // applies only to new category created / new seeds
         post.category = category;
     }
 
