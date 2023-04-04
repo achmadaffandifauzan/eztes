@@ -3,6 +3,8 @@ const router = express.Router({ mergeParams: true });
 const passport = require('passport');
 const User = require('../models/user');
 const Post = require('../models/post');
+const Comment = require('../models/comment');
+const Category = require('../models/category');
 const catchAsync = require('../utils/CatchAsync');
 const { isLoggedIn } = require('../middleware');
 const ExpressError = require('../utils/ExpressError');
@@ -48,8 +50,36 @@ router.get('/logout', isLoggedIn, catchAsync(async (req, res, next) => {
 
 router.get('/:userId', catchAsync(async (req, res, next) => {
     const { userId } = req.params;
-    const user = await User.findById(userId).populate('posts');
-    res.render('users/show', { user });
+    const user = await User.findById(userId);
+    const posts = await Post.find({ author: user }).populate('comments');
+    const categories = await Category.find({ author: user });
+    let totCategories = Object.keys(categories).length;
+    let totPosts = 0;
+    for (let category of categories) {
+        let post = Object.keys(category.posts).length;
+        totPosts += post;
+    };
+    let authorCommentsObj = []
+    for (let p of posts) {
+        if (p.comments) {
+            for (let c of p.comments) {
+                authorCommentsObj.push(c.author)
+            }
+        }
+    }
+    const commentsCountedObj = await Comment.aggregate([
+        { $match: { 'author': { $in: authorCommentsObj } } },
+        { $group: { _id: '$author', count: { $sum: 1 } } }
+    ])
+    // console.log(commentsCountedObj)
+    let totAnswerer = commentsCountedObj.length;
+    let totAnswer = 0;
+    for (let a of commentsCountedObj) {
+        totAnswer += parseInt(a.count);
+    }
+    // console.log(totAnswerer)
+    // console.log(totAnswer)
+    res.render('users/show', { user, categories, totCategories, totPosts, totAnswerer, totAnswer });
 }))
 
 module.exports = router;

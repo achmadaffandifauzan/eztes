@@ -5,11 +5,12 @@ backend :
 - post image
 - user may input symbols that can break code
 - post but same category (post appear in different category owner)
+- daftar penjawab empty
 
 frontend :
 - evaluate page : know how many not answered (answered / question)
 - user management post
-
+- landing page
 
 
 reference design :

@@ -1,63 +1,67 @@
 <% layout('layouts/boilerplate') %>
-  <div class="card mb-4">
-    <img
-      src="https://images.unsplash.com/photo-1674240587643-4b261f0dceb6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxOHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=30"
-      class="card-img-top img-fluid profileBgImage" alt="..." />
-    <div class="profileImageWrapper">
-      <img
-        src="https://images.unsplash.com/photo-1674289838075-f3d7d572fc80?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyMHx8fGVufDB8fHx8&auto=format&fit=crop&w=600&q=20"
-        class="profileImage img-fluid mx-auto d-block" alt="..." />
-    </div>
-    <div class="card-body">
-      <h3 class="card-title">
-        <%= user.username %>
-      </h3>
-      <% if (currentUser) {%>
-        <% if (user._id.equals(currentUser._id)==false) {%>
-          <% if (isFriend==false) { %>
-            <h4>
-              <form action="/requestFriend/<%= user._id %>/<%= currentUser._id %>" method="POST">
-                <button class="btn btn-sm btn-info m-auto">Tambah Teman</button>
-              </form>
-            </h4>
-            <% } else { %>
-              <h4>
-                <form action="/<%= user._id %>/<%= currentUser._id %>?_method=DELETE" method="POST">
-                  <button class="btn btn-sm btn-danger m-auto">Hapus Teman</button>
-                </form>
-              </h4>
-              <% } %>
-                <% } %>
-                  <% } %>
-    </div>
-  </div>
-  <div>
 
-    <% for (let post of user.posts) {%>
-      <div class="col-sm-6 offset-sm-3 card mt-0 mb-4">
-        <div class="card-header">
-          <a href="/<%= user._id %>" class="ownerName">
-            <%=user.username%>
-          </a>
-        </div>
-        <div class="card-body pb-0">
-          <a href="posts/<%=post._id%>" class="postTitle">
-            <%=post.title%>
-          </a>
-          <a href="posts/<%=post._id%>" class="postDescription">
-            <p>
-              <%= post.description %>
-            </p>
-          </a>
-          <p class="mb-0">
-            <a href="" class="postHashtag">
-              <%= post.hashtag %>
-            </a>
-          </p>
-        </div>
-        <% if (post.images.length>= 1){ %>
-          <img src="<%=post.images[0].url%>" class="border border-2 mx-0 my-0 image-post-userShow" alt="..." />
-          <% } %>
-      </div>
-      <% } %>
+<div id="showUserPageContainer">
+  <div id="cardUser" class="card col-6 offset-3 mt-4">
+    <div class="card-body">
+      <span><%= user.name %></span>
+      <span class="small textt-muted">Username : <%= user.username %></span>
+    </div>
   </div>
+  <div class="cardStatisticContainer">
+    <div class="card col-3">
+      <div class="card-body">
+        <div>
+          Total Kategori : <%= totCategories %>
+        </div>
+        <span class="material-symbols-rounded">
+          folder
+        </span>
+      </div>
+    </div>
+    <div class="card col-3">
+      <div class="card-body">
+        <div>
+          Total Post : <%= totPosts %>
+        </div>
+        <span class="material-symbols-rounded">
+          description
+        </span>
+      </div>
+    </div>
+    <div class="card col-3">
+      <div class="card-body">
+        <div>
+          Total Penjawab : <%= totAnswerer %>
+        </div>
+        <span class="material-symbols-rounded">
+          group
+        </span>
+      </div>
+    </div>
+    <div class="card col-3">
+      <div class="card-body">
+        <div>
+          Total Jawaban : <%= totAnswer %>
+        </div>
+        <span class="material-symbols-rounded">
+          comment
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="col-8 offset-2">
+    <h4 class="text-center m-4">Categories</h4>
+    <% for (let category of categories) {%>
+    <div class=" card cardIndex my-4">
+      <a href="/categories/<%= category._id %>" class="text-decoration-none">
+        <div class="card-body cardIndexBody">
+          <h5 class="card-title">
+            <%= category.categoryName %>
+          </h5>
+        </div>
+
+      </a>
+    </div>
+    <% } %>
+  </div>
+</div>
