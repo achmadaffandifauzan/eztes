@@ -41,11 +41,8 @@ router.get('/categories/:id/answerer', catchAsync(async (req, res, next) => {
     const category = await Category.findById(req.params.id);
     // const comments = await Comment.find({ category: req.params.id }).populate('author');
     const comments = await Comment.aggregate([
-        {
-            "$group": {
-                _id: "$author",
-            },
-        },
+        { "$match": { 'category': category._id } },
+        { "$group": { _id: "$author" } },
     ])
 
     // returning promise instead of result of find

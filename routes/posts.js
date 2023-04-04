@@ -59,7 +59,7 @@ router.post('/', isLoggedIn, upload.array('post[image]'), catchAsync(async (req,
     const user = await User.findById(req.user._id);
     user.posts.push(post._id);
 
-    let category = await Category.findOne({ categoryName: post.postCategory })
+    let category = await Category.findById(post.category);
     if (category) {
         category.posts.push(post);
         post.category = category;
