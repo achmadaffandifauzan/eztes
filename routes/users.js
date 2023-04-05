@@ -66,17 +66,16 @@ router.get('/:userId', catchAsync(async (req, res, next) => {
                 authorCommentsObj.push(c.author)
             }
         }
-    }
-    const commentsCountedObj = await Comment.aggregate([
+    };
+    let totAnswer = authorCommentsObj.length;
+    // console.log(authorCommentsObj)
+    const authorCommentsGroupedObj = await Comment.aggregate([
         { $match: { 'author': { $in: authorCommentsObj } } },
         { $group: { _id: '$author', count: { $sum: 1 } } }
-    ])
-    // console.log(commentsCountedObj)
-    let totAnswerer = commentsCountedObj.length;
-    let totAnswer = 0;
-    for (let a of commentsCountedObj) {
-        totAnswer += parseInt(a.count);
-    }
+    ]);
+    // console.log(authorCommentsGroupedObj)
+    let totAnswerer = authorCommentsGroupedObj.length;
+
     // console.log(totAnswerer)
     // console.log(totAnswer)
     res.render('users/show', { user, categories, totCategories, totPosts, totAnswerer, totAnswer });
