@@ -12,6 +12,8 @@
     "express-session": "^1.17.3",
     "helmet": "^6.0.1",
     "joi": "^17.7.0",
+    "jquery": "^3.6.4",
+    "jsdom": "^21.1.1",
     "method-override": "^3.0.0",
     "mongo-sanitize": "^1.1.0",
     "mongoose": "^6.8.3",

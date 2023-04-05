@@ -1,7 +1,62 @@
 <% layout('layouts/boilerplate') %>
 <div id="categoryIndexContainer">
 
-  <div class="col-6 cardIndexContainer scrollbar scrollbar-morpheus-den">
+  <div id="indexTopContainer">
+    <div id="navReplacementIndex">
+      <div class="navIndexContainer">
+        <a class="nav-link navMenu" href="/categories">Menu</a>
+        <a class="nav-link navMenu" href="/posts/new">Buat Soal</a>
+        <% if (currentUser) {%>
+        <a class="nav-link navMenu" href="/<%= currentUser._id %>">Akun</a>
+        <% } %>
+      </div>
+
+      <% if(!currentUser) { %>
+      <div class="navIndexContainer">
+        <a class="nav-link navAuth" href="/login"><span class="material-symbols-rounded spanMaterialSymbol">
+            login
+          </span>
+          <span class="spanMaterialSymbol">Login</span>
+        </a>
+        <a class="nav-link navAuth" href="/register"><span class="material-symbols-rounded spanMaterialSymbol">
+            app_registration
+          </span><span class="spanMaterialSymbol">Register</span></a>
+        <% } else { %>
+        <a class="nav-link navAuth" href="/logout"><span class="material-symbols-rounded spanMaterialSymbol">
+            logout
+          </span><span class="spanMaterialSymbol">Logout</span></a>
+        <% } %>
+      </div>
+    </div>
+    <div id="indexSearchContainer">
+      <img src="https://res.cloudinary.com/dgny2tywl/image/upload/v1680107077/Logo/sekawann_fabdam.png" alt="Logo"
+        width="400" height="100" class="d-inline-block align-text-center">
+      <div id="indexSearch">
+        <form action="/categories" method="get">
+          <div class="mb-3 inputContainer">
+            <input type="text" placeholder="Kategori" class="form-control" id="category" name="categoryName"
+              spellcheck="false">
+          </div>
+          <div class="mb-3 inputContainer">
+            <input type="text" placeholder="Pemilik" class="form-control" id="owner" name="authorName"
+              spellcheck="false">
+          </div>
+          <div class="buttonContainer">
+            <button>
+              <span class="material-symbols-rounded">
+                search
+              </span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="indexBottomContainer">
+    <span id="arrowDownIndex" class=" material-symbols-rounded">
+      keyboard_double_arrow_down
+    </span>
     <% for (let category of categories) {%>
     <div class=" card cardIndex my-4">
       <a href="/categories/<%= category._id %>" class="text-decoration-none">
@@ -16,7 +71,7 @@
       </a>
     </div>
     <% } %>
-    <nav aria-label="Page navigation example" class="">
+    <nav aria-label="Page navigation example" id="paginationIndex" class="">
       <ul class="pagination">
         <li class="page-item"><a class="page-link" href="?page=1">1</a></li>
         <li class="page-item"><a class="page-link" href="?page=2">2</a></li>
@@ -26,27 +81,5 @@
     </nav>
   </div>
 
-  <div class="col-6">
-    <div id="indexSearchContainer">
-      <img src="https://res.cloudinary.com/dgny2tywl/image/upload/v1680107077/Logo/sekawann_fabdam.png" alt="Logo"
-        width="400" height="100" class="d-inline-block align-text-center">
-      <div id="indexSearch">
-        <form action="/categories" method="get">
-          <div class="mb-3 inputContainer">
-            <label for="category" class="form-label">Kategori</label>
-            <input type="text" class="form-control" id="category" name="categoryName" spellcheck="false">
-          </div>
-          <div class="mb-3 inputContainer">
-            <label for="owner" class="form-label">Pemilik</label>
-            <input type="text" class="form-control" id="owner" name="authorName" spellcheck="false">
-          </div>
-          <div class="buttonContainer">
-            <button>
-              Cari Soal
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
+
 </div>

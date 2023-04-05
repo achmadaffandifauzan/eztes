@@ -4,6 +4,8 @@ backend :
 - protect the route not just from ejs, but in the router also
 - post image
 - user may input symbols that can break code
+- fix jquery
+- fix ES model (type:module in package.json)
 
 frontend :
 - evaluate page : know how many not answered (answered / question)

@@ -14,15 +14,16 @@ main {
   /* added by js */
   margin: 0;
   padding: 0;
-  background: linear-gradient(0deg, rgba(29, 33, 78, 1) 0%, rgba(4, 215, 162, 1) 76%);
-  height: 100%;
-  max-height: 100vh;
-  overflow: hidden;
 }
 
 body {
   font-family: 'Varela Round', sans-serif;
   background-color: white;
+
+}
+
+.bodyIndex {
+  background: linear-gradient(0deg, rgba(29, 33, 78, 1) 0%, rgba(4, 215, 162, 1) 76%);
 }
 
 textarea {
@@ -160,18 +161,54 @@ textarea {
 
 }
 
+/* -----INDEX PAGE------- */
+/* -----INDEX PAGE------- */
+/* -----INDEX PAGE------- */
+
 #categoryIndexContainer {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
+}
+
+#navReplacementIndex {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.6rem;
+}
+
+#navReplacementIndex .navIndexContainer {
+  display: flex;
+}
+
+#indexTopContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+#arrowDownIndex {
+  display: flex;
+  justify-content: center;
+  transition: 0.3s;
+  font-size: 30px;
+  cursor: pointer;
+  color: #1d214e;
+}
+
+#arrowDownIndex:hover {
+  font-size: 40px;
 }
 
 #indexSearchContainer {
   position: sticky;
-  padding-top: 5rem;
+  top: 0;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
+  gap: 10%;
+  padding: 20px 0;
 
   /* background: rgb(29, 33, 78);
   background: linear-gradient(0deg, rgba(29, 33, 78, 1) 0%, rgba(4, 215, 162, 1) 76%); */
@@ -179,8 +216,6 @@ textarea {
 }
 
 #indexSearch {
-  width: 100%;
-  padding: 50px;
   justify-content: center;
   align-items: center;
   display: flex;
@@ -211,6 +246,14 @@ textarea {
   font-size: 30px;
   color: #1d214e;
   transition: 0.3s;
+  padding: 10px 20px;
+  text-align: center;
+}
+
+#indexSearch .inputContainer input::placeholder {
+  font-size: 20px;
+  display: flex;
+  text-align: center;
 }
 
 #indexSearch .inputContainer input:hover {
@@ -230,34 +273,40 @@ textarea {
   margin-bottom: 0;
 }
 
-/* why make buttonContainer ? because <button> display cannot be changedx */
+/* why make buttonContainer ? because <button> display cannot be changed */
 #indexSearch .buttonContainer {
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: row;
-  width: 100px;
-  height: 100px;
+  background-color: #1d214e;
+  width: 50px;
+  height: 50px;
+  margin-top: 1rem;
   overflow: hidden;
   border-radius: 100px;
   transition: 0.3s;
   line-height: 14px;
   font-size: 12px;
-  border: 2px solid #04d7a2;
-  box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px;
+  /* border: 2px solid #04d7a2; */
+  /* box-shadow: rgba(17, 17, 26, 0.1) 0px 4px 16px, rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px; */
 }
 
 #indexSearch .buttonContainer:hover {
-  width: 120px;
-  height: 120px;
+  width: 100px;
 
   box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 }
 
 #indexSearch button {
+  background-color: #1d214e;
   border: 5px;
-  background-color: #04d7a200;
   width: inherit;
   height: inherit;
   color: #04d7a2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #indexSearch .labelForm {
@@ -265,13 +314,8 @@ textarea {
   color: #1d214e;
 }
 
-.cardIndexContainer {
-  height: 100vh;
-  overflow-y: scroll;
-  padding-top: 1rem;
-  background-color: white;
-}
 
+/* index Bottom  */
 .cardIndex {
   width: 80%;
   max-width: 95%;
@@ -309,6 +353,20 @@ textarea {
   display: flex;
   justify-content: center;
 }
+
+#paginationIndex {
+  display: flex;
+  justify-content: center;
+}
+
+#paginationIndex .page-link {
+  color: #1d214e;
+  background-color: #04d7a2;
+  border: 2px solid #1d214e;
+  border-radius: 100%;
+}
+
+
 
 .cardShow {
   max-width: 60%;

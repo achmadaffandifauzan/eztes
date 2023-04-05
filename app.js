@@ -15,6 +15,10 @@ const LocalStrategy = require("passport-local");
 const User = require("./models/user");
 const helmet = require('helmet');
 
+// const { JSDOM } = require("jsdom");
+// const { window } = new JSDOM("");
+// const $ = require("jquery")(window);
+
 const categoriesRoutes = require("./routes/categories");
 const usersRoutes = require("./routes/users");
 const postsRoutes = require("./routes/posts");
@@ -81,6 +85,7 @@ const scriptSrcUrls = [
   "https://kit.fontawesome.com/",
   "https://cdnjs.cloudflare.com/",
   "https://cdn.jsdelivr.net/",
+  // "https://code.jquery.com/",
 ];
 const styleSrcUrls = [
   "https://cdn.jsdelivr.net/",
@@ -140,7 +145,6 @@ app.use("/posts/:id/comments", commentsRoutes);
 app.use("/", usersRoutes);
 
 
-
 app.get("/", (req, res) => {
   res.render("about");
 });
@@ -156,3 +160,4 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT} ~express`));
+
