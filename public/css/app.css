@@ -343,6 +343,10 @@ textarea {
   text-transform: uppercase;
   font-weight: bolder;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
 
 .cardIndexBody {
@@ -375,6 +379,10 @@ textarea {
 
 .card-body {
   text-align: justify;
+}
+
+.card-title {
+  margin: 0;
 }
 
 button {
@@ -538,7 +546,7 @@ button {
   right: 0;
   text-align: center;
   z-index: 99;
-  padding: 10px;
+  padding: 10px 30px;
   max-width: 500px;
   margin-bottom: 15px;
 }

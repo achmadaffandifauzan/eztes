@@ -7,8 +7,7 @@ const catchAsync = require('../utils/CatchAsync');
 const { isLoggedIn, isCommentAuthor, validateComment, isPostAvailable } = require('../middleware');
 
 
-// prefix => /posts/:id/
-router.post('/', isPostAvailable, isLoggedIn, catchAsync(async (req, res, next) => {
+router.post('/posts/:id/comments/', isPostAvailable, isLoggedIn, catchAsync(async (req, res, next) => {
     const postDB = await Post.findById(req.params.id).populate('comments');
     const categoryDB = await Category.find({ posts: req.params.id });
     try {
@@ -58,7 +57,7 @@ router.post('/', isPostAvailable, isLoggedIn, catchAsync(async (req, res, next) 
     await postDB.save();
     res.redirect(`/posts/${postDB._id}`);
 }));
-router.delete('/:commentId', isLoggedIn, isCommentAuthor, catchAsync(async (req, res, next) => {
+router.delete('/posts/:id/comments/:commentId', isLoggedIn, isCommentAuthor, catchAsync(async (req, res, next) => {
     const { id, commentId } = req.params;
     await Post.findByIdAndUpdate(id, { $pull: { comments: commentId } });
     await Comment.findByIdAndDelete(commentId);

@@ -140,8 +140,8 @@ app.use((req, res, next) => {
 });
 
 app.use("/", categoriesRoutes);
-app.use("/posts", postsRoutes);
-app.use("/posts/:id/comments", commentsRoutes);
+app.use("/", postsRoutes);
+app.use("/", commentsRoutes);
 app.use("/", usersRoutes);
 
 

@@ -4,12 +4,24 @@ backend :
 - protect the route not just from ejs, but in the router also
 - post image
 - user may input symbols that can break code
-- fix jquery
-- fix ES model (type:module in package.json)
+- index page listing category grouping error, not post
+- delete category feature (also find out why need .pre / .post in models js)
 
 frontend :
 - evaluate page : know how many not answered (answered / question)
-- user management post
+- about page
+- mobile view (index, answerer, evaluate)
+
++++ DEPLOYEMENT +++
+
+
+
+
+note :
+- dont forget to SAVE THE ALUR PEMBUATAN dan ALUR LOGIC APP (crud,dll (answer why and how)) scr DETAIL
+
+- local process env not uploaded on github. SO, railway has its own env that we have to fill
+
 
 
 

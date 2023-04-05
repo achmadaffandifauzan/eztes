@@ -10,10 +10,10 @@ const { storage, cloudinary } = require('../cloudinary');
 const upload = multer({ storage });
 
 
-router.get('/new', isLoggedIn, (req, res) => {
+router.get('/posts/new', isLoggedIn, (req, res) => {
     res.render('posts/new');
 })
-router.get('/:id', isPostAvailable, catchAsync(async (req, res, next) => {
+router.get('/posts/:id', isPostAvailable, catchAsync(async (req, res, next) => {
     const post = await Post.findById(req.params.id)
         .populate({ path: 'comments', populate: { path: 'author' } })
         .populate('author');
@@ -26,7 +26,7 @@ router.get('/:id', isPostAvailable, catchAsync(async (req, res, next) => {
         res.render('posts/show', { post });
     }
 }))
-router.get('/:id/edit', isLoggedIn, isPostAuthor, catchAsync(async (req, res, next) => {
+router.get('/posts/:id/edit', isLoggedIn, isPostAuthor, catchAsync(async (req, res, next) => {
     const post = await Post.findById(req.params.id);
     if (!post) {
         req.flash('error', "Soal tidak tersedia.");
@@ -35,21 +35,21 @@ router.get('/:id/edit', isLoggedIn, isPostAuthor, catchAsync(async (req, res, ne
         res.render('posts/edit', { post });
     }
 }))
-router.post('/:id/hide', isLoggedIn, isPostAuthor, catchAsync(async (req, res, next) => {
+router.post('/posts/:id/hide', isLoggedIn, isPostAuthor, catchAsync(async (req, res, next) => {
     const post = await Post.findById(req.params.id);
     post.isAvailable = "false";
     post.save()
     req.flash('success', "Soal telah ditutup.");
     res.redirect(`/categories/${post.category}`);
 }))
-router.post('/:id/unhide', isLoggedIn, isPostAuthor, catchAsync(async (req, res, next) => {
+router.post('/posts/:id/unhide', isLoggedIn, isPostAuthor, catchAsync(async (req, res, next) => {
     const post = await Post.findById(req.params.id);
     post.isAvailable = "true";
     post.save()
     req.flash('success', "Soal telah dibuka kembali.");
     res.redirect(`/categories/${post.category}`);
 }))
-router.post('/', isLoggedIn, upload.array('post[image]'), catchAsync(async (req, res, next) => {
+router.post('/posts', isLoggedIn, upload.array('post[image]'), catchAsync(async (req, res, next) => {
     const post = new Post(req.body.post);
     post.images = req.files.map(file => ({ url: file.path, filename: file.filename }));
     post.author = req.user._id;
@@ -59,7 +59,9 @@ router.post('/', isLoggedIn, upload.array('post[image]'), catchAsync(async (req,
     const user = await User.findById(req.user._id);
     user.posts.push(post._id);
 
-    let category = await Category.findById(post.category);
+    // check if category is already not exist (new category)
+    let category = await Category.findOne({ categoryName: post.postCategory, author: post.author });
+    // console.log(category)
     if (category) {
         category.posts.push(post);
         post.category = category;
@@ -82,7 +84,7 @@ router.post('/', isLoggedIn, upload.array('post[image]'), catchAsync(async (req,
 //     console.log(req.body, req.files);
 //     res.send('it worked')
 // })
-router.put('/:id', isLoggedIn, isPostAuthor, upload.array('post[image]'), catchAsync(async (req, res, next) => {
+router.put('/posts/:id', isLoggedIn, isPostAuthor, upload.array('post[image]'), catchAsync(async (req, res, next) => {
     const { id } = req.params;
     const post = await Post.findByIdAndUpdate(id, { ...req.body.post });
     const imagesArr = req.files.map(file => ({ url: file.path, filename: file.filename }));
@@ -99,7 +101,7 @@ router.put('/:id', isLoggedIn, isPostAuthor, upload.array('post[image]'), catchA
     res.redirect(`/posts/${id}`);
 }))
 
-router.delete('/:id', isLoggedIn, isPostAuthor, catchAsync(async (req, res, next) => {
+router.delete('/posts/:id', isLoggedIn, isPostAuthor, catchAsync(async (req, res, next) => {
     const { id } = req.params;
     const post = await Post.findById(id);
     const category = await Category.findById(post.category);

@@ -67,4 +67,12 @@ router.get('/categories/:id/:userID', catchAsync(async (req, res, next) => {
     res.render('categories/evaluate', { category, userComment, posts });
 
 }))
+router.delete('/categories/:id', catchAsync(async (req, res, next) => {
+    const { id } = req.params;
+    await Category.findByIdAndDelete(id);
+    req.flash('success', 'Berhasil menghapus kategori beserta seluruh soal dan jawabannya.')
+    res.redirect(`/categories`);
+}))
+
+
 module.exports = router;

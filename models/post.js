@@ -54,7 +54,13 @@ const postSchema = new Schema({
     },
 });
 
+
+// why here? 
+// 1. find out
+// 2. because if we trigger Post.findOneAndDelete in another router, we dont need to re write code inside many route. 
+// in router, it findByIdAndDelete, but here with findOneAndDelete is still triggered
 postSchema.post('findOneAndDelete', async function (doc) {
+    // console.log("ASSSSSSSSSSSS")
     // postSchema.post : after triggering findOneAndDelete, this function wil be triggered
     if (doc) {
         await Comment.deleteMany({
@@ -64,6 +70,7 @@ postSchema.post('findOneAndDelete', async function (doc) {
         })
     }
 })
+
 
 module.exports = mongoose.model('Post', postSchema);
 
