@@ -40,12 +40,10 @@ const postSchema = new Schema({
     },
     isAvailable: {
         type: String,
-        required: false,
         default: "true",
     },
     type: {
         type: String,
-        required: true,
         enum: ['options', 'essay']
     },
     options: [{
