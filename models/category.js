@@ -36,7 +36,7 @@ categorySchema.post('findOneAndDelete', async function (doc) {
             })
         }
         // deleting post
-        console.log("doc from categorySchema => ", doc);
+        // console.log("doc from categorySchema => ", doc);
         await Post.deleteMany({
             _id: {
                 $in: doc.posts

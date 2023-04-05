@@ -776,13 +776,13 @@ button {
 #aboutNav .btn {
   height: 40px;
   background-color: #b0e5b3;
-  border: 2px solid #03ac0e;
-  color: #03ac0e;
+  border: 2px solid #1d214e;
+  color: #1d214e;
 }
 
 #aboutNav .btn:hover {
 
-  background-color: #e5cbb0;
+  background-color: #04d7a2;
 }
 
 #aboutMain {
@@ -795,20 +795,20 @@ button {
   justify-content: center;
   align-items: center;
   height: 300px;
-  background-color: #b0e2e5;
+  background-color: #04d7a2;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
 #aboutMainHeader h2 {
   margin-top: 250px;
   margin-bottom: 50px;
-  color: #03ac0e;
+  color: #1d214e;
 }
 
 #aboutMain img {
   width: 500px;
   justify-self: center;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+
 }
 
 #desc {
@@ -826,7 +826,11 @@ button {
   justify-content: center;
   display: flex;
   text-align: center;
-  color: #03ac0e;
+  color: #1d214e;
+}
+
+.faqMain {
+  margin-bottom: 40px;
 }
 
 .faqQuestion {
@@ -836,7 +840,6 @@ button {
   border: 2px solid #b0e5b3;
   padding: 20px;
   border-radius: 10px;
-  margin-bottom: 10px;
   transition: 0.2s;
   user-select: none;
 }
@@ -852,10 +855,9 @@ button {
   border: 2px solid #dbdcdc;
   border-radius: 10px;
   user-select: none;
-  margin-bottom: 60px;
   transition: max-height 0.35s ease-in;
   max-height: 100vh;
-
+  margin-top: 10px;
   overflow: hidden;
 }
 
@@ -865,6 +867,7 @@ button {
   transition: max-height 0.35s ease-out;
   margin: 0;
   overflow: hidden;
+  padding: 0;
 }
 
 
