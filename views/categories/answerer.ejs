@@ -3,7 +3,7 @@
 <div class="titlePageAnswerer">DAFTAR PENJAWAB</div>
 <% for(let user of Answerer) {%>
 <a href="/categories/<%= category._id %>/<%= user._id %>" class="text-decoration-none">
-    <div class="card my-3 col-6 offset-3 cardAnswerer">
+    <div class="card my-3 col-sm-6 offset-sm-3 cardAnswerer">
         <div>
             <%= user.name %>
         </div>

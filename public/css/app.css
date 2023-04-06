@@ -369,6 +369,22 @@ textarea {
 }
 
 
+@media only screen and (max-width: 600px) {
+  #indexSearchContainer {
+    flex-direction: column;
+    padding: 20px;
+    gap: 30px;
+  }
+
+  #indexSearchContainer img {
+    width: 300px;
+    height: 80px;
+  }
+}
+
+/* -------------- */
+/* -------------- */
+/* -------------- */
 .cardShow {
   transition: 0.3s;
 }
@@ -625,6 +641,7 @@ button {
   font-weight: bold;
 }
 
+@media only screen and (max-width: 600px) {}
 
 /* -----EVALUATE PAGE------- */
 /* -----EVALUATE PAGE------- */
@@ -728,7 +745,16 @@ button {
   background-color: #dc354663;
 }
 
+@media only screen and (max-width: 600px) {
+  .evaluateQnA {
+    flex-direction: column;
+  }
 
+  .evaluateQnA .card {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}
 
 
 /* ---------- */
@@ -816,10 +842,20 @@ button {
   color: #1d214e;
 }
 
+#aboutMain {
+  overflow: hidden;
+}
+
 #aboutMain img {
   width: 500px;
   justify-self: center;
 
+}
+
+@media only screen and (max-width: 600px) {
+  #aboutMain img {
+    width: 250px;
+  }
 }
 
 #desc {

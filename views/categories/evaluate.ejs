@@ -1,12 +1,12 @@
 <% layout('layouts/boilerplate') %>
 <a class="btn btn-sm btn-primary mb-2 " href="/categories/<%= category._id %>/answerer" role="button">Kembali</a>
 <div class="evaluatePageHeaderContainer">
-    <div class="evaluatePageHeader card col-6 offset-3">
+    <div class="evaluatePageHeader card col-sm-6 offset-sm-3">
         <span class="evaluatePageTitle"><%= category.categoryName %></span>
         <span> oleh <%= category.author.name %></span>
 
     </div>
-    <div class="evaluatePageHeader card col-6 offset-3">
+    <div class="evaluatePageHeader card col-sm-6 offset-sm-3">
         <span>Penjawab : </span>
         <span class="authorName"><%= userComment.name%></span>
     </div>
