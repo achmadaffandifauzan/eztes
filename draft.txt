@@ -3,14 +3,11 @@ backend :
 - protect the route not just from ejs, but in the router also
 - post image
 - user may input symbols that can break code
-- index page listing category grouping error, not post
-- delete category feature (also find out why need .pre / .post in models js)
 
 
 
 frontend :
 - evaluate page : know how many not answered (answered / question)
-- about page
 - mobile view (index, answerer, evaluate)
 - box shadow effect performance (solution : https://tobiasahlin.com/blog/how-to-animate-box-shadow/)
 
