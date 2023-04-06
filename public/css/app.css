@@ -319,9 +319,9 @@ textarea {
 .cardIndex {
   width: 80%;
   max-width: 95%;
-  height: 100px;
   transition: 0.3s;
-  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+
   /* centering while NOT on display : flex */
   margin-left: auto;
   margin-right: auto;
@@ -330,28 +330,26 @@ textarea {
 
 .cardIndex:hover {
   width: 100%;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  /* box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px; */
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 
 .cardIndexHeader {
   /* border-bottom: 4px solid #04d7a2 !important; */
-  background-color: #04d7a2;
+  background-color: #b0e5b3;
   color: #1d214e;
   border: 0;
-  font-size: 12px;
+  font-size: 10px;
   text-transform: uppercase;
   font-weight: bolder;
-  text-align: center;
   display: flex;
-  justify-content: center;
   align-items: center;
   gap: 20px;
 }
 
 .cardIndexBody {
   color: #1d214e;
-  /* background-color: #ff9900; */
+  background-color: #b0e5b3;
   /* background-image: linear-gradient(to right, #ff9900, #ff9900, #04d7a2); */
   text-align: center;
   display: flex;
@@ -371,10 +369,12 @@ textarea {
 }
 
 
-
 .cardShow {
-  max-width: 60%;
-  margin: auto;
+  transition: 0.3s;
+}
+
+.cardShow:hover {
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 
 .card-body {
@@ -578,6 +578,7 @@ button {
 
 .cardCategory:hover {
   box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
+
 }
 
 /* 
@@ -598,6 +599,10 @@ button {
   color: #1d214e;
   background-color: #04d7a2;
   transition: 0.3s;
+}
+
+.cardAnswerer:hover {
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 
 .cardAnswerer div {
@@ -634,6 +639,12 @@ button {
 .evaluateQnA .card {
   display: inline-block;
   width: 47%;
+  transition: 0.3s;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+.evaluateQnA .card:hover {
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 
 .evaluateQnA .card-header {

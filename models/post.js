@@ -60,30 +60,20 @@ const postSchema = new Schema({
 // 2. because if we trigger Post.findOneAndDelete in another router, we dont need to re write code inside many route. 
 // in router, it findByIdAndDelete, but here with findOneAndDelete is still triggered
 postSchema.post('findOneAndDelete', async function (doc) {
+    // deleting post => deleting dependencies up (category and user) and down (comments)=> deleting dependencies's dependencies
     // console.log("ASSSSSSSSSSSS")
     // postSchema.post : after triggering findOneAndDelete, this function wil be triggered
     if (doc) {
-        await Comment.deleteMany({
-            _id: {
-                $in: doc.comments
-            }
-        })
+
+        // dependencies up
+        await Category.findByIdAndUpdate({ _id: doc.category }, { $pull: { posts: doc._id } });
+        await User.findByIdAndUpdate({ _id: doc.author }, { $pull: { posts: doc._id } });
+
+        // dependencies down
+        await Comment.deleteMany({ _id: { $in: doc.comments } });
     }
+
 })
 
 
 module.exports = mongoose.model('Post', postSchema);
-
-// let contoh = {
-//     tipe : "pilgan",
-//     options : {
-//         1 : 'asda',
-//         2 : 'asssda',
-//         3 : 'assdda',
-//         4 : 'asffda',
-//         5 : 'asfgda',
-//     },
-//     key : {
-//         1 : true,
-//     }
-// }
