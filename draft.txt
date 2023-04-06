@@ -1,9 +1,9 @@
 backend :
+- post image (how it works)
+- find out why colt use postSchema.post() in models instead of deleting depencencies in route
 - joiSchemas : middleware validatePost,commentPost 
 - protect the route not just from ejs, but in the router also
-- post image
 - user may input symbols that can break code
-- find out why colt use postSchema.post() in models instead of deleting depencencies in route
 
 
 frontend :
@@ -12,8 +12,6 @@ frontend :
 - box shadow effect performance (solution : https://tobiasahlin.com/blog/how-to-animate-box-shadow/)
 
 +++ DEPLOYEMENT +++
-
-
 
 
 note :

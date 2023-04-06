@@ -79,7 +79,7 @@ router.delete('/categories/:id', catchAsync(async (req, res, next) => {
     // deleting post dependencies in user
     await User.findByIdAndUpdate({ _id: category.author }, { $pull: { posts: { $in: category.posts } } });
     // deleting category dependencies in user
-    await User.findByIdAndUpdate({ _id: category.author }, { $pull: { posts: category._id } });
+    await User.findByIdAndUpdate({ _id: category.author }, { $pull: { categories: category._id } });
 
     // dependencies down
     // deleting comments dependencies in posts

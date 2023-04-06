@@ -52,6 +52,7 @@ router.post('/posts/:id/unhide', isLoggedIn, isPostAuthor, catchAsync(async (req
 }))
 router.post('/posts', isLoggedIn, upload.array('post[image]'), catchAsync(async (req, res, next) => {
     const post = new Post(req.body.post);
+    console.log(req.body.post)
     post.images = req.files.map(file => ({ url: file.path, filename: file.filename }));
     post.author = req.user._id;
     post.isAvailable = "true";
