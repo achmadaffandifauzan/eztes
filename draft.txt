@@ -3,7 +3,7 @@ backend :
 - protect the route not just from ejs, but in the router also
 - post image
 - user may input symbols that can break code
-
+- find out why colt use postSchema.post() in models instead of deleting depencencies in route
 
 
 frontend :

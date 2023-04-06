@@ -1,4 +1,8 @@
 const mongoose = require('mongoose');
+const Post = require('../models/post');
+const User = require('../models/user');
+const Category = require('../models/category');
+const Comment = require('./comment');
 const { Schema } = mongoose;
 
 const commentSchema = new Schema({

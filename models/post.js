@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
-const Comment = require('./comment')
+const Post = require('../models/post');
+const User = require('../models/user');
+const Category = require('../models/category');
+const Comment = require('./comment');
 const { Schema } = mongoose;
 
 const imageSchema = new Schema({
@@ -55,25 +58,25 @@ const postSchema = new Schema({
 });
 
 
-// why here? 
-// 1. find out
-// 2. because if we trigger Post.findOneAndDelete in another router, we dont need to re write code inside many route. 
-// in router, it findByIdAndDelete, but here with findOneAndDelete is still triggered
-postSchema.post('findOneAndDelete', async function (doc) {
-    // deleting post => deleting dependencies up (category and user) and down (comments)=> deleting dependencies's dependencies
-    // console.log("ASSSSSSSSSSSS")
-    // postSchema.post : after triggering findOneAndDelete, this function wil be triggered
-    if (doc) {
+// // why here? 
+// // 1. find out // putting it here can trigger circular dependencies postSchema -> categorySchema -> postSchema
+// // 2. because if we trigger Post.findOneAndDelete in another router, we dont need to re write code inside many route. 
+// // in router, it findByIdAndDelete, but here with findOneAndDelete is still triggered
+// postSchema.post('findOneAndDelete', async function (doc) {
+//     // deleting post => deleting dependencies up (category and user) and down (comments)=> deleting dependencies's dependencies
+//     // console.log("ASSSSSSSSSSSS")
+//     // postSchema.post : after triggering findOneAndDelete, this function wil be triggered
+//     if (doc) {
+//         // console.log(doc)
+//         // dependencies up
+//         // --> causing circular dependencies --> await Category.findOneAndUpdate({ _id: doc.category }, { $pull: { posts: doc._id } });
+//         await User.findOneAndUpdate({ _id: doc.author }, { $pull: { posts: doc._id } });
 
-        // dependencies up
-        await Category.findByIdAndUpdate({ _id: doc.category }, { $pull: { posts: doc._id } });
-        await User.findByIdAndUpdate({ _id: doc.author }, { $pull: { posts: doc._id } });
+//         // dependencies down
+//         await Comment.deleteMany({ _id: { $in: doc.comments } });
+//     }
 
-        // dependencies down
-        await Comment.deleteMany({ _id: { $in: doc.comments } });
-    }
-
-})
+// })
 
 
 module.exports = mongoose.model('Post', postSchema);

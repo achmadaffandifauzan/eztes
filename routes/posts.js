@@ -3,6 +3,7 @@ const router = express.Router({ mergeParams: true });
 const Post = require('../models/post');
 const User = require('../models/user');
 const Category = require('../models/category');
+const Comment = require('../models/comment');
 const catchAsync = require('../utils/CatchAsync');
 const { isLoggedIn, isPostAuthor, validatePost, isPostAvailable } = require('../middleware');
 const multer = require('multer');
@@ -106,6 +107,19 @@ router.delete('/posts/:id', isLoggedIn, isPostAuthor, catchAsync(async (req, res
     const post = await Post.findById(id);
     const category = await Category.findById(post.category);
     await Post.findByIdAndDelete(id);
+
+    // deleting post => deleting dependencies up (category and user) and down (comments)=> deleting dependencies's dependencies
+    // console.log("ASSSSSSSSSSSS")
+
+
+    // dependencies up
+    await Category.findOneAndUpdate({ _id: post.category }, { $pull: { posts: post._id } });
+    await User.findOneAndUpdate({ _id: post.author }, { $pull: { posts: post._id } });
+
+    // dependencies down
+    await Comment.deleteMany({ _id: { $in: post.comments } });
+
+
     req.flash('success', 'Berhasil menghapus soal.')
     res.redirect(`/categories/${category._id}`);
 }))

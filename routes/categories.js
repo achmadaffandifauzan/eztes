@@ -69,7 +69,29 @@ router.get('/categories/:id/:userID', catchAsync(async (req, res, next) => {
 }))
 router.delete('/categories/:id', catchAsync(async (req, res, next) => {
     const { id } = req.params;
+    const category = await Category.findById(id);
     await Category.findByIdAndDelete(id);
+
+
+    // deleting category => deleting dependencies up (user) and down (posts)=> deleting dependencies's dependencies
+
+    // dependencies up
+    // deleting post dependencies in user
+    await User.findByIdAndUpdate({ _id: category.author }, { $pull: { posts: { $in: category.posts } } });
+    // deleting category dependencies in user
+    await User.findByIdAndUpdate({ _id: category.author }, { $pull: { posts: category._id } });
+
+    // dependencies down
+    // deleting comments dependencies in posts
+    for (let post of category.posts) {
+        // why not just langsung postDoc.comments ? because doc.posts is not populating comments, so we must manually findById
+        const postDB = await Post.findById(post);
+        await Comment.deleteMany({ _id: { $in: postDB.comments } })
+    }
+    // deleting post
+    await Post.deleteMany({ _id: { $in: category.posts } });
+
+
     req.flash('success', 'Berhasil menghapus kategori beserta seluruh soal dan jawabannya.')
     res.redirect(`/categories`);
 }))
