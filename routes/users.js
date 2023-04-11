@@ -6,13 +6,13 @@ const Post = require('../models/post');
 const Comment = require('../models/comment');
 const Category = require('../models/category');
 const catchAsync = require('../utils/CatchAsync');
-const { isLoggedIn } = require('../middleware');
+const { isLoggedIn, isGuest } = require('../middleware');
 const ExpressError = require('../utils/ExpressError');
 
-router.get('/register', (req, res) => {
+router.get('/register', isGuest, (req, res) => {
     res.render('users/register');
 })
-router.post('/register', catchAsync(async (req, res, next) => {
+router.post('/register', isGuest, catchAsync(async (req, res, next) => {
     try {
         const { name, email, username, password } = req.body.user;
         const newUser = new User({ email, username, name });
@@ -28,10 +28,10 @@ router.post('/register', catchAsync(async (req, res, next) => {
         res.redirect('/register');
     }
 }));
-router.get('/login', (req, res) => {
+router.get('/login', isGuest, (req, res) => {
     res.render('users/login');
 })
-router.post('/login', passport.authenticate('local',
+router.post('/login', isGuest, passport.authenticate('local',
     { failureFlash: true, failureRedirect: '/login', keepSessionInfo: true }),
     catchAsync(async (req, res, next) => {
         req.flash('success', 'Anda berhasil login.');

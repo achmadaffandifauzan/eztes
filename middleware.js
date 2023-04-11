@@ -14,7 +14,13 @@ module.exports.isLoggedIn = (req, res, next) => {
     }
     next();
 }
-
+module.exports.isGuest = (req, res, next) => {
+    if (req.isAuthenticated()) {
+        req.flash('error', "You're still logged in!");
+        return res.redirect('/categories');
+    }
+    next();
+}
 module.exports.isPostAuthor = catchAsync(async (req, res, next) => {
     const post = await Post.findById(req.params.id)
     if (post.author.equals(req.user._id)) {
