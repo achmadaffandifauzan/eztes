@@ -6,9 +6,9 @@ const ExpressError = require('./utils/ExpressError');
 
 module.exports.isLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
-        req.session.lastPath = req.originalUrl;
-        //console.log(req.query._method)
-        if (req.query._method === 'DELETE') { req.session.lastPath = '/posts'; } //prevent error because redirecting on link with post / delete / put method create an error
+        // req.session.lastPath = req.originalUrl;
+        // //console.log(req.query._method)
+        // if (req.query._method === 'DELETE') { req.session.lastPath = '/posts'; } //prevent error because redirecting on link with post / delete / put method create an error
         req.flash('error', "Anda belum login!");
         return res.redirect('/login');
     }
