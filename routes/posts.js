@@ -52,7 +52,7 @@ router.post('/posts/:id/unhide', isLoggedIn, isPostAuthor, catchAsync(async (req
 }))
 router.post('/posts', isLoggedIn, upload.array('post[image]'), catchAsync(async (req, res, next) => {
     const post = new Post(req.body.post);
-    console.log(req.body.post)
+    // console.log(req.body.post)
     post.images = req.files.map(file => ({ url: file.path, filename: file.filename }));
     post.author = req.user._id;
     post.isAvailable = "true";
@@ -82,10 +82,6 @@ router.post('/posts', isLoggedIn, upload.array('post[image]'), catchAsync(async 
     res.redirect(`/posts/${post._id}`);
 }))
 
-// router.post('/', upload.array('post[image]'), (req, res,) => {
-//     console.log(req.body, req.files);
-//     res.send('it worked')
-// })
 router.put('/posts/:id', isLoggedIn, isPostAuthor, upload.array('post[image]'), catchAsync(async (req, res, next) => {
     const { id } = req.params;
     const post = await Post.findByIdAndUpdate(id, { ...req.body.post });
@@ -98,7 +94,6 @@ router.put('/posts/:id', isLoggedIn, isPostAuthor, upload.array('post[image]'), 
         await post.updateOne({ $pull: { images: { filename: { $in: req.body.deleteImages } } } })
     }
     post.save();
-    //console.log("___________UPDATED____________", post)
     req.flash('success', 'Berhasil memperbarui soal.')
     res.redirect(`/posts/${id}`);
 }))
@@ -106,8 +101,13 @@ router.put('/posts/:id', isLoggedIn, isPostAuthor, upload.array('post[image]'), 
 router.delete('/posts/:id', isLoggedIn, isPostAuthor, catchAsync(async (req, res, next) => {
     const { id } = req.params;
     const post = await Post.findById(id);
-    const category = await Category.findById(post.category);
+    if (post.images.length > 0) {
+        for (let image of post.images) {
+            await cloudinary.uploader.destroy(image.filename);
+        }
+    }
     await Post.findByIdAndDelete(id);
+    const category = await Category.findById(post.category);
 
     // deleting post => deleting dependencies up (category and user) and down (comments)=> deleting dependencies's dependencies
     // console.log("ASSSSSSSSSSSS")
