@@ -1,0 +1,73 @@
+<% layout('layouts/boilerplate') %>
+<a class="btn btn-sm btn-primary mb-2 " href="/categories/<%= category._id %>" role="button">Kembali</a>
+
+<div class="evaluatePageHeaderContainer">
+    <div class="evaluatePageHeader card col-sm-6 offset-sm-3">
+        <span class="evaluatePageTitle"><%= category.categoryName %></span>
+        <span> oleh <%= category.author.name %></span>
+
+    </div>
+    <h4>Setel Bobot Soal</h4>
+</div>
+
+<form action="/categories/<%= category._id %>/setWeight" method="POST">
+    <% for(let post of category.posts) {%>
+    <div class="evaluateQnA">
+        <div class="">
+            <label class="form-label" for="weight_<% post._id %>">Bobot</label>
+            <select name="postWeights[<%= post._id %>]" id="weight_<% post._id %>" class="form-select">
+                <option value="0.5">* 0.5</option>
+                <option value="1" selected>* 1</option>
+                <option value="1.5">* 1.5</option>
+                <option value="2">* 2</option>
+                <option value="3">* 3</option>
+                <option value="4">* 4</option>
+                <option value="5">* 5</option>
+            </select>
+        </div>
+        <div class="card">
+            <div class="card-header card-header-question">
+                Pertanyaan
+            </div>
+            <div class="card-body">
+                <h4 class="postTitle">
+                    <%= post.title %>
+                </h4>
+                <p>
+                    <%= post.description %>
+                </p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header card-header-answer">
+                Jawaban
+            </div>
+            <div class="card-body">
+
+                <% if (post.type == 'options') {%>
+
+                <% for(let option of post.options) {%>
+                <div class="answerMCQ">
+                    <div class="answerMCQ-option">
+                        <label class="form-check-input"></label>
+
+                        <div class="answerMCQ-textAnswer">
+                            <%=option  %>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+
+                <% } else if(post.type == 'essay') {%>
+                <div>Jawaban Isian</div>
+
+                <% } %>
+            </div>
+        </div>
+    </div>
+
+    <% } %>
+    <div class="d-flex align-center justify-content-center my-5">
+        <button class="btn btn-success borderRadius">Simpan Bobot</button>
+    </div>
+</form>

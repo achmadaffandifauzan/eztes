@@ -9,7 +9,17 @@ const { isLoggedIn, isCommentAuthor, validateComment, isPostAvailable } = requir
 
 router.post('/posts/:id/comments/', isPostAvailable, isLoggedIn, catchAsync(async (req, res, next) => {
     const postDB = await Post.findById(req.params.id).populate('comments');
-    const categoryDB = await Category.find({ posts: req.params.id });
+    const categoryDB = await Category.findOne({ posts: req.params.id });
+    if (!postDB.answerer.includes(req.user._id)) {
+        // list this user to post.answerer if not listed yet
+        postDB.answerer.push(req.user._id)
+        await postDB.save();
+    };
+    if (!categoryDB.answerer.includes(req.user._id)) {
+        // list this user to category.answerer if not listed yet
+        categoryDB.answerer.push(req.user._id)
+        await categoryDB.save();
+    };
     try {
         // repost answer (comment from this user is already exist)
         const comment = await Comment.findOne(

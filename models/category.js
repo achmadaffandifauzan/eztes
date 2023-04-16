@@ -22,6 +22,16 @@ const categorySchema = new Schema({
             ref: 'Post'
         }
     ],
+    isAvailable: {
+        type: String,
+        default: "true",
+    },
+    answerer: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        }
+    ],
 })
 
 // categorySchema.post('findOneAndDelete', async function (doc) {

@@ -34,6 +34,12 @@ const postSchema = new Schema({
             ref: 'Comment',
         }
     ],
+    answerer: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        }
+    ],
     category: {
         type: Schema.Types.ObjectId,
         ref: 'Category',
@@ -53,6 +59,9 @@ const postSchema = new Schema({
         type: String,
     }],
     key: {
+        type: Number,
+    },
+    weight: {
         type: Number,
     },
 });
