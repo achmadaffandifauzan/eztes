@@ -5,6 +5,8 @@ const Post = require('../models/post');
 const User = require('../models/user');
 const Comment = require('../models/comment');
 const catchAsync = require('../utils/CatchAsync');
+const Score = require('../models/score');
+const ScoreDetail = require('../models/scoreDetail');
 
 router.get('/categories', catchAsync(async (req, res, next) => {
     //https://stackoverflow.com/questions/5539955/how-to-paginate-with-mongoose-in-node-js
@@ -41,24 +43,20 @@ router.get('/categories/:id', catchAsync(async (req, res, next) => {
 }))
 router.get('/categories/:id/answerer', catchAsync(async (req, res, next) => {
     const category = await Category.findById(req.params.id);
-    // const comments = await Comment.find({ category: req.params.id }).populate('author');
-    const comments = await Comment.aggregate([
-        { "$match": { 'category': category._id } },
-        { "$group": { _id: "$author" } },
-    ])
-
-    // returning promise instead of result of find
-    // const comment = comments.map(async (comment) => {
-    //     await User.findById(comment)
-    // })
-    // console.log(posts[0].comments[0])
-
-    let Answerer = [];
-    for (let comment of comments) {
-        Answerer.push(await User.findById(comment))
-    }
+    // const comments = await Comment.aggregate([
+    //     { "$match": { 'category': category._id } },
+    //     { "$group": { _id: "$author" } },
+    // ])
+    // let Answerer = [];
+    // for (let comment of comments) {
+    //     Answerer.push(await User.findById(comment))
+    // }         ====>>>> new model update already has answerer in the category
     // console.log(Answerer)
-    res.render('categories/answerer', { Answerer, category })
+    // console.log(category.answerer)
+    const scores = await Score.find({ category: category._id, user: { $in: category.answerer } })
+    const users = await User.find({ id: { $in: category.answerer } });
+    // console.log(score)
+    res.render('categories/answerer', { category, scores, users })
 }))
 router.get('/categories/:id/setWeight', catchAsync(async (req, res, next) => {
     const category = await Category.findById(req.params.id).populate('posts');
@@ -66,7 +64,7 @@ router.get('/categories/:id/setWeight', catchAsync(async (req, res, next) => {
 }))
 router.post('/categories/:id/setWeight', catchAsync(async (req, res, next) => {
     // console.log(req.body.postWeights)
-    const category = await Category.findById(req.params.id).populate('posts');
+    const category = await Category.findById(req.params.id);
     for (let post of category.posts) {
         // console.log(req.body.postWeights[post._id])
         await Post.findByIdAndUpdate(post._id, { weight: req.body.postWeights[post._id] })
@@ -91,6 +89,54 @@ router.get('/categories/:id/:userID', catchAsync(async (req, res, next) => {
     const comments = await Comment.find({ author: userID, category: category._id });
     res.render('categories/evaluate', { category, posts, comments, userComment });
 }))
+router.post('/categories/:id/:userID', catchAsync(async (req, res, next) => {
+    const { id, userID } = req.params;
+    const user = await User.findById(userID);
+    const category = await Category.findById(id).populate('posts');
+    let scoreDetailObj = {
+        'user': user._id,
+    }
+    let limitScore = 0;
+    let scoreSum = 0;
+    // to model ScoreDetail
+    let scoreByPosts = Object.entries(req.body.score) // iterate an object
+    for (let scoreObj of scoreByPosts) {
+        // console.log(scoreObj)
+        scoreDetailObj['category'] = category._id;
+        scoreDetailObj['user'] = user._id;
+        // get the post id from scoreObj, where storeObj = ['postID', 'score']
+        scoreDetailObj['post'] = scoreObj[0];
+        // score is number score * weight of it's post
+        // console.log(category.posts)
+        const post = await Post.findById(scoreObj[0])
+        scoreDetailObj['score'] = scoreObj[1] * post.weight;
+
+
+        let scoreDetail = await ScoreDetail.findOneAndUpdate({ category: category._id, user: user._id, post: scoreObj[0] },
+            { score: scoreDetailObj['score'] }, { new: true });
+        if (!scoreDetail) {
+            scoreDetail = new ScoreDetail(scoreDetailObj);
+        }
+        await scoreDetail.save();
+        scoreSum += scoreDetailObj['score'];
+        limitScore += 100 * post.weight;
+    }
+    // to model Score
+    scoreCategory = scoreSum / limitScore * 100;
+    let score = await Score.findOneAndUpdate({ category: category._id, user: user._id },
+        { scoreCategory: scoreCategory }, { new: true });
+    if (!score) {
+        score = new Score({
+            category: category._id,
+            user: user._id,
+            scoreCategory: scoreCategory
+        })
+    }
+    await score.save();
+    req.flash('success', 'Nilai Berhasil Dibuat')
+    res.redirect(`/categories/${id}`)
+}))
+
 router.delete('/categories/:id', catchAsync(async (req, res, next) => {
     const { id } = req.params;
     const category = await Category.findById(id);

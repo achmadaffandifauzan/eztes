@@ -14,8 +14,8 @@
     <% for(let post of category.posts) {%>
     <div class="evaluateQnA">
         <div class="">
-            <label class="form-label" for="weight_<% post._id %>">Bobot</label>
-            <select name="postWeights[<%= post._id %>]" id="weight_<% post._id %>" class="form-select">
+            <label class="form-label" for="weight_<%= post._id %>">Bobot</label>
+            <select name="postWeights[<%= post._id %>]" id="weight_<%= post._id %>" class="form-select">
                 <option value="0.5">* 0.5</option>
                 <option value="1" selected>* 1</option>
                 <option value="1.5">* 1.5</option>
@@ -36,6 +36,33 @@
                 <p>
                     <%= post.description %>
                 </p>
+                <div id="carouselExampleIndicators" class="carousel slide my-0" data-bs-ride="true">
+                    <div class="carousel-indicators">
+                        <% for (let i=0 ; i<post.images.length ; i++){%>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= i %>"
+                            <%=i==0 ? "class=active aria-current=true" : '' %> aria-label="Slide <%= i+1 %>"></button>
+                        <% }%>
+                    </div>
+                    <div class="carousel-inner">
+                        <% for (let i=0 ; i<post.images.length ; i++){%>
+                        <div class="carousel-item <%= i == 0 ? 'active' : '' %>">
+                            <img src="<%= post.images[i].url %>" class="d-block w-100 image-post-show" alt="...">
+                        </div>
+                        <% }%>
+                    </div>
+                    <% if (post.images.length> 1) {%>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                    <% } %>
+                </div>
             </div>
         </div>
         <div class="card">

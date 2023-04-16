@@ -6,6 +6,7 @@ backend :
 - user may input symbols that can break code
 - module.exports.isLoggedIn -> if (req.query._method === 'DELETE') { req.session.lastPath = '/posts'; } //prevent error because redirecting on link with post / delete / put method create an error (but why only req.query._method === 'DELETE', not with 'PUT' and 'POST')
 but it wont error tho because it return res.redirect('/login') anyway.
+- WHY when updating router and restart indexJS (nodemon), user doesn't logged out, while in socialize does
 
 frontend :
 - evaluate page : know how many not answered (answered / question)

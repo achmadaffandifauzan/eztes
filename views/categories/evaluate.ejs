@@ -12,52 +12,52 @@
     </div>
 </div>
 
+<form action="/categories/<%= category._id %>/<%= userComment._id %>" method="POST" novalidate class="needs-validation">
+    <% for(let post of posts) {%>
+    <div class="evaluateQnA">
 
-<% for(let post of posts) {%>
-<div class="evaluateQnA">
-
-    <div class="card">
-        <div class="card-header card-header-question">
-            Pertanyaan
-        </div>
-        <div class="card-body">
-            <h4 class="postTitle">
-                <%= post.title %>
-            </h4>
-            <p>
-                <%= post.description %>
-            </p>
-            <div id="carouselExampleIndicators" class="carousel slide my-0" data-bs-ride="true">
-                <div class="carousel-indicators">
-                    <% for (let i=0 ; i<post.images.length ; i++){%>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= i %>"
-                        <%=i==0 ? "class=active aria-current=true" : '' %> aria-label="Slide <%= i+1 %>"></button>
-                    <% }%>
-                </div>
-                <div class="carousel-inner">
-                    <% for (let i=0 ; i<post.images.length ; i++){%>
-                    <div class="carousel-item <%= i == 0 ? 'active' : '' %>">
-                        <img src="<%= post.images[i].url %>" class="d-block w-100 image-post-show" alt="...">
+        <div class="card cardQuestion">
+            <div class="card-header card-header-question">
+                Pertanyaan
+            </div>
+            <div class="card-body">
+                <h4 class="postTitle">
+                    <%= post.title %>
+                </h4>
+                <p>
+                    <%= post.description %>
+                </p>
+                <div id="carouselExampleIndicators" class="carousel slide my-0" data-bs-ride="true">
+                    <div class="carousel-indicators">
+                        <% for (let i=0 ; i<post.images.length ; i++){%>
+                        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= i %>"
+                            <%=i==0 ? "class=active aria-current=true" : '' %> aria-label="Slide <%= i+1 %>"></button>
+                        <% }%>
                     </div>
-                    <% }%>
+                    <div class="carousel-inner">
+                        <% for (let i=0 ; i<post.images.length ; i++){%>
+                        <div class="carousel-item <%= i == 0 ? 'active' : '' %>">
+                            <img src="<%= post.images[i].url %>" class="d-block w-100 image-post-show" alt="...">
+                        </div>
+                        <% }%>
+                    </div>
+                    <% if (post.images.length> 1) {%>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                    <% } %>
                 </div>
-                <% if (post.images.length> 1) {%>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-                    data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-                <% } %>
             </div>
         </div>
-    </div>
 
-    <% 
+        <% 
     for (let c of comments) {
         // basically, find the comment by this user on this post 
         if (c.post.equals(post._id)){
@@ -66,83 +66,121 @@
     }
     %>
 
-    <div class="card">
-        <!-- if this user is answering the post, then show his answer -->
-        <% if (post.answerer.includes(userComment._id)) { %>
+        <div class="card cardAnswer">
+            <!-- if this user is answering the post, then show his answer -->
+            <% if (post.answerer.includes(userComment._id)) { %>
 
 
-        <% if (comment.correctness === true) {%>
-        <div class="card-header bg-success text-white fw-bold">
-            Jawaban Benar
-        </div>
-        <% } else if (comment.correctness === false){%>
-        <div class="card-header bg-danger text-white fw-bold">
-            Jawaban Salah
-        </div>
-        <% } else {%>
-        <div class="card-header bg-info fw-bold">
-            Jawaban Isian
-        </div>
-        <% } %>
-
-        <div class="card-body">
-            <% if (post.type == 'options') {%>
-            <% for(let option of post.options) {%>
-            <div class="answerMCQ">
-                <div class="answerMCQ-option">
-                    <label class="form-check-input"></label>
-                    <!-- the key answer is showed only if =>(the answer is wrong and the option from the loop meet the key of options) -->
-                    <% if (option == post.options[post.key] && comment.correctness === false ) {%>
-                    <div class="text-success answerCorrectness">
-                        <span class="material-symbols-rounded">
-                            key
-                        </span>
-                    </div>
-                    <% } %>
-                    <% if (option == comment.choiceValue && comment.correctness === true ) {%>
-                    <div class="text-success answerCorrectness">
-                        <span class="material-symbols-rounded fs-5">
-                            verified
-                        </span>
-                    </div>
-                    <% } else if (option == comment.choiceValue && comment.correctness === false ) {%>
-                    <div class="text-danger answerCorrectness">
-                        <span class="material-symbols-rounded fs-5">
-                            block
-                        </span>
-                    </div>
-                    <% } %>
-                    <div class="answerMCQ-textAnswer">
-                        <%=option  %>
-                    </div>
-                </div>
+            <% if (comment.correctness === true) {%>
+            <div class="card-header bg-success text-white fw-bold">
+                Jawaban Benar
+            </div>
+            <% } else if (comment.correctness === false){%>
+            <div class="card-header bg-danger text-white fw-bold">
+                Jawaban Salah
+            </div>
+            <% } else {%>
+            <div class="card-header bg-info fw-bold">
+                Jawaban Isian
             </div>
             <% } %>
-            <% } else if(post.type == 'essay') {%>
-            <div><%= comment.text %></div>
-            <% } %>
-        </div>
-        <% } else { %>
-        <!-- else if user is not answering the post -->
-        <div class="card-header bg-dark text-white fw-bold">
-            Tidak Terjawab
-        </div>
-        <div class="card-body">
 
-            <% if (post.type == 'options') {%>
-            <% for(let option of post.options) {%>
-            <div class="answerMCQ">
-                <div class="answerMCQ-option">
-                    <label class="form-check-input"></label>
-                    <div class="answerMCQ-textAnswer">
-                        <%=option%>
+            <div class="card-body">
+                <% if (post.type == 'options') {%>
+                <% for(let option of post.options) {%>
+                <div class="answerMCQ">
+                    <div class="answerMCQ-option">
+                        <label class="form-check-input"></label>
+                        <!-- the key answer is showed only if =>(the answer is wrong and the option from the loop meet the key of options) -->
+                        <% if (option == post.options[post.key] && comment.correctness === false ) {%>
+                        <div class="text-success answerCorrectness">
+                            <span class="material-symbols-rounded">
+                                key
+                            </span>
+                        </div>
+                        <% } %>
+                        <% if (option == comment.choiceValue && comment.correctness === true ) {%>
+                        <div class="text-success answerCorrectness">
+                            <span class="material-symbols-rounded fs-5">
+                                verified
+                            </span>
+                        </div>
+                        <% } else if (option == comment.choiceValue && comment.correctness === false ) {%>
+                        <div class="text-danger answerCorrectness">
+                            <span class="material-symbols-rounded fs-5">
+                                block
+                            </span>
+                        </div>
+                        <% } %>
+                        <div class="answerMCQ-textAnswer">
+                            <%=option  %>
+                        </div>
                     </div>
                 </div>
+                <% } %>
+                <% } else if(post.type == 'essay') {%>
+                <div><%= comment.text %></div>
+                <% } %>
+            </div>
+            <% } else { %>
+            <!-- else if user is not answering the post -->
+            <div class="card-header bg-dark text-white fw-bold">
+                Tidak Terjawab
+            </div>
+            <div class="card-body">
+
+                <% if (post.type == 'options') {%>
+                <% for(let option of post.options) {%>
+                <div class="answerMCQ">
+                    <div class="answerMCQ-option">
+                        <label class="form-check-input"></label>
+                        <div class="answerMCQ-textAnswer">
+                            <%=option%>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+                <% } else {%>
+                <div class="fw-bold text-center">
+                    ---
+                </div>
+                <% } %>
             </div>
             <% } %>
-            <% } %>
         </div>
-        <% } %>
+
+        <div class="card cardScore">
+            <div class="card-header">
+                Bobot &nbsp;<span class="text-success fw-bold"> <%= post.weight %> </span>
+            </div>
+            <div class="card-body text-center">
+                <% if (post.type == 'essay') {%>
+                <label class="form-label" for="score_<% post._id %>">
+                    <span class="text-success fw-bold">Beri</span> Nilai
+                </label>
+                <div class="d-flex flex-row">
+                    <input type="number" min="0" max="100" name="score[<%= post._id %>]" class="form-control"
+                        id="score_<%= post._id %>" required>
+                    <span class="input-group-text" id="basic-addon2">%</span>
+                </div>
+                <% } else if (post.type == 'options'){%>
+                <label class="form-label" for="score_<% post._id %>">Nilai</label>
+                <div class="d-flex flex-row">
+                    <input type="number" min="0" max="100" name="score[<%= post._id %>]"
+                        class="form-control text-success" placeholder="ex : 80" id="score_<%= post._id %>"
+                        value="<%= (comment.correctness === true) && (post.answerer.includes(userComment._id))  ? 100 : 0 %>"
+                        readonly>
+                    <span class="input-group-text" id="basic-addon2">%</span>
+                </div>
+                <% } %>
+            </div>
+        </div>
+
     </div>
-</div>
-<% } %>
+    <% } %>
+    <div class="d-flex justify-content-center my-5 ">
+        <button class="btn btn-success borderRadius">
+            Generate nilai
+        </button>
+    </div>
+</form>

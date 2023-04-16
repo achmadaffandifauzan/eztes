@@ -613,10 +613,10 @@ button {
 
 .cardAnswerer {
   height: 40px;
-  /* display: flex;
-  flex-direction: column;
+  display: flex;
+  flex-direction: row;
   align-items: center;
-  justify-content: space-between; */
+  justify-content: space-around;
   color: #1d214e;
   background-color: #04d7a2;
   transition: 0.3s;
@@ -627,7 +627,6 @@ button {
 }
 
 .cardAnswerer div {
-  position: absolute;
   top: 50%;
   line-height: 0px;
   left: 0;
@@ -655,7 +654,8 @@ button {
 .evaluateQnA {
   display: flex;
   justify-content: space-between;
-  margin: 40px 5%;
+  margin: 40px 1%;
+  gap: 2%;
 }
 
 .evaluateQnA .card {
@@ -663,6 +663,19 @@ button {
   width: 47%;
   transition: 0.3s;
   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  height: fit-content;
+}
+
+.evaluateQnA .cardQuestion {
+  width: 45%;
+}
+
+.evaluateQnA .cardAnswer {
+  width: 35%;
+}
+
+.evaluateQnA .cardScore {
+  width: 14%;
 }
 
 .evaluateQnA .card:hover {
@@ -726,7 +739,7 @@ button {
 .answerMCQ-option .answerMCQ-textAnswer {
   grid-column-start: 3;
   padding: 0 10px 0 5px;
-  display: flex;
+  overflow: hidden;
   align-self: center;
 }
 

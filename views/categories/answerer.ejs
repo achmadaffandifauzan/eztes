@@ -1,12 +1,20 @@
 <% layout('layouts/boilerplate') %>
 <a class="btn btn-sm btn-primary mb-2 " href="/categories/<%= category._id %>" role="button">Kembali</a>
 <div class="titlePageAnswerer">DAFTAR PENJAWAB</div>
-<% for(let user of Answerer) {%>
+<% for(let user of users) {%>
+
 <a href="/categories/<%= category._id %>/<%= user._id %>" class="text-decoration-none">
     <div class="card my-3 col-sm-6 offset-sm-3 cardAnswerer">
         <div>
             <%= user.name %>
         </div>
+        <% for (let score of scores) {%>
+        <% if (score.user.equals(user._id)) {%>
+        <div>
+            <%= score.scoreCategory %>
+        </div>
+        <% } %>
+        <% } %>
     </div>
 </a>
 <% } %>
