@@ -26,5 +26,8 @@ const commentSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Category'
     },
+    lastSubmitted: {
+        type: String,
+    },
 });
 module.exports = mongoose.model('Comment', commentSchema);

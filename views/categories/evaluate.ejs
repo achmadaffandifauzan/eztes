@@ -151,7 +151,11 @@
 
         <div class="card cardScore">
             <div class="card-header">
+                <% if (post.weight) {%>
                 Bobot &nbsp;<span class="text-success fw-bold"> <%= post.weight %> </span>
+                <% } else { %>
+                <div class="fw-bold text-danger fst-italic text-center">Bobot belum disetel!</div>
+                <% } %>
             </div>
             <div class="card-body text-center">
                 <% if (post.type == 'essay') {%>

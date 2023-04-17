@@ -64,6 +64,12 @@ const postSchema = new Schema({
     weight: {
         type: Number,
     },
+    dateCreated: {
+        type: String,
+    },
+    lastEdited: {
+        type: String,
+    },
 });
 
 

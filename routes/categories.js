@@ -7,6 +7,8 @@ const Comment = require('../models/comment');
 const catchAsync = require('../utils/CatchAsync');
 const Score = require('../models/score');
 const ScoreDetail = require('../models/scoreDetail');
+const { cloudinary } = require('../cloudinary');
+const dayjs = require('dayjs');
 
 router.get('/categories', catchAsync(async (req, res, next) => {
     //https://stackoverflow.com/questions/5539955/how-to-paginate-with-mongoose-in-node-js
@@ -54,8 +56,8 @@ router.get('/categories/:id/answerer', catchAsync(async (req, res, next) => {
     // console.log(Answerer)
     // console.log(category.answerer)
     const scores = await Score.find({ category: category._id, user: { $in: category.answerer } })
-    const users = await User.find({ id: { $in: category.answerer } });
-    // console.log(score)
+    const users = await User.find({ _id: { $in: category.answerer } });
+    // console.log(category.answerer, users, scores)
     res.render('categories/answerer', { category, scores, users })
 }))
 router.get('/categories/:id/setWeight', catchAsync(async (req, res, next) => {
@@ -68,7 +70,7 @@ router.post('/categories/:id/setWeight', catchAsync(async (req, res, next) => {
     for (let post of category.posts) {
         // console.log(req.body.postWeights[post._id])
         await Post.findByIdAndUpdate(post._id, { weight: req.body.postWeights[post._id] })
-        // await Post.findOneAndUpdate({ id: post._id }, { weight: req.body.postWeights[post._id] })  ==> somehow in loop doesn't work
+        // await Post.findOneAndUpdate({ _id: post._id }, { weight: req.body.postWeights[post._id] })  ==> somehow in loop doesn't work
     }
     req.flash('success', 'Berhasil memberi bobot soal')
     res.redirect(`/categories/${req.params.id}`)
@@ -89,19 +91,26 @@ router.get('/categories/:id/:userID', catchAsync(async (req, res, next) => {
     const comments = await Comment.find({ author: userID, category: category._id });
     res.render('categories/evaluate', { category, posts, comments, userComment });
 }))
+// generate score (in evaluate post)
 router.post('/categories/:id/:userID', catchAsync(async (req, res, next) => {
     const { id, userID } = req.params;
     const user = await User.findById(userID);
     const category = await Category.findById(id).populate('posts');
+    // check if weight is set
+    console.log(category)
+    if (!category.posts[0].weight) {
+        req.flash("error", "Anda belum menyetel bobot soal!")
+        return res.redirect(`/categories/${category._id}`)
+    };
     let scoreDetailObj = {
         'user': user._id,
-    }
+    };
     let limitScore = 0;
     let scoreSum = 0;
     // to model ScoreDetail
     let scoreByPosts = Object.entries(req.body.score) // iterate an object
     for (let scoreObj of scoreByPosts) {
-        // console.log(scoreObj)
+        console.log(scoreObj)
         scoreDetailObj['category'] = category._id;
         scoreDetailObj['user'] = user._id;
         // get the post id from scoreObj, where storeObj = ['postID', 'score']
@@ -111,9 +120,10 @@ router.post('/categories/:id/:userID', catchAsync(async (req, res, next) => {
         const post = await Post.findById(scoreObj[0])
         scoreDetailObj['score'] = scoreObj[1] * post.weight;
 
-
+        console.log(scoreDetailObj['score'])
         let scoreDetail = await ScoreDetail.findOneAndUpdate({ category: category._id, user: user._id, post: scoreObj[0] },
             { score: scoreDetailObj['score'] }, { new: true });
+
         if (!scoreDetail) {
             scoreDetail = new ScoreDetail(scoreDetailObj);
         }
@@ -125,6 +135,7 @@ router.post('/categories/:id/:userID', catchAsync(async (req, res, next) => {
     scoreCategory = scoreSum / limitScore * 100;
     let score = await Score.findOneAndUpdate({ category: category._id, user: user._id },
         { scoreCategory: scoreCategory }, { new: true });
+
     if (!score) {
         score = new Score({
             category: category._id,
@@ -132,6 +143,9 @@ router.post('/categories/:id/:userID', catchAsync(async (req, res, next) => {
             scoreCategory: scoreCategory
         })
     }
+    const currentTime = dayjs().format("HH:mm");
+    const currentDate = dayjs().format("D MMM YY");
+    score.lastScored = `${currentTime} - ${currentDate}`;
     await score.save();
     req.flash('success', 'Nilai Berhasil Dibuat')
     res.redirect(`/categories/${id}`)
@@ -153,9 +167,15 @@ router.delete('/categories/:id', catchAsync(async (req, res, next) => {
 
     // dependencies down
     // deleting comments dependencies in posts
+    // also deleting images of posts
     for (let post of category.posts) {
-        // why not just langsung postDoc.comments ? because doc.posts is not populating comments, so we must manually findById
+        // why not just langsung category.comments ? because category.posts is not populating comments, so we must manually findById
         const postDB = await Post.findById(post);
+        if (postDB.images.length > 0) {
+            for (let image of postDB.images) {
+                await cloudinary.uploader.destroy(image.filename);
+            }
+        }
         await Comment.deleteMany({ _id: { $in: postDB.comments } })
     }
     // deleting post

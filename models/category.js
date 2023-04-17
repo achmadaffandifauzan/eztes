@@ -32,6 +32,12 @@ const categorySchema = new Schema({
             ref: 'User'
         }
     ],
+    dateCreated: {
+        type: String,
+    },
+    lastEdited: {
+        type: String,
+    },
 })
 
 // categorySchema.post('findOneAndDelete', async function (doc) {

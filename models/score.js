@@ -13,7 +13,10 @@ const scoreSchema = ({
     },
     scoreCategory: {
         type: Number,
-    }
+    },
+    lastScored: {
+        type: String,
+    },
 })
 
 module.exports = mongoose.model('Score', scoreSchema);

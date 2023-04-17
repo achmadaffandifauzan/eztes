@@ -9,6 +9,7 @@ const { isLoggedIn, isPostAuthor, validatePost, isPostAvailable } = require('../
 const multer = require('multer');
 const { storage, cloudinary } = require('../cloudinary');
 const upload = multer({ storage });
+const dayjs = require('dayjs');
 
 
 router.get('/posts/new', isLoggedIn, (req, res) => {
@@ -57,20 +58,29 @@ router.post('/posts', isLoggedIn, upload.array('post[image]'), catchAsync(async 
     post.author = req.user._id;
     post.isAvailable = "true";
     post.postCategory = req.body.post.postCategory;
+    const currentTime = dayjs().format("HH:mm");
+    const currentDate = dayjs().format("D MMM YY");
+    post.dateCreated = `${currentTime} - ${currentDate}`;
 
     const user = await User.findById(req.user._id);
     user.posts.push(post._id);
 
-    // check if category is already not exist (new category)
+    // check if category is not exist (new category)
     let category = await Category.findOne({ categoryName: post.postCategory, author: post.author });
     // console.log(category)
     if (category) {
         category.posts.push(post);
         post.category = category;
+        const currentTime = dayjs().format("HH:mm");
+        const currentDate = dayjs().format("D MMM YY");
+        category.lastEdited = `${currentTime} - ${currentDate}`;
     } else {
         category = new Category({ categoryName: post.postCategory, author: post.author });
         category.authorName = user.name;
         category.posts.push(post);
+        const currentTime = dayjs().format("HH:mm");
+        const currentDate = dayjs().format("D MMM YY");
+        category.dateCreated = `${currentTime} - ${currentDate}`;
         user.categories.push(category); // applies only to new category created / new seeds
         post.category = category;
     }
@@ -93,6 +103,9 @@ router.put('/posts/:id', isLoggedIn, isPostAuthor, upload.array('post[image]'), 
         }
         await post.updateOne({ $pull: { images: { filename: { $in: req.body.deleteImages } } } })
     }
+    const currentTime = dayjs().format("HH:mm");
+    const currentDate = dayjs().format("D MMM YY");
+    post.lastEdited = `${currentTime} - ${currentDate}`;
     post.save();
     req.flash('success', 'Berhasil memperbarui soal.')
     res.redirect(`/posts/${id}`);

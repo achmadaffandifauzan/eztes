@@ -67,6 +67,16 @@
         </button>
         <% } %>
     </div>
+    <div class="card-footer d-flex flex-row justify-content-between text-muted fw-light fst-italic  font-size-sm small">
+        <div>
+            Dibuat pada <%= post.dateCreated %>
+        </div>
+        <div>
+            <% if (post.lastEdited) {%>
+            Terakhir diedit <%= post.lastEdited %>
+            <% } %>
+        </div>
+    </div>
 
 </div>
 <!-- ANSWER -->
@@ -142,14 +152,17 @@
         </div>
         <div class="card-body">
             <% if (comment.type == 'essay') {%>
-            <p class="card-text">
+            <div class="card-text">
                 <%= comment.text %>
-            </p>
+            </div>
             <% } else if(comment.type == 'options') { %>
-            <p class="card-text">
+            <div class="card-text">
                 <%= comment.choiceValue %>
-            </p>
+            </div>
             <% } %>
+        </div>
+        <div class="card-footer text-muted fw-light fst-italic text-end font-size-sm small">
+            Terakhir diubah <%= comment.lastSubmitted %>
         </div>
     </div>
 </div>

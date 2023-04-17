@@ -84,6 +84,17 @@
             </button>
             <% } %>
         </div>
+        <div
+            class="card-footer d-flex flex-row justify-content-between text-muted fw-light fst-italic  font-size-sm small">
+            <div>
+                Dibuat pada <%= post.dateCreated %>
+            </div>
+            <div>
+                <% if (post.lastEdited) {%>
+                Terakhir diedit <%= post.lastEdited %>
+                <% } %>
+            </div>
+        </div>
 
     </div>
     <% } %>

@@ -23,6 +23,9 @@ const userSchema = new Schema({
       ref: "Category",
     }
   ],
+  dateCreated: {
+    type: String,
+  },
 });
 
 userSchema.plugin(passportLocalMongoose);

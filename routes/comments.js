@@ -5,11 +5,12 @@ const Post = require('../models/post');
 const Category = require('../models/category');
 const catchAsync = require('../utils/CatchAsync');
 const { isLoggedIn, isCommentAuthor, validateComment, isPostAvailable } = require('../middleware');
+const dayjs = require('dayjs');
 
 
 router.post('/posts/:id/comments/', isPostAvailable, isLoggedIn, catchAsync(async (req, res, next) => {
     const postDB = await Post.findById(req.params.id).populate('comments');
-    const categoryDB = await Category.findOne({ posts: req.params.id });
+    const categoryDB = await Category.findById(postDB.category);
     if (!postDB.answerer.includes(req.user._id)) {
         // list this user to post.answerer if not listed yet
         postDB.answerer.push(req.user._id)
@@ -41,6 +42,9 @@ router.post('/posts/:id/comments/', isPostAvailable, isLoggedIn, catchAsync(asyn
         } else if (postDB.type == 'essay') {
             comment.text = req.body.comment.text;
         }
+        const currentTime = dayjs().format("HH:mm");
+        const currentDate = dayjs().format("D MMM YY");
+        comment.lastSubmitted = `${currentTime} - ${currentDate}`;
         await comment.save();
     } catch (error) {
         // new answer (comment from this user is not exist)
@@ -62,6 +66,9 @@ router.post('/posts/:id/comments/', isPostAvailable, isLoggedIn, catchAsync(asyn
             comment.type = 'essay';
         }
         postDB.comments.push(comment);
+        const currentTime = dayjs().format("HH:mm");
+        const currentDate = dayjs().format("D MMM YY");
+        comment.lastSubmitted = `${currentTime} - ${currentDate}`;
         await comment.save();
     }
     await postDB.save();

@@ -17,7 +17,7 @@ const scoreDetailSchema = ({
     },
     score: {
         type: Number,
-    },
+    }
 })
 
 module.exports = mongoose.model('ScoreDetail', scoreDetailSchema);

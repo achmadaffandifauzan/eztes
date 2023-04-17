@@ -10,8 +10,11 @@
         </div>
         <% for (let score of scores) {%>
         <% if (score.user.equals(user._id)) {%>
-        <div>
+        <div class="fw-bold text-danger">
             <%= score.scoreCategory %>
+        </div>
+        <div class="small fst-italic">
+            dikoreksi pada : <%= score.lastScored %>
         </div>
         <% } %>
         <% } %>

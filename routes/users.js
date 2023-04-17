@@ -8,6 +8,7 @@ const Category = require('../models/category');
 const catchAsync = require('../utils/CatchAsync');
 const { isLoggedIn, isGuest } = require('../middleware');
 const ExpressError = require('../utils/ExpressError');
+const dayjs = require('dayjs');
 
 router.get('/register', isGuest, (req, res) => {
     res.render('users/register');
@@ -17,6 +18,10 @@ router.post('/register', isGuest, catchAsync(async (req, res, next) => {
         const { name, email, username, password } = req.body.user;
         const newUser = new User({ email, username, name });
         const registeredUser = await User.register(newUser, password);
+        const currentTime = dayjs().format("HH:mm");
+        const currentDate = dayjs().format("D MMM YY");
+        newUser.dateCreated = `${currentTime} - ${currentDate}`;
+        await newUser.save();
         req.login(registeredUser, (error) => {
             if (error) return next(error);
             req.flash('success', 'Anda berhasil terdaftar.');
