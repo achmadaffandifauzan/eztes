@@ -1,20 +1,19 @@
 backend :
 - joiSchemas : middleware validatePost,commentPost 
-- post image (how it works)
-- find out why colt use postSchema.post() in models instead of deleting depencencies in route
-- protect the route not just from ejs, but in the router also
+- protect the route ... not just from ejs, but in the router also
 - user may input symbols that can break code
-- module.exports.isLoggedIn -> if (req.query._method === 'DELETE') { req.session.lastPath = '/posts'; } //prevent error because redirecting on link with post / delete / put method create an error (but why only req.query._method === 'DELETE', not with 'PUT' and 'POST')
-but it wont error tho because it return res.redirect('/login') anyway.
-- WHY when updating router and restart indexJS (nodemon), user doesn't logged out, while in socialize does
-- MUST set weight before koreksi
 - close category
 - seed
 
+find out :
+
+find out why module.exports.isLoggedIn -> if (req.query._method === 'DELETE') { req.session.lastPath = '/posts'; } //prevent error because redirecting on link with post / delete / put method create an error (but why only req.query._method === 'DELETE', not with 'PUT' and 'POST'). but it wont error tho because it return res.redirect('/login') anyway.
 find out why MODEL.find({ id :...}) should be { _id :...}
+find out why colt use postSchema.post() in models instead of deleting depencencies in route
+find out WHY when updating router and restart indexJS (nodemon), user doesn't logged out, while in socialize does
+
 
 frontend :
-- evaluate page : know how many not answered (answered / question)
 - box shadow effect performance (solution : https://tobiasahlin.com/blog/how-to-animate-box-shadow/)
 
 +++ DEPLOYEMENT +++

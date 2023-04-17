@@ -14,6 +14,7 @@
     <% for(let post of category.posts) {%>
     <div class="evaluateQnA">
         <div class="">
+            <!-- set existing weight (if exist) to input value  -->
             <% 
                     var weight = 1
                     if (post.weight) {
@@ -21,7 +22,7 @@
                     } 
                     %>
             <label class="form-label text-center" for="weight_<%= post._id %>">
-                <%= (post.weight)? "Ganti bobot" : "Setel Bobot" %>
+                <%= (post.weight)? "Ganti bobot ?" : "Setel Bobot" %>
             </label>
             <select name="postWeights[<%= post._id %>]" id="weight_<%= post._id %>" class="form-select">
                 <% for (let i = 0; i<=5;i+= 0.5) {%>

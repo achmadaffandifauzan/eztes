@@ -9,6 +9,7 @@ const Score = require('../models/score');
 const ScoreDetail = require('../models/scoreDetail');
 const { cloudinary } = require('../cloudinary');
 const dayjs = require('dayjs');
+const { isLoggedIn, isCategoryAuthor, isCategoryAvailable } = require('../middleware');
 
 router.get('/categories', catchAsync(async (req, res, next) => {
     //https://stackoverflow.com/questions/5539955/how-to-paginate-with-mongoose-in-node-js
@@ -38,23 +39,40 @@ router.get('/categories', catchAsync(async (req, res, next) => {
     res.render('categories/index', { categories, pageBefore, pageAfter })
 }))
 
-router.get('/categories/:id', catchAsync(async (req, res, next) => {
+router.get('/categories/:id', isCategoryAvailable, catchAsync(async (req, res, next) => {
     const categories = await Category.findById(req.params.id).populate('posts').populate('author')
     // console.log(categories)
     res.render('categories/category', { categories })
 }))
-router.get('/categories/:id/answerer', catchAsync(async (req, res, next) => {
+
+router.post('/categories/:id/hide', isLoggedIn, isCategoryAuthor, catchAsync(async (req, res, next) => {
+    const category = await Category.findById(req.params.id);
+    category.isAvailable = "false";
+    category.save()
+    req.flash('success', "Kategori telah ditutup.");
+    res.redirect(`/categories/${category._id}`);
+}))
+router.post('/categories/:id/unhide', isLoggedIn, isCategoryAuthor, catchAsync(async (req, res, next) => {
+    const category = await Category.findById(req.params.id);
+    category.isAvailable = "true";
+    category.save()
+    req.flash('success', "Kategori telah ditutup.");
+    res.redirect(`/categories/${category._id}`);
+}))
+
+
+router.get('/categories/:id/answerer', isLoggedIn, isCategoryAuthor, catchAsync(async (req, res, next) => {
     const category = await Category.findById(req.params.id);
     const scores = await Score.find({ category: category._id, user: { $in: category.answerer } })
     const users = await User.find({ _id: { $in: category.answerer } });
     // console.log(category.answerer, users, scores)
     res.render('categories/answerer', { category, scores, users })
 }))
-router.get('/categories/:id/setWeight', catchAsync(async (req, res, next) => {
-    const category = await Category.findById(req.params.id).populate('posts');
+router.get('/categories/:id/setWeight', isLoggedIn, isCategoryAuthor, catchAsync(async (req, res, next) => {
+    const category = await Category.findById(req.params.id).populate('posts').populate('author');
     res.render('categories/setWeight', { category })
 }))
-router.post('/categories/:id/setWeight', catchAsync(async (req, res, next) => {
+router.post('/categories/:id/setWeight', isLoggedIn, isCategoryAuthor, catchAsync(async (req, res, next) => {
     // console.log(req.body.postWeights)
     const category = await Category.findById(req.params.id);
     for (let post of category.posts) {
@@ -65,15 +83,9 @@ router.post('/categories/:id/setWeight', catchAsync(async (req, res, next) => {
     req.flash('success', 'Berhasil memberi bobot soal')
     res.redirect(`/categories/${req.params.id}`)
 }))
-// router.post('/categories/:id/close', catchAsync(async (req, res, next) => {
-//     const category = await Category.findById(req.params.id).populate('posts');
-//     for (let answerer of category.answerer) {
-//         for (let post of category.posts) {
-//             if (post.answerer)
-//         }
-//     }
-// }))
-router.get('/categories/:id/:userID', catchAsync(async (req, res, next) => {
+
+// (evaluate post)
+router.get('/categories/:id/:userID', isLoggedIn, isCategoryAuthor, catchAsync(async (req, res, next) => {
     const { id, userID } = req.params;
     const userComment = await User.findById(userID);
     const category = await Category.findById(id).populate('author');
@@ -82,7 +94,7 @@ router.get('/categories/:id/:userID', catchAsync(async (req, res, next) => {
     res.render('categories/evaluate', { category, posts, comments, userComment });
 }))
 // generate score (in evaluate post)
-router.post('/categories/:id/:userID', catchAsync(async (req, res, next) => {
+router.post('/categories/:id/:userID', isLoggedIn, isCategoryAuthor, catchAsync(async (req, res, next) => {
     const { id, userID } = req.params;
     const user = await User.findById(userID);
     const category = await Category.findById(id).populate('posts');
@@ -144,7 +156,7 @@ router.post('/categories/:id/:userID', catchAsync(async (req, res, next) => {
     res.redirect(`/categories/${id}`)
 }))
 
-router.delete('/categories/:id', catchAsync(async (req, res, next) => {
+router.delete('/categories/:id', isLoggedIn, isCategoryAuthor, catchAsync(async (req, res, next) => {
     const { id } = req.params;
     const category = await Category.findById(id);
     await Category.findByIdAndDelete(id);

@@ -12,9 +12,16 @@
             Penjawab</button></a>
     <a href="/categories/<%= categories._id%>/setWeight"><button class="btn btn-sm btn-secondary">Setel Bobot
             Soal</button></a>
-    <form action="/categories/<%= categories._id %>/close" method="POST">
+    <% if (categories.isAvailable == "true") {%>
+    <form action="/categories/<%= categories._id %>/hide" method="POST">
         <button class="btn btn-sm btn-warning">Tutup Kategori</button>
     </form>
+    <% }  else if (categories.isAvailable == "false"){%>
+    <form action="/categories/<%= categories._id %>/unhide" method="POST">
+        <button class="btn btn-sm btn-info">Buka Kategori</button>
+    </form>
+    <% } %>
+
     <form action="/categories/<%= categories._id %>?_method=DELETE" method="POST">
         <button class="btn btn-sm btn-danger">Hapus Kategori</button>
     </form>

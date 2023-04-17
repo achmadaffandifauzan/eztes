@@ -961,12 +961,13 @@ button {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  flex-flow: wrap;
+  flex-wrap: wrap;
 }
 
 .cardStatisticContainer .card {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-  width: 20%;
+  /* width: 20%;
+  min-width: 250px; */
   margin: 1%;
   margin-top: 20px;
   margin-bottom: 20px;

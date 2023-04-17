@@ -1,5 +1,6 @@
 const { postSchema, commentSchema } = require("./joiSchemas");
 const Post = require('./models/post');
+const Category = require('./models/category');
 const Comment = require('./models/comment');
 const catchAsync = require('./utils/CatchAsync');
 const ExpressError = require('./utils/ExpressError');
@@ -21,6 +22,15 @@ module.exports.isGuest = (req, res, next) => {
     }
     next();
 }
+module.exports.isCategoryAuthor = catchAsync(async (req, res, next) => {
+    const category = await Category.findById(req.params.id)
+    if (category.author.equals(req.user._id)) {
+        next();
+    } else {
+        req.flash('error', "Anda tidak memiliki izin untuk itu!");
+        res.redirect(`/categories`)
+    }
+})
 module.exports.isPostAuthor = catchAsync(async (req, res, next) => {
     const post = await Post.findById(req.params.id)
     if (post.author.equals(req.user._id)) {
@@ -73,5 +83,19 @@ module.exports.isPostAvailable = catchAsync(async (req, res, next) => {
     } else {
         req.flash('error', "Soal telah ditutup!");
         res.redirect(`/${post.author}/${post.postCategoryId}`)
+    }
+})
+
+module.exports.isCategoryAvailable = catchAsync(async (req, res, next) => {
+    const category = await Category.findById(req.params.id)
+    if (category.isAvailable === "true") {
+        next();
+    } else if (req.user) {
+        if (category.author.equals(req.user._id)) {
+            next();
+        }
+    } else {
+        req.flash('error', "Soal telah ditutup!");
+        res.redirect(`/categories`)
     }
 })
