@@ -1,8 +1,6 @@
 backend :
 - joiSchemas : middleware validatePost,commentPost 
-- protect the route ... not just from ejs, but in the router also
 - user may input symbols that can break code
-- close category
 - seed
 
 find out :
