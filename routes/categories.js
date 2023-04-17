@@ -45,16 +45,6 @@ router.get('/categories/:id', catchAsync(async (req, res, next) => {
 }))
 router.get('/categories/:id/answerer', catchAsync(async (req, res, next) => {
     const category = await Category.findById(req.params.id);
-    // const comments = await Comment.aggregate([
-    //     { "$match": { 'category': category._id } },
-    //     { "$group": { _id: "$author" } },
-    // ])
-    // let Answerer = [];
-    // for (let comment of comments) {
-    //     Answerer.push(await User.findById(comment))
-    // }         ====>>>> new model update already has answerer in the category
-    // console.log(Answerer)
-    // console.log(category.answerer)
     const scores = await Score.find({ category: category._id, user: { $in: category.answerer } })
     const users = await User.find({ _id: { $in: category.answerer } });
     // console.log(category.answerer, users, scores)
@@ -98,10 +88,13 @@ router.post('/categories/:id/:userID', catchAsync(async (req, res, next) => {
     const category = await Category.findById(id).populate('posts');
     // check if weight is set
     console.log(category)
-    if (!category.posts[0].weight) {
-        req.flash("error", "Anda belum menyetel bobot soal!")
-        return res.redirect(`/categories/${category._id}`)
-    };
+    for (let post of category.posts) {
+        if (!post.weight) {
+            req.flash("error", "Anda belum menyetel bobot seluruh soal!")
+            return res.redirect(`/categories/${category._id}`)
+        };
+    }
+
     let scoreDetailObj = {
         'user': user._id,
     };

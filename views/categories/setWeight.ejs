@@ -14,15 +14,21 @@
     <% for(let post of category.posts) {%>
     <div class="evaluateQnA">
         <div class="">
-            <label class="form-label" for="weight_<%= post._id %>">Bobot</label>
+            <% 
+                    var weight = 1
+                    if (post.weight) {
+                        weight = post.weight
+                    } 
+                    %>
+            <label class="form-label text-center" for="weight_<%= post._id %>">
+                <%= (post.weight)? "Ganti bobot" : "Setel Bobot" %>
+            </label>
             <select name="postWeights[<%= post._id %>]" id="weight_<%= post._id %>" class="form-select">
-                <option value="0.5">* 0.5</option>
-                <option value="1" selected>* 1</option>
-                <option value="1.5">* 1.5</option>
-                <option value="2">* 2</option>
-                <option value="3">* 3</option>
-                <option value="4">* 4</option>
-                <option value="5">* 5</option>
+                <% for (let i = 0; i<=5;i+= 0.5) {%>
+                <option value="<%= i %>" <%= (i == weight) ? "selected" : "" %>>*
+                    <%= i %></option>
+                <% } %>
+                <!-- example : <option value="1" selected> * 1 </option> -->
             </select>
         </div>
         <div class="card">

@@ -7,7 +7,7 @@
 </h6>
 <% if (currentUser) {%>
 <% if (categories.author.equals(currentUser._id)) {%>
-<div class="col-sm-8 offset-sm-2 mt-0 mb-5 d-flex justify-content-around">
+<div class="col-sm-8 offset-sm-2 mt-0 mb-5 d-flex justify-content-around flex-wrap">
     <a href="/categories/<%= categories._id%>/answerer"><button class="btn btn-sm btn-secondary">Koreksi
             Penjawab</button></a>
     <a href="/categories/<%= categories._id%>/setWeight"><button class="btn btn-sm btn-secondary">Setel Bobot

@@ -170,10 +170,18 @@
                 <% } else if (post.type == 'options'){%>
                 <label class="form-label" for="score_<% post._id %>">Nilai</label>
                 <div class="d-flex flex-row">
+                    <% 
+                        // check if this question has answer before putting score
+                        // not happend in q type essay, because score determined by author
+                        if (post.answerer.includes(userComment._id)){
+                            if (comment.correctness === true) {
+                                var scoreOptions = 100
+                            }
+                        }
+                        %>
                     <input type="number" min="0" max="100" name="score[<%= post._id %>]"
                         class="form-control text-success" placeholder="ex : 80" id="score_<%= post._id %>"
-                        value="<%= (comment.correctness === true) && (post.answerer.includes(userComment._id))  ? 100 : 0 %>"
-                        readonly>
+                        value="<%= (scoreOptions) ? scoreOptions : 0 %>" readonly>
                     <span class="input-group-text" id="basic-addon2">%</span>
                 </div>
                 <% } %>

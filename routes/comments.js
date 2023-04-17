@@ -76,7 +76,18 @@ router.post('/posts/:id/comments/', isPostAvailable, isLoggedIn, catchAsync(asyn
 }));
 router.delete('/posts/:id/comments/:commentId', isLoggedIn, isCommentAuthor, catchAsync(async (req, res, next) => {
     const { id, commentId } = req.params;
-    await Post.findByIdAndUpdate(id, { $pull: { comments: commentId } });
+    const post = await Post.findByIdAndUpdate(id, {
+        $pull: {
+            comments: commentId,
+            answerer: req.user._id
+        }
+    });
+    const comments = await Comment.find({ _id: req.user._id, category: post.category });
+    // check if this user still has a comment on this category, if not, it will be removed from answerer list
+    console.log(comments)
+    if (comments.length == 0) {
+        await Category.findByIdAndUpdate(post.category, { $pull: { answerer: req.user._id } });
+    }
     await Comment.findByIdAndDelete(commentId);
     res.redirect(`/posts/${id}`);
 }));
