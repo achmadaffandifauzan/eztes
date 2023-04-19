@@ -2,6 +2,7 @@ backend :
 - joiSchemas : middleware validatePost,commentPost 
 - user may input symbols that can break code
 - seed
+- last path
 
 find out :
 

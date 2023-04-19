@@ -25,12 +25,9 @@ const postsRoutes = require("./routes/posts");
 const commentsRoutes = require("./routes/comments");
 
 const MongoStore = require('connect-mongo');
-
-
 const mongoSanitize = require('express-mongo-sanitize');
 
-//process.env.DB_URL
-// in env file: mongodb://127.0.0.1:27017/sekawan2 || mongodb+srv://sekawan2:qwertyu900@sekawan2.hs5ud5r.mongodb.net/?retryWrites=true&w=majority
+
 const dbUrl = process.env.DB_URL;
 mongoose.set("strictQuery", true);
 mongoose.connect(dbUrl);
