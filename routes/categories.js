@@ -9,9 +9,9 @@ const Score = require('../models/score');
 const ScoreDetail = require('../models/scoreDetail');
 const { cloudinary } = require('../cloudinary');
 const dayjs = require('dayjs');
-const { isLoggedIn, isCategoryAuthor, isCategoryAvailable } = require('../middleware');
+const { isLoggedIn, isCategoryAuthor, isCategoryAvailable, validateWeight, sanitizeScore, validateQuery } = require('../middleware');
 
-router.get('/categories', catchAsync(async (req, res, next) => {
+router.get('/categories', validateQuery, catchAsync(async (req, res, next) => {
     //https://stackoverflow.com/questions/5539955/how-to-paginate-with-mongoose-in-node-js
     let limit = 10;
     let page = (Math.abs(req.query.page) || 0);
@@ -72,7 +72,7 @@ router.get('/categories/:id/setWeight', isLoggedIn, isCategoryAuthor, catchAsync
     const category = await Category.findById(req.params.id).populate('posts').populate('author');
     res.render('categories/setWeight', { category })
 }))
-router.post('/categories/:id/setWeight', isLoggedIn, isCategoryAuthor, catchAsync(async (req, res, next) => {
+router.post('/categories/:id/setWeight', isLoggedIn, isCategoryAuthor, validateWeight, catchAsync(async (req, res, next) => {
     // console.log(req.body.postWeights)
     const category = await Category.findById(req.params.id);
     for (let post of category.posts) {
@@ -94,12 +94,12 @@ router.get('/categories/:id/:userID', isLoggedIn, isCategoryAuthor, catchAsync(a
     res.render('categories/evaluate', { category, posts, comments, userComment });
 }))
 // generate score (in evaluate post)
-router.post('/categories/:id/:userID', isLoggedIn, isCategoryAuthor, catchAsync(async (req, res, next) => {
+router.post('/categories/:id/:userID', isLoggedIn, isCategoryAuthor, sanitizeScore, catchAsync(async (req, res, next) => {
     const { id, userID } = req.params;
     const user = await User.findById(userID);
     const category = await Category.findById(id).populate('posts');
     // check if weight is set
-    console.log(category)
+    // console.log(category)
     for (let post of category.posts) {
         if (!post.weight) {
             req.flash("error", "Anda belum menyetel bobot seluruh soal!")
@@ -115,7 +115,7 @@ router.post('/categories/:id/:userID', isLoggedIn, isCategoryAuthor, catchAsync(
     // to model ScoreDetail
     let scoreByPosts = Object.entries(req.body.score) // iterate an object
     for (let scoreObj of scoreByPosts) {
-        console.log(scoreObj)
+        // console.log(scoreObj)
         scoreDetailObj['category'] = category._id;
         scoreDetailObj['user'] = user._id;
         // get the post id from scoreObj, where storeObj = ['postID', 'score']
@@ -125,7 +125,7 @@ router.post('/categories/:id/:userID', isLoggedIn, isCategoryAuthor, catchAsync(
         const post = await Post.findById(scoreObj[0])
         scoreDetailObj['score'] = scoreObj[1] * post.weight;
 
-        console.log(scoreDetailObj['score'])
+        // console.log(scoreDetailObj['score'])
         let scoreDetail = await ScoreDetail.findOneAndUpdate({ category: category._id, user: user._id, post: scoreObj[0] },
             { score: scoreDetailObj['score'] }, { new: true });
 
@@ -139,13 +139,13 @@ router.post('/categories/:id/:userID', isLoggedIn, isCategoryAuthor, catchAsync(
     // to model Score
     scoreCategory = scoreSum / limitScore * 100;
     let score = await Score.findOneAndUpdate({ category: category._id, user: user._id },
-        { scoreCategory: scoreCategory }, { new: true });
+        { scoreCategory: scoreCategory.toFixed(2) }, { new: true });
 
     if (!score) {
         score = new Score({
             category: category._id,
             user: user._id,
-            scoreCategory: scoreCategory
+            scoreCategory: scoreCategory.toFixed(2)
         })
     }
     const currentTime = dayjs().format("HH:mm");

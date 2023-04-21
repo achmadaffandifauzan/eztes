@@ -3,6 +3,7 @@ backend :
 - user may input symbols that can break code
 - seed
 - last path
+- weight 0 error
 
 find out :
 

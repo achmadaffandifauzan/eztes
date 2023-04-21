@@ -4,6 +4,7 @@ const Category = require('./models/category');
 const Comment = require('./models/comment');
 const catchAsync = require('./utils/CatchAsync');
 const ExpressError = require('./utils/ExpressError');
+const sanitizeHtml = require('sanitize-html');
 
 module.exports.isLoggedIn = (req, res, next) => {
     if (!req.isAuthenticated()) {
@@ -129,4 +130,41 @@ module.exports.validateUser = (req, res, next) => {
     } else {
         next();
     }
+}
+
+module.exports.validateWeight = (req, res, next) => {
+    let weight = ["0", "1", "1.5", "2", "2.5", "3", "3.5", "4", "4.5", "5"];
+    for (let key in req.body.postWeights) {
+        if (req.body.postWeights.hasOwnProperty(key)) {
+            if (!weight.includes(req.body.postWeights[key])) {
+                throw new ExpressError("Tidak diperbolehkan!", 403);
+            }
+        }
+    }
+    next()
+}
+module.exports.sanitizeScore = (req, res, next) => {
+    for (let i = 0; i < req.body.score.length; i++) {
+        let score = sanitizeHtml(req.body.score[i], {
+            allowedTags: [],
+            allowedAttributes: {},
+        });
+        req.body.score[i] = score;
+    }
+    next()
+}
+module.exports.validateQuery = (req, res, next) => {
+    //https://stackoverflow.com/questions/388996/regex-for-javascript-to-allow-only-alphanumeric
+    var alphanumeric = /^[a-z0-9]+$/i;
+    if (req.query.authorName) {
+        if (!req.query.authorName.match(alphanumeric)) {
+            throw new ExpressError("Tidak diperbolehkan mencari dengan kata kunci itu!", 403);
+        }
+    }
+    if (req.query.categoryName) {
+        if (!req.query.categoryName.match(alphanumeric)) {
+            throw new ExpressError("Tidak diperbolehkan mencari dengan kata kunci itu!", 403);
+        }
+    }
+    next()
 }
