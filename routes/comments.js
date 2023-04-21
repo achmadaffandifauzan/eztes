@@ -8,7 +8,7 @@ const { isLoggedIn, isCommentAuthor, validateComment, isPostAvailable } = requir
 const dayjs = require('dayjs');
 
 
-router.post('/posts/:id/comments/', isPostAvailable, isLoggedIn, catchAsync(async (req, res, next) => {
+router.post('/posts/:id/comments/', isPostAvailable, isLoggedIn, validateComment, catchAsync(async (req, res, next) => {
     const postDB = await Post.findById(req.params.id).populate('comments');
     const categoryDB = await Category.findById(postDB.category);
     if (!postDB.answerer.includes(req.user._id)) {

@@ -51,7 +51,7 @@ router.post('/posts/:id/unhide', isLoggedIn, isPostAuthor, catchAsync(async (req
     req.flash('success', "Soal telah dibuka kembali.");
     res.redirect(`/categories/${post.category}`);
 }))
-router.post('/posts', isLoggedIn, upload.array('post[image]'), catchAsync(async (req, res, next) => {
+router.post('/posts', isLoggedIn, upload.array('post[image]'), validatePost, catchAsync(async (req, res, next) => {
     const post = new Post(req.body.post);
     // console.log(req.body.post)
     post.images = req.files.map(file => ({ url: file.path, filename: file.filename }));
@@ -92,7 +92,7 @@ router.post('/posts', isLoggedIn, upload.array('post[image]'), catchAsync(async 
     res.redirect(`/posts/${post._id}`);
 }))
 
-router.put('/posts/:id', isLoggedIn, isPostAuthor, upload.array('post[image]'), catchAsync(async (req, res, next) => {
+router.put('/posts/:id', isLoggedIn, isPostAuthor, upload.array('post[image]'), validatePost, catchAsync(async (req, res, next) => {
     const { id } = req.params;
     const post = await Post.findByIdAndUpdate(id, { ...req.body.post });
     const imagesArr = req.files.map(file => ({ url: file.path, filename: file.filename }));

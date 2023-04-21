@@ -14,6 +14,7 @@ find out WHY when updating router and restart indexJS (nodemon), user doesn't lo
 
 frontend :
 - box shadow effect performance (solution : https://tobiasahlin.com/blog/how-to-animate-box-shadow/)
+- change icon to preload
 
 +++ DEPLOYEMENT +++
 

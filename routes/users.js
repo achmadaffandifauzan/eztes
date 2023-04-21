@@ -6,14 +6,14 @@ const Post = require('../models/post');
 const Comment = require('../models/comment');
 const Category = require('../models/category');
 const catchAsync = require('../utils/CatchAsync');
-const { isLoggedIn, isGuest } = require('../middleware');
+const { isLoggedIn, isGuest, validateUser } = require('../middleware');
 const ExpressError = require('../utils/ExpressError');
 const dayjs = require('dayjs');
 
 router.get('/register', isGuest, (req, res) => {
     res.render('users/register');
 })
-router.post('/register', isGuest, catchAsync(async (req, res, next) => {
+router.post('/register', isGuest, validateUser, catchAsync(async (req, res, next) => {
     try {
         const { name, email, username, password } = req.body.user;
         const newUser = new User({ email, username, name });

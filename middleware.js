@@ -1,4 +1,4 @@
-const { postSchema, commentSchema } = require("./joiSchemas");
+const { postSchema, commentSchema, userSchema } = require("./joiSchemas");
 const Post = require('./models/post');
 const Category = require('./models/category');
 const Comment = require('./models/comment');
@@ -50,27 +50,7 @@ module.exports.isCommentAuthor = catchAsync(async (req, res, next) => {
         res.redirect(`/posts/${id}`)
     }
 })
-module.exports.validatePost = (req, res, next) => {
-    // this joiSchema only catch error if user pass the client side validation anyway (the bootstrap form validation)
-    const { error } = postSchema.validate(req.body);
-    if (error) {
-        // mapping error(s) then joining them to single array of single string
-        const messageErr = error.details.map(x => x.message).join(',');
-        throw new ExpressError(messageErr, 400);
-    } else {
-        next();
-    }
-}
-module.exports.validateComment = (req, res, next) => {
-    const { error } = commentSchema.validate(req.body);
-    if (error) {
-        // mapping error(s) then joining them to single array of single string
-        const messageErr = error.details.map(x => x.message).join(',');
-        throw new ExpressError(messageErr, 400);
-    } else {
-        next();
-    }
-}
+
 
 module.exports.isPostAvailable = catchAsync(async (req, res, next) => {
     const post = await Post.findById(req.params.id)
@@ -99,3 +79,54 @@ module.exports.isCategoryAvailable = catchAsync(async (req, res, next) => {
         res.redirect(`/categories`)
     }
 })
+
+module.exports.validatePost = (req, res, next) => {
+    // this joiSchema only catch error if user pass the client side validation anyway (the bootstrap form validation)
+    // ==> why using { ...req.body } ?
+    // ==> because: req.body :
+    // [Object: null prototype] {
+    //     post: [Object: null prototype] {
+    //       title: 'asdssada',
+    //       description: 'dadasdasdasdas',
+    //       postCategory: 'asd',
+    //       type: 'essay'
+    //     }
+    //   }
+    // ==> are supposed to be:
+    //  {
+    //     post: {
+    //       title: 'asdssada',
+    //       description: 'dadasdasdasdas',
+    //       postCategory: 'asd',
+    //       type: 'essay'
+    //     }
+    //   }
+    const { error } = postSchema.validate({ ...req.body });
+    if (error) {
+        // mapping error(s) then joining them to single array of single string
+        const messageErr = error.details.map(x => x.message).join(',');
+        throw new ExpressError(messageErr, 400);
+    } else {
+        next();
+    }
+}
+module.exports.validateComment = (req, res, next) => {
+    const { error } = commentSchema.validate(req.body);
+    if (error) {
+        // mapping error(s) then joining them to single array of single string
+        const messageErr = error.details.map(x => x.message).join(',');
+        throw new ExpressError(messageErr, 400);
+    } else {
+        next();
+    }
+}
+module.exports.validateUser = (req, res, next) => {
+    const { error } = userSchema.validate(req.body);
+    if (error) {
+        // mapping error(s) then joining them to single array of single string
+        const messageErr = error.details.map(x => x.message).join(',');
+        throw new ExpressError(messageErr, 400);
+    } else {
+        next();
+    }
+}
