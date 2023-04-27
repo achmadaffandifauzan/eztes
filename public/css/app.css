@@ -17,6 +17,8 @@ main {
 .mainIndex {
   /* added by js */
   margin: 0;
+  margin-right: auto;
+  margin-left: auto;
   padding: 0;
 }
 
@@ -649,7 +651,6 @@ button {
   font-weight: bold;
 }
 
-@media only screen and (max-width: 600px) {}
 
 /* -----EVALUATE PAGE------- */
 /* -----EVALUATE PAGE------- */
@@ -657,10 +658,12 @@ button {
 
 .evaluateQnA {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   margin: 40px 1%;
   gap: 2%;
 }
+
 
 .evaluateQnA .card {
   display: inline-block;
@@ -767,6 +770,7 @@ button {
   background-color: #dc354663;
 }
 
+/* why does this in the bottom ? because it needs to override the existing code */
 @media only screen and (max-width: 600px) {
   .evaluateQnA {
     flex-direction: column;
