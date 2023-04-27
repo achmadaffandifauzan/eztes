@@ -612,14 +612,19 @@ button {
 /* -----ANSWERER PAGE------- */
 
 .cardAnswerer {
-  height: 40px;
+  min-height: 40px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   color: #1d214e;
   background-color: #04d7a2;
   transition: 0.3s;
+  padding: 0 15px;
+}
+
+.cardAnswerer .name {
+  width: 50%;
 }
 
 .cardAnswerer:hover {
@@ -628,7 +633,6 @@ button {
 
 .cardAnswerer div {
   top: 50%;
-  line-height: 0px;
   left: 0;
   right: 0;
   text-align: center;
