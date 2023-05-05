@@ -17,8 +17,8 @@ main {
 .mainIndex {
   /* added by js */
   margin: 0;
-  margin-right: auto;
   margin-left: auto;
+  margin-right: auto;
   padding: 0;
 }
 
