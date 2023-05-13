@@ -14,19 +14,19 @@ module.exports.isLoggedIn = (req, res, next) => {
         req.flash('error', "Anda belum login!");
         return res.redirect('/login');
     }
-    next();
+    return next();
 }
 module.exports.isGuest = (req, res, next) => {
     if (req.isAuthenticated()) {
         req.flash('error', "You're still logged in!");
         return res.redirect('/categories');
     }
-    next();
+    return next();
 }
 module.exports.isCategoryAuthor = catchAsync(async (req, res, next) => {
     const category = await Category.findById(req.params.id)
     if (category.author.equals(req.user._id)) {
-        next();
+        return next();
     } else {
         req.flash('error', "Anda tidak memiliki izin untuk itu!");
         res.redirect(`/categories`)
@@ -35,7 +35,7 @@ module.exports.isCategoryAuthor = catchAsync(async (req, res, next) => {
 module.exports.isPostAuthor = catchAsync(async (req, res, next) => {
     const post = await Post.findById(req.params.id)
     if (post.author.equals(req.user._id)) {
-        next();
+        return next();
     } else {
         req.flash('error', "Anda tidak memiliki izin untuk itu!");
         res.redirect(`/posts/${req.params.id}`)
@@ -45,7 +45,7 @@ module.exports.isCommentAuthor = catchAsync(async (req, res, next) => {
     const { id, commentId } = req.params;
     const comment = await Comment.findById(commentId)
     if (comment.author.equals(req.user._id)) {
-        next();
+        return next();
     } else {
         req.flash('error', "Anda tidak memiliki izin untuk itu!");
         res.redirect(`/posts/${id}`)
@@ -56,10 +56,10 @@ module.exports.isCommentAuthor = catchAsync(async (req, res, next) => {
 module.exports.isPostAvailable = catchAsync(async (req, res, next) => {
     const post = await Post.findById(req.params.id)
     if (post.isAvailable === "true") {
-        next();
+        return next();
     } else if (req.user) {
         if (post.author.equals(req.user._id)) {
-            next();
+            return next();
         }
     } else {
         req.flash('error', "Soal telah ditutup!");
@@ -70,17 +70,35 @@ module.exports.isPostAvailable = catchAsync(async (req, res, next) => {
 module.exports.isCategoryAvailable = catchAsync(async (req, res, next) => {
     const category = await Category.findById(req.params.id)
     if (category.isAvailable === "true") {
-        next();
+        return next();
     } else if (req.user) {
         if (category.author.equals(req.user._id)) {
-            next();
+            return next();
         }
     } else {
-        req.flash('error', "Soal telah ditutup!");
+        req.flash('error', "Kategori telah ditutup!");
         res.redirect(`/categories`)
     }
 })
 
+module.exports.verifyToken = catchAsync(async (req, res, next) => {
+    const category = await Category.findById(req.params.id);
+    if (req.user) {
+        if (category.author.equals(req.user._id)) {
+            return next();
+        }
+    }
+    if (!category.accessToken) {
+        return next();
+    } else if (!req.query.token) {
+        res.redirect(`/categories/${category._id}/formtoken`);
+    } else if (category.accessToken === req.query.token) {
+        return next();
+    } else {
+        req.flash('error', 'Token tidak sesuai.');
+        res.redirect(`/categories/${category._id}/formtoken`);
+    }
+})
 module.exports.validatePost = (req, res, next) => {
     // this joiSchema only catch error if user pass the client side validation anyway (the bootstrap form validation)
     // ==> why using { ...req.body } ?
@@ -108,7 +126,7 @@ module.exports.validatePost = (req, res, next) => {
         const messageErr = error.details.map(x => x.message).join(',');
         throw new ExpressError(messageErr, 400);
     } else {
-        next();
+        return next();
     }
 }
 module.exports.validateComment = (req, res, next) => {
@@ -118,7 +136,7 @@ module.exports.validateComment = (req, res, next) => {
         const messageErr = error.details.map(x => x.message).join(',');
         throw new ExpressError(messageErr, 400);
     } else {
-        next();
+        return next();
     }
 }
 module.exports.validateUser = (req, res, next) => {
@@ -128,7 +146,7 @@ module.exports.validateUser = (req, res, next) => {
         const messageErr = error.details.map(x => x.message).join(',');
         throw new ExpressError(messageErr, 400);
     } else {
-        next();
+        return next();
     }
 }
 
@@ -141,7 +159,7 @@ module.exports.validateWeight = (req, res, next) => {
             }
         }
     }
-    next()
+    return next();
 }
 module.exports.sanitizeScore = (req, res, next) => {
     for (let i = 0; i < req.body.score.length; i++) {
@@ -151,7 +169,7 @@ module.exports.sanitizeScore = (req, res, next) => {
         });
         req.body.score[i] = score;
     }
-    next()
+    return next();
 }
 module.exports.validateQuery = (req, res, next) => {
     //https://stackoverflow.com/questions/388996/regex-for-javascript-to-allow-only-alphanumeric
@@ -166,5 +184,5 @@ module.exports.validateQuery = (req, res, next) => {
             throw new ExpressError("Tidak diperbolehkan mencari dengan kata kunci itu!", 403);
         }
     }
-    next()
+    return next();
 }

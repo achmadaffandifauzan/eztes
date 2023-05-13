@@ -1,9 +1,13 @@
 backend :
-- joiSchemas : middleware validatePost,commentPost 
+- joiSchemas : middleware validatePost,commentPost, SETWEIGHT, SETTOKEN
 - user may input symbols that can break code
 - seed
 - last path
 - weight 0 error
+
+
+feature add:
+timer / timing for the question to closed or open
 
 find out :
 

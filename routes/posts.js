@@ -18,7 +18,7 @@ router.get('/posts/new', isLoggedIn, (req, res) => {
 router.get('/posts/:id', isPostAvailable, catchAsync(async (req, res, next) => {
     const post = await Post.findById(req.params.id)
         .populate({ path: 'comments', populate: { path: 'author' } })
-        .populate('author');
+        .populate('author').populate('category');
     // console.log(post)
     //console.log(post.isAvailable)
     if (!post) {

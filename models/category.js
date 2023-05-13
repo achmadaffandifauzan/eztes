@@ -34,6 +34,9 @@ const categorySchema = new Schema({
     lastEdited: {
         type: String,
     },
+    accessToken: {
+        type: String,
+    }
 })
 
 

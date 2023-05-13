@@ -9,7 +9,7 @@ const Score = require('../models/score');
 const ScoreDetail = require('../models/scoreDetail');
 const { cloudinary } = require('../cloudinary');
 const dayjs = require('dayjs');
-const { isLoggedIn, isCategoryAuthor, isCategoryAvailable, validateWeight, sanitizeScore, validateQuery } = require('../middleware');
+const { isLoggedIn, isCategoryAuthor, isCategoryAvailable, validateWeight, sanitizeScore, validateQuery, verifyToken } = require('../middleware');
 
 router.get('/categories', validateQuery, catchAsync(async (req, res, next) => {
     //https://stackoverflow.com/questions/5539955/how-to-paginate-with-mongoose-in-node-js
@@ -39,12 +39,29 @@ router.get('/categories', validateQuery, catchAsync(async (req, res, next) => {
     res.render('categories/index', { categories, pageBefore, pageAfter })
 }))
 
-router.get('/categories/:id', isCategoryAvailable, catchAsync(async (req, res, next) => {
-    const categories = await Category.findById(req.params.id).populate('posts').populate('author')
-    // console.log(categories)
+router.get('/categories/:id', isCategoryAvailable, verifyToken, catchAsync(async (req, res, next) => {
+    const categories = await Category.findById(req.params.id).populate('posts').populate('author');
     res.render('categories/category', { categories })
-}))
 
+}))
+router.get('/categories/:id/formtoken', isCategoryAvailable, catchAsync(async (req, res, next) => {
+    const category = await Category.findById(req.params.id).populate('author');
+    res.render('categories/formToken', { category });
+}))
+router.post('/categories/:id/settoken', isLoggedIn, isCategoryAuthor, catchAsync(async (req, res, next) => {
+    const category = await Category.findById(req.params.id);
+    category.accessToken = req.body.token;
+    category.save()
+    req.flash('success', "Berhasil menyetel token.");
+    res.redirect(`/categories/${category._id}`);
+}))
+router.post('/categories/:id/deletetoken', isLoggedIn, isCategoryAuthor, catchAsync(async (req, res, next) => {
+    const category = await Category.findById(req.params.id);
+    category.accessToken = '';
+    category.save()
+    req.flash('success', "Berhasil menghapus token.");
+    res.redirect(`/categories/${category._id}`);
+}))
 router.post('/categories/:id/hide', isLoggedIn, isCategoryAuthor, catchAsync(async (req, res, next) => {
     const category = await Category.findById(req.params.id);
     category.isAvailable = "false";
@@ -56,7 +73,7 @@ router.post('/categories/:id/unhide', isLoggedIn, isCategoryAuthor, catchAsync(a
     const category = await Category.findById(req.params.id);
     category.isAvailable = "true";
     category.save()
-    req.flash('success', "Kategori telah ditutup.");
+    req.flash('success', "Kategori telah dibuka.");
     res.redirect(`/categories/${category._id}`);
 }))
 

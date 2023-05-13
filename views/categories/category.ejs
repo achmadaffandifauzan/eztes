@@ -7,11 +7,51 @@
 </h6>
 <% if (currentUser) {%>
 <% if (categories.author.equals(currentUser._id)) {%>
-<div class="col-sm-8 offset-sm-2 mt-0 mb-5 d-flex justify-content-around flex-wrap">
+<div class="col-sm-8 offset-sm-2 mt-0 d-flex justify-content-around flex-wrap">
     <a href="/categories/<%= categories._id%>/answerer"><button class="btn btn-sm btn-secondary">Koreksi
             Penjawab</button></a>
-    <a href="/categories/<%= categories._id%>/setWeight"><button class="btn btn-sm btn-secondary">Setel Bobot
+    <a href="/categories/<%= categories._id%>/setWeight"><button class="btn btn-sm btn-secondary">Set Bobot
             Soal</button></a>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Setel token untuk akses katogori</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="/categories/<%= categories._id %>/settoken" method="POST" class="needs-validation"
+                        novalidate>
+                        <% if (categories.accessToken) {%>
+                        <div>
+                            Token saat ini : <span class="text-danger fw-bold"><%= categories.accessToken %></span>
+                        </div>
+                        <% } %>
+                        <div class="form-floating mb-3">
+                            <input name="token" type="text" class="form-control" id="token" placeholder="Token"
+                                required>
+                            <label for="token">Token baru </label>
+                            <div class="invalid-feedback">
+                                Token harus diisi
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-success">Simpan</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <form action="/categories/<%= categories._id %>/deletetoken" method="POST">
+                        <button type="submit" class="btn btn-danger">Hapus Token</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <% if (categories.isAvailable == "true") {%>
     <form action="/categories/<%= categories._id %>/hide" method="POST">
         <button class="btn btn-sm btn-warning">Tutup Kategori</button>
@@ -26,8 +66,19 @@
         <button class="btn btn-sm btn-danger">Hapus Kategori</button>
     </form>
 </div>
+<!-- Button trigger modal -->
+<div class="col-sm-4 offset-sm-4 my-3 ">
+    <button type="button" class="btn btn-sm btn-info w-100 py-2" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <% if (!categories.accessToken) {%>
+        <span class="text-muted">Setel token</span>
+        <% } else { %>
+        Token : <span class="fw-bold"><%= categories.accessToken %></span>
+        <% } %>
+    </button>
+</div>
 <% } %>
 <% } %>
+
 <div id="cardCategoryContainer">
 
 

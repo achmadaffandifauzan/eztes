@@ -1,0 +1,19 @@
+<% layout('layouts/boilerplate') %>
+<h3 class="text-center mt-5 mb-2">
+    <%= category.categoryName %>
+</h3>
+<h6 class="text-center font-sm text-uppercase">
+    Oleh : <%= category.author.name %>
+</h6>
+<div class="col-sm-4 offset-sm-4 my-5">
+    <form action="/categories/<%= category._id %>" method="GET">
+        <div class="form-floating mb-3">
+            <input name="token" type="text" class="form-control" id="token" placeholder="Token">
+            <label for="token">Masukkan token untuk melanjutkan</label>
+        </div>
+        <button type="submit" class="btn btn-success w-100">Masuk</button>
+    </form>
+    <div class="text-center text-muted">
+        Belum mendapat token ? hubungi <%= category.author.name %>
+    </div>
+</div>

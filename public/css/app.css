@@ -33,6 +33,11 @@ body {
   background: linear-gradient(0deg, rgba(29, 33, 78, 1) 0%, rgba(4, 215, 162, 1) 76%);
 }
 
+.bgSekawan {
+  background-color: #04d7a2;
+  color: #1d214e;
+}
+
 textarea {
   max-height: 300px;
 }

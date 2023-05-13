@@ -1,5 +1,10 @@
 <% layout('layouts/boilerplate') %>
-<a class="btn btn-sm btn-primary mb-2 " href="/categories/<%= category._id %>" role="button">Kembali</a>
+<% if(category.accessToken) {%>
+<% var token = '?token='+category.accessToken; %>
+<% } else {%>
+<% var token = '' %>
+<% } %>
+<a class="btn btn-sm btn-primary mb-2 " href="/categories/<%= category._id + token %>" role="button">Kembali</a>
 
 <div class="evaluatePageHeaderContainer">
     <div class="evaluatePageHeader card col-sm-6 offset-sm-3">
