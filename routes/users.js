@@ -61,7 +61,7 @@ router.get('/:userId', catchAsync(async (req, res, next) => {
     let totCategories = Object.keys(categories).length;
     let totPosts = 0;
     for (let category of categories) {
-        console.log(category)
+        // console.log(category)
         let post = Object.values(category.posts).length;
         totPosts += post;
     };
