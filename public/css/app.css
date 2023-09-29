@@ -30,7 +30,8 @@ body {
 }
 
 .bodyIndex {
-  background: linear-gradient(0deg, rgba(29, 33, 78, 1) 0%, rgba(4, 215, 162, 1) 76%);
+  /* background: linear-gradient(0deg, rgba(29, 33, 78, 1) 0%, rgba(4, 215, 162, 1) 76%); */
+  /* background-color: #ffffff; */
 }
 
 .bgSekawan {
@@ -43,14 +44,14 @@ textarea {
 }
 
 #nav {
-  background-color: #04d7a2;
+  background-color: #04d7a240;
   color: #1d214e;
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   padding: 0 10px;
-
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
 }
 
 .navIndex {
@@ -252,8 +253,9 @@ textarea {
   border: 0;
   box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
   border-radius: 100px;
-  background-color: #04d7a200;
+  /* background-color: #04d7a200; */
   /* background-color: #ff9900; */
+  background-color: #c2e8d9;
   border: 0;
   font-size: 30px;
   color: #1d214e;
@@ -348,7 +350,8 @@ textarea {
 
 .cardIndexHeader {
   /* border-bottom: 4px solid #04d7a2 !important; */
-  background-color: #b0e5b3;
+  /* background-color: #b0e5b3; */
+  background-color: #c2e8d9;
   color: #1d214e;
   border: 0;
   font-size: 10px;
@@ -361,7 +364,8 @@ textarea {
 
 .cardIndexBody {
   color: #1d214e;
-  background-color: #b0e5b3;
+  /* background-color: #b0e5b3; */
+  background-color: #c2e8d9;
   /* background-image: linear-gradient(to right, #ff9900, #ff9900, #04d7a2); */
   text-align: center;
   display: flex;
