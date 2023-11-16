@@ -1,11 +1,3 @@
-.material-symbols-outlined {
-  font-variation-settings:
-    'FILL' 0,
-    'wght' 500,
-    'GRAD' 0,
-    'opsz' 48
-}
-
 main {
   margin-top: 4rem;
 }
@@ -23,15 +15,18 @@ main {
 }
 
 body {
-  font-family: 'Varela Round', sans-serif;
+  font-family: "Varela Round", sans-serif;
   /* font-family: 'Bodoni Moda', serif; */
   background-color: white;
-
 }
 
 .bodyIndex {
-  /* background: linear-gradient(0deg, rgba(29, 33, 78, 1) 0%, rgba(4, 215, 162, 1) 76%); */
-  /* background-color: #ffffff; */
+  background: linear-gradient(
+    0deg,
+    rgba(29, 33, 78, 1) 0%,
+    rgba(4, 215, 162, 1) 76%
+  );
+  background-color: #ffffff;
 }
 
 .bgSekawan {
@@ -44,7 +39,7 @@ textarea {
 }
 
 #nav {
-  background-color: #04d7a240;
+  background-color: #04d7a2;
   color: #1d214e;
   position: fixed;
   top: 0;
@@ -66,7 +61,6 @@ textarea {
   width: 100%;
   justify-content: space-around;
 }
-
 
 #navSearch .input-group span {
   border-radius: 30px 0 0 30px;
@@ -117,11 +111,9 @@ textarea {
   padding: 0.4em;
 }
 
-
 .spanMaterialSymbol {
   vertical-align: middle;
 }
-
 
 .navbar-brand {
   color: #1d214e;
@@ -162,7 +154,8 @@ textarea {
 
 .footer {
   background-color: #fafafa;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
   height: min-content;
 }
 
@@ -170,8 +163,8 @@ textarea {
   border-radius: 20px !important;
   border: 0px;
   overflow: hidden;
-  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px, rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
-
+  box-shadow: rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
 }
 
 /* -----INDEX PAGE------- */
@@ -193,6 +186,9 @@ textarea {
 
 #navReplacementIndex .navIndexContainer {
   display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
 #indexTopContainer {
@@ -200,17 +196,19 @@ textarea {
   flex-direction: column;
 }
 
-#arrowDownIndex {
+#arrowDownIndexParent {
   display: flex;
-  justify-content: center;
+  height: 40px;
+}
+#arrowDownIndex {
+  width: 30px;
   transition: 0.3s;
   font-size: 30px;
   cursor: pointer;
   color: #1d214e;
 }
-
 #arrowDownIndex:hover {
-  font-size: 40px;
+  width: 40px;
 }
 
 #indexSearchContainer {
@@ -251,11 +249,12 @@ textarea {
 
 #indexSearch .inputContainer input {
   border: 0;
-  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
   border-radius: 100px;
-  /* background-color: #04d7a200; */
+  background-color: #04d7a200;
   /* background-color: #ff9900; */
-  background-color: #c2e8d9;
+  /* background-color: #c2e8d9; */
   border: 0;
   font-size: 30px;
   color: #1d214e;
@@ -271,7 +270,8 @@ textarea {
 }
 
 #indexSearch .inputContainer input:hover {
-  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
   width: 120%;
 }
 
@@ -309,7 +309,8 @@ textarea {
 #indexSearch .buttonContainer:hover {
   width: 100px;
 
-  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+  box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+    rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
 }
 
 #indexSearch button {
@@ -327,14 +328,20 @@ textarea {
   font-size: 30px;
   color: #1d214e;
 }
-
-
 /* index Bottom  */
+#indexBottomContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .cardIndex {
   width: 80%;
   max-width: 95%;
   transition: 0.3s;
-  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 
   /* centering while NOT on display : flex */
   margin-left: auto;
@@ -345,13 +352,14 @@ textarea {
 .cardIndex:hover {
   width: 100%;
   /* box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px; */
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 
 .cardIndexHeader {
   /* border-bottom: 4px solid #04d7a2 !important; */
-  /* background-color: #b0e5b3; */
-  background-color: #c2e8d9;
+  background-color: #b0e5b3;
+  /* background-color: #c2e8d9; */
   color: #1d214e;
   border: 0;
   font-size: 10px;
@@ -364,8 +372,8 @@ textarea {
 
 .cardIndexBody {
   color: #1d214e;
-  /* background-color: #b0e5b3; */
-  background-color: #c2e8d9;
+  background-color: #b0e5b3;
+  /* background-color: #c2e8d9; */
   /* background-image: linear-gradient(to right, #ff9900, #ff9900, #04d7a2); */
   text-align: center;
   display: flex;
@@ -373,17 +381,23 @@ textarea {
 }
 
 #paginationIndex {
+  width: 100%;
   display: flex;
+  flex-direction: row;
   justify-content: center;
 }
-
+#paginationIndex .pagination {
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  justify-content: space-between;
+}
 #paginationIndex .page-link {
   color: #1d214e;
   background-color: #04d7a2;
   border: 2px solid #1d214e;
   border-radius: 20px;
 }
-
 
 @media only screen and (max-width: 600px) {
   #indexSearchContainer {
@@ -406,7 +420,8 @@ textarea {
 }
 
 .cardShow:hover {
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 
 .card-body {
@@ -450,7 +465,6 @@ button {
   background-color: #edf0ef;
   border-bottom: 1px solid #d8d9d9;
 }
-
 
 .buttonContainerShow {
   display: grid;
@@ -587,8 +601,6 @@ button {
   padding: 14px;
 }
 
-
-
 .cardHeaderColored {
   background-color: #04d7a2;
   background-image: linear-gradient(to left, #1d214ea9, #04d7a2);
@@ -609,8 +621,9 @@ button {
 }
 
 .cardCategory:hover {
-  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px, rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px, rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
-
+  box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 2px, rgba(0, 0, 0, 0.07) 0px 2px 4px,
+    rgba(0, 0, 0, 0.07) 0px 4px 8px, rgba(0, 0, 0, 0.07) 0px 8px 16px,
+    rgba(0, 0, 0, 0.07) 0px 16px 32px, rgba(0, 0, 0, 0.07) 0px 32px 64px;
 }
 
 /* 
@@ -639,7 +652,8 @@ button {
 }
 
 .cardAnswerer:hover {
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 
 .cardAnswerer div {
@@ -660,7 +674,6 @@ button {
   font-weight: bold;
 }
 
-
 /* -----EVALUATE PAGE------- */
 /* -----EVALUATE PAGE------- */
 /* -----EVALUATE PAGE------- */
@@ -673,12 +686,12 @@ button {
   gap: 2%;
 }
 
-
 .evaluateQnA .card {
   display: inline-block;
   width: 47%;
   transition: 0.3s;
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
   height: fit-content;
 }
 
@@ -695,7 +708,8 @@ button {
 }
 
 .evaluateQnA .card:hover {
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 
 .evaluateQnA .card-header {
@@ -791,7 +805,6 @@ button {
   }
 }
 
-
 /* ---------- */
 /* ---------- */
 /* NEW AND EDIT PAGE */
@@ -812,13 +825,11 @@ button {
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
 }
 
-
 /* ---------- */
 /* ---------- */
 /* ABOUT PAGE */
 /* ---------- */
 /* ---------- */
-
 
 #aboutNav {
   position: fixed;
@@ -837,7 +848,7 @@ button {
   justify-content: center;
   text-align: center;
   color: #03ac0e;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
 
 #aboutNavBrand span {
@@ -853,7 +864,6 @@ button {
 }
 
 #aboutNav .btn:hover {
-
   background-color: #04d7a2;
 }
 
@@ -868,7 +878,8 @@ button {
   align-items: center;
   height: 300px;
   background-color: #04d7a2;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 
 #aboutMainHeader h2 {
@@ -884,7 +895,6 @@ button {
 #aboutMain img {
   width: 500px;
   justify-self: center;
-
 }
 
 @media only screen and (max-width: 600px) {
@@ -951,7 +961,6 @@ button {
   overflow: hidden;
   padding: 0;
 }
-
 
 /* ---------- */
 /* ---------- */

@@ -94,22 +94,16 @@
                         <!-- the key answer is showed only if =>(the answer is wrong and the option from the loop meet the key of options) -->
                         <% if (option == post.options[post.key] && comment.correctness === false ) {%>
                         <div class="text-success answerCorrectness">
-                            <span class="material-symbols-rounded">
-                                key
-                            </span>
+                            <img src="/icons/key.svg" alt="">
                         </div>
                         <% } %>
                         <% if (option == comment.choiceValue && comment.correctness === true ) {%>
                         <div class="text-success answerCorrectness">
-                            <span class="material-symbols-rounded fs-5">
-                                verified
-                            </span>
+                            <img src="/icons/verified.svg"   alt="">
                         </div>
                         <% } else if (option == comment.choiceValue && comment.correctness === false ) {%>
                         <div class="text-danger answerCorrectness">
-                            <span class="material-symbols-rounded fs-5">
-                                block
-                            </span>
+                            <img src="/icons/block.svg"  alt="">
                         </div>
                         <% } %>
                         <div class="answerMCQ-textAnswer">

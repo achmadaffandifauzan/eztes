@@ -131,22 +131,18 @@
             </a>
             <% if(comment.type == 'options' && post.author.equals(currentUser._id)) {  %>
             <% if (comment.correctness === true) {%>
-            <div class="text-success answerCorrectness">
+            <div class="text-success answerCorrectness d-flex flex-row align-items-center">
                 <span>
                     Jawaban Benar
                 </span>
-                <span class="material-symbols-rounded fs-5">
-                    verified
-                </span>
+                <img src="/icons/verified.svg" class="ms-1" alt="">
             </div>
             <% } else {%>
-            <div class="text-danger answerCorrectness">
+            <div class="text-danger answerCorrectness d-flex flex-row align-items-center">
                 <span>
                     Jawaban Salah
                 </span>
-                <span class="material-symbols-rounded fs-5">
-                    block
-                </span>
+                <img src="/icons/block.svg" class="ms-1" alt="">
             </div>
             <% } %>
             <% } %>

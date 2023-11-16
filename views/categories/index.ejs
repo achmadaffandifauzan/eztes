@@ -1,6 +1,5 @@
 <% layout('layouts/boilerplate') %>
 <div id="categoryIndexContainer">
-
   <div id="indexTopContainer">
     <div id="navReplacementIndex">
       <div class="navIndexContainer">
@@ -14,39 +13,59 @@
 
       <% if(!currentUser) { %>
       <div class="navIndexContainer">
-        <a class="nav-link navAuth" href="/login"><span class="material-symbols-rounded spanMaterialSymbol">
-            login
-          </span>
+        <a class="nav-link navAuth" href="/login"
+          ><img src="/icons/login.svg" class="spanMaterialSymbol" alt="" />
+
           <span class="spanMaterialSymbol">Login</span>
         </a>
-        <a class="nav-link navAuth" href="/register"><span class="material-symbols-rounded spanMaterialSymbol">
-            app_registration
-          </span><span class="spanMaterialSymbol">Register</span></a>
+        <a class="nav-link navAuth" href="/register">
+          <img
+            src="/icons/app_registration.svg"
+            class="spanMaterialSymbol"
+            alt=""
+          />
+          <span class="spanMaterialSymbol">Register</span></a
+        >
         <% } else { %>
-        <a class="nav-link navAuth" href="/logout"><span class="material-symbols-rounded spanMaterialSymbol">
-            logout
-          </span><span class="spanMaterialSymbol">Logout</span></a>
+        <a class="nav-link navAuth" href="/logout">
+          <img src="/icons/logout.svg" class="spanMaterialSymbol" alt="" />
+          <span class="spanMaterialSymbol">Logout</span></a
+        >
         <% } %>
       </div>
     </div>
     <div id="indexSearchContainer">
-      <img src="https://res.cloudinary.com/dgny2tywl/image/upload/v1683974552/Logo/eztes_uibnyt.svg" alt="Logo"
-        width="500" class="d-inline-block align-text-center">
+      <img
+        src="https://res.cloudinary.com/dgny2tywl/image/upload/v1683974552/Logo/eztes_uibnyt.svg"
+        alt="Logo"
+        width="500"
+        class="d-inline-block align-text-center"
+      />
       <div id="indexSearch">
         <form action="/categories" method="get">
           <div class="mb-3 inputContainer">
-            <input type="text" placeholder="Kategori" class="form-control" id="category" name="categoryName"
-              spellcheck="false">
+            <input
+              type="text"
+              placeholder="Kategori"
+              class="form-control"
+              id="category"
+              name="categoryName"
+              spellcheck="false"
+            />
           </div>
           <div class="mb-3 inputContainer">
-            <input type="text" placeholder="Pemilik" class="form-control" id="owner" name="authorName"
-              spellcheck="false">
+            <input
+              type="text"
+              placeholder="Pemilik"
+              class="form-control"
+              id="owner"
+              name="authorName"
+              spellcheck="false"
+            />
           </div>
           <div class="buttonContainer">
             <button>
-              <span class="material-symbols-rounded">
-                search
-              </span>
+              <img src="/icons/search.svg" alt="" />
             </button>
           </div>
         </form>
@@ -55,34 +74,36 @@
   </div>
 
   <div id="indexBottomContainer">
-    <span id="arrowDownIndex" class=" material-symbols-rounded">
-      keyboard_double_arrow_down
-    </span>
+    <div id="arrowDownIndexParent">
+      <img
+        id="arrowDownIndex"
+        src="/icons/keyboard_double_arrow_down.svg"
+        alt=""
+      />
+    </div>
     <% for (let category of categories) {%>
-    <div class=" card cardIndex my-4">
+    <div class="card cardIndex my-4">
       <a href="/categories/<%= category._id %>" class="text-decoration-none">
-        <div class="card-header cardIndexHeader ">
+        <div class="card-header cardIndexHeader">
           Author : <%= category.authorName %>
         </div>
         <div class="card-body cardIndexBody">
-          <h5 class="card-title">
-            <%= category.categoryName %>
-          </h5>
+          <h5 class="card-title"><%= category.categoryName %></h5>
         </div>
       </a>
     </div>
     <% } %>
-    <nav aria-label="Page navigation example" id="paginationIndex" class="">
+    <nav aria-label="Page navigation example" id="paginationIndex">
       <ul class="pagination">
         <li class="page-item">
-          <a class="page-link" href="?page=<%= pageBefore %>">&laquo; Halaman Sebelumnya</a>
+          <a class="page-link" href="?page=<%= pageBefore %>"
+            >&laquo; Halaman
+          </a>
         </li>
         <li class="page-item">
-          <a class="page-link" href="?page=<%= pageAfter%>">Halaman Berikutnya &raquo;</a>
+          <a class="page-link" href="?page=<%= pageAfter%>">Halaman &raquo;</a>
         </li>
       </ul>
     </nav>
   </div>
-
-
 </div>
