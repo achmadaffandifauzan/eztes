@@ -13,7 +13,7 @@ const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user");
-const helmet = require('helmet');
+const helmet = require("helmet");
 
 // const { JSDOM } = require("jsdom");
 // const { window } = new JSDOM("");
@@ -24,21 +24,20 @@ const usersRoutes = require("./routes/users");
 const postsRoutes = require("./routes/posts");
 const commentsRoutes = require("./routes/comments");
 
-const MongoStore = require('connect-mongo');
-const mongoSanitize = require('express-mongo-sanitize');
-
+const MongoStore = require("connect-mongo");
+const mongoSanitize = require("express-mongo-sanitize");
 
 const dbUrl = process.env.DB_URL;
 const connectDB = async () => {
   try {
-    mongoose.set('strictQuery', true);
+    mongoose.set("strictQuery", true);
     const conn = await mongoose.connect(dbUrl);
     console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
     console.log(error);
     process.exit(1);
   }
-}
+};
 
 const app = express();
 
@@ -56,14 +55,14 @@ const secret = process.env.SECRET || "asecret";
 const store = MongoStore.create({
   mongoUrl: dbUrl,
   secret,
-  touchAfter: 24 * 60 * 60 // time period in seconds
-})
-store.on('error', function (e) {
-  console.log("SESSION STORE ERROR : ", e)
-})
+  touchAfter: 24 * 60 * 60, // time period in seconds
+});
+store.on("error", function (e) {
+  console.log("SESSION STORE ERROR : ", e);
+});
 const sessionConfig = {
   store,
-  name: 'session',
+  name: "session",
   secret,
   resave: false,
   saveUninitialized: true,
@@ -92,15 +91,14 @@ const styleSrcUrls = [
   "https://use.fontawesome.com/",
   "https://fonts.google.com/",
 ];
-const connectSrcUrls = [
-];
+const connectSrcUrls = [];
 const fontSrcUrls = [
   "https://fonts.gstatic.com/",
   "https://fonts.googleapis.com/",
   "https://fonts.google.com/",
 ];
 app.use(
-  helmet({ crossOriginEmbedderPolicy: false, }),
+  helmet({ crossOriginEmbedderPolicy: false }),
   helmet.contentSecurityPolicy({
     directives: {
       defaultSrc: [],
@@ -136,14 +134,16 @@ app.use((req, res, next) => {
   next();
 });
 
+app.get("/about", (req, res) => {
+  res.render("about");
+});
 app.use("/", categoriesRoutes);
 app.use("/", postsRoutes);
 app.use("/", commentsRoutes);
 app.use("/", usersRoutes);
 
-
 app.get("/", (req, res) => {
-  res.render("about");
+  res.redirect("/categories");
 });
 
 app.all("*", (req, res, next) => {
@@ -160,7 +160,5 @@ const PORT = process.env.PORT || 3000;
 connectDB().then(() => {
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT} ~express`);
-  })
-})
-
-
+  });
+});
